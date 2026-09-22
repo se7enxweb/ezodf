@@ -26,6 +26,40 @@
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
+
+if ( !function_exists( 'daemonConvert' ) ) {
+/*!
+      Connects to the eZ Publish document conversion daemon and converts the document to specified format
+*/
+function daemonConvert( $server, $port, $sourceFile, $conversionCommand, $destFile )
+{
+    $fp = fsockopen( $server,
+                     $port,
+                     $errorNR,
+                     $errorString,
+                     10 ); // @as 2008-11-25 - Increase the timeout from 0 to 10 to prevent problems with connection
+
+    if ( $fp )
+    {
+        $welcome = fread( $fp, 1024 );
+
+        $welcome = trim( $welcome );
+        if ( $welcome == "eZ Publish document conversion daemon" )
+        {
+            $commandString = "$conversionCommand $sourceFile $destFile";
+            fputs( $fp, $commandString, strlen( $commandString ) );
+
+            $result = fread( $fp, 1024 );
+            $result = trim( $result );
+        }
+        fclose( $fp );
+
+        return $result;
+    }
+    return false;
+}
+}
+
 $http = eZHTTPTool::instance();
 $module = $Params["Module"];
 $NodeID = $Params['NodeID'];
@@ -208,35 +242,5 @@ $Result['path'] = array( array( 'url' => '/ezodf/export/',
                                 'text' => ezpI18n::tr( 'extension/ezodf', 'OpenOffice.org export' ) ) );
 
 
-/*!
-      Connects to the eZ Publish document conversion daemon and converts the document to specified format
-*/
-function daemonConvert( $server, $port, $sourceFile, $conversionCommand, $destFile )
-{
-    $fp = fsockopen( $server,
-                     $port,
-                     $errorNR,
-                     $errorString,
-                     10 ); // @as 2008-11-25 - Increase the timeout from 0 to 10 to prevent problems with connection
-
-    if ( $fp )
-    {
-        $welcome = fread( $fp, 1024 );
-
-        $welcome = trim( $welcome );
-        if ( $welcome == "eZ Publish document conversion daemon" )
-        {
-            $commandString = "$conversionCommand $sourceFile $destFile";
-            fputs( $fp, $commandString, strlen( $commandString ) );
-
-            $result = fread( $fp, 1024 );
-            $result = trim( $result );
-        }
-        fclose( $fp );
-
-        return $result;
-    }
-    return false;
-}
 
 ?>

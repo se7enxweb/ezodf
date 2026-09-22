@@ -26,10 +26,14 @@
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
+
+if ( !function_exists( 'makeErrorArray' ) ) {
 function makeErrorArray( $num, $msg )
 {
     return array( 'number' => $num, 'message' => $msg );
 }
+}
+
 
 $http = eZHTTPTool::instance();
 $module = $Params["Module"];
