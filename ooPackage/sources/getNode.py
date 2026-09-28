@@ -31,7 +31,7 @@ class getNode( unohelper.Base, XServiceName, XMain ):
                 self.output = 'problem:Server unreachable'
             elif output.find( '<html>' ) == 0:
                 self.output = 'problem:Server unreachable'
-            elif output.find( '<br />' ) == 0:
+            elif output.find( '<br>' ) == 0:
                 self.output = 'problem:Invalid node ID'
             else:
                 self.output = output

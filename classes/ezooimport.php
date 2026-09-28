@@ -1637,7 +1637,7 @@ class eZOOImport
 
                                     // set image
                                     $imageContent = $dataMap['image']->attribute( 'content' );
-                                    //echo "Initializing Image from $href<br />";
+                                    //echo "Initializing Image from $href<br>";
                                     $imageContent->initializeFromFile( $href, false, basename( $href ) );
                                     $dataMap['image']->store();
 
