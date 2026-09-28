@@ -75,23 +75,23 @@
         <translation>Importa a</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Esporta un contenuto eZ Publish in OpenOffice.org</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Esporta un contenuto Exponential in OpenOffice.org</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Qui puoi esportare qualunque oggetto contenuto di eZ Publish in un documento in formato OpenOffice.org Writer.</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Qui puoi esportare qualunque oggetto contenuto di Exponential in un documento in formato OpenOffice.org Writer.</translation>
     </message>
     <message>
         <source>The images are placed in the media library and can be re-used.</source>
         <translation>Le immagini vengono collocate nella libreria media e possono essere riutilizzate.</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Puoi importare documenti OpenOffice.org Writer direttamente in eZ Publish da questa pagina. Ti verrà chiesto dove posizionare i documenti e eZ Publish farà il resto. Il documento viene convertito nella classe appropriata durante l&apos;importazione, ne riceverai notifica al completamento dell&apos;importazione.
+        <translation>Puoi importare documenti OpenOffice.org Writer direttamente in Exponential da questa pagina. Ti verrà chiesto dove posizionare i documenti e Exponential farà il resto. Il documento viene convertito nella classe appropriata durante l&apos;importazione, ne riceverai notifica al completamento dell&apos;importazione.
 Le immagini vengono collocate nella libreria media in modo da poter essere riutilizzate.</translation>
     </message>
     <message>

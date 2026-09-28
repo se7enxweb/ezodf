@@ -63,12 +63,12 @@
         <translation>Exportação OpenOffice.org / BrOffice.org</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Exportar conteúdo do eZ Publish para o OpenOffice.org / BrOffice.org</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Exportar conteúdo do Exponential para o OpenOffice.org / BrOffice.org</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Aqui você pode exportar qualquer objeto de conteúdo do eZ Publish para um documento OpenOffice.org / BrOffice Writer.</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Aqui você pode exportar qualquer objeto de conteúdo do Exponential para um documento OpenOffice.org / BrOffice Writer.</translation>
     </message>
     <message>
         <source>Document is now imported</source>
@@ -103,12 +103,12 @@
         <translation>Importar para</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Você pode importar documentos OpenOffice.org / BrOffice.org Writer diretamente para o eZ Publish a partir desta página.
-Você escolhe onde colocar o documento e o eZ Publish fará o resto. O documento será convertido para
+        <translation>Você pode importar documentos OpenOffice.org / BrOffice.org Writer diretamente para o Exponential a partir desta página.
+Você escolhe onde colocar o documento e o Exponential fará o resto. O documento será convertido para
 o tipo de conteúdo apropriado durante a importação, você receberá um aviso sobre isto depois de concluída a importação
 As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outros artigos.</translation>
     </message>

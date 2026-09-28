@@ -31,16 +31,16 @@
         <translation>OpenOffice.org export</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Exportovat obsah eZ Publish do OpenOffice.org</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Exportovat obsah Exponential do OpenOffice.org</translation>
     </message>
     <message>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Zde můžete exportovat jakýkoli předmět obsahu eZ Publish do formátu dokumentu OpenOffice.org Writer.</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Zde můžete exportovat jakýkoli předmět obsahu Exponential do formátu dokumentu OpenOffice.org Writer.</translation>
     </message>
     <message>
         <source>Export Object</source>
@@ -87,11 +87,11 @@
         <translation>Importovat do</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Můžete importovat dokumenty OpenOffice.org Writer přímo do eZ Publish z této stránky. Jste optáni kam umístit dokument a eZ Publish se postará o zbytek. Dokument je  převeden do odpovídající třídy během importu, poté co je import hotový, obdržíte o tom zprávu. Obrázky jsou umístěny v mediální knihovně, tudíž je můžete znovu použít v dalších článcích.</translation>
+        <translation>Můžete importovat dokumenty OpenOffice.org Writer přímo do Exponential z této stránky. Jste optáni kam umístit dokument a Exponential se postará o zbytek. Dokument je  převeden do odpovídající třídy během importu, poté co je import hotový, obdržíte o tom zprávu. Obrázky jsou umístěny v mediální knihovně, tudíž je můžete znovu použít v dalších článcích.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>

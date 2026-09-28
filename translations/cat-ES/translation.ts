@@ -31,16 +31,16 @@
         <translation>OpenOffice.org Export</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Exporta eZ Publish content a OpenOffice.org</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Exporta Exponential content a OpenOffice.org</translation>
     </message>
     <message>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Aquí pots exportar qualsevol objecte eZ Publish content a format document OpenOffice.org Writer. </translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Aquí pots exportar qualsevol objecte Exponential content a format document OpenOffice.org Writer. </translation>
     </message>
     <message>
         <source>Export Object</source>
@@ -87,12 +87,12 @@
         <translation>Importa a</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Pots importar documents OpenOffice.org Writer directament a eZ Publish des d&apos;aquesta pàgina. Has de
-definir on vols ubicar el document i l&apos;eZ Publish fa la resta. El document es converteix al 
+        <translation>Pots importar documents OpenOffice.org Writer directament a Exponential des d&apos;aquesta pàgina. Has de
+definir on vols ubicar el document i l&apos;Exponential fa la resta. El document es converteix al 
 format adecuat durant el procés d&apos;importació. Se te n&apos;informarà un cop el document hagi estat convertit.
 Les imatges es coloquen a la mediateca per tal que puguin ser reutilitzades en altre articles.</translation>
     </message>

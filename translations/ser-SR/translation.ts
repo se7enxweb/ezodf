@@ -75,24 +75,24 @@
         <translation>Uvezi u</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Izvezi eZ Publish sadržaj u OpenOffice.org</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Izvezi Exponential sadržaj u OpenOffice.org</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Ovde možete izvesti bilo koji eZ Publish sadržajni objekat u OpenOffice.org Writer formatu dokumenta.</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Ovde možete izvesti bilo koji Exponential sadržajni objekat u OpenOffice.org Writer formatu dokumenta.</translation>
     </message>
     <message>
         <source>The images are placed in the media library and can be re-used.</source>
         <translation>Slike su stavljene u biblioteku medija i mogu se ponovo koristiti.</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Možete uvesti OpenOffice.org Writer dokumenta direktno u eZ Publish sa ove strane. Pitaće Vas
-gde želite da stavite dokument i eZ Publish će uraditi ostalo. Dokument je adaptiran u odgovarajuću
+        <translation>Možete uvesti OpenOffice.org Writer dokumenta direktno u Exponential sa ove strane. Pitaće Vas
+gde želite da stavite dokument i Exponential će uraditi ostalo. Dokument je adaptiran u odgovarajuću
 klasu prilikom uvoza, a Vi ćete dobiti obaveštenje o ovome nakon što se završi sa uvozom.
 Slike su stavljene u biblioteku medija tako da ih možete ponovo koristiti i u drugim člancima.
 </translation>

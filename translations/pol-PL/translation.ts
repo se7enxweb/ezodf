@@ -31,16 +31,16 @@
         <translation>Eksport do OpenOffice.org</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Eksport zawartości eZ Publish do OpenOffice.org</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Eksport zawartości Exponential do OpenOffice.org</translation>
     </message>
     <message>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Tutaj wyeksportujesz zawartość obiektu eZ Publish do formatu OpenOffice.org Writer document.</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Tutaj wyeksportujesz zawartość obiektu Exponential do formatu OpenOffice.org Writer document.</translation>
     </message>
     <message>
         <source>Export Object</source>
@@ -87,12 +87,12 @@
         <translation>Importuj do</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Importuj dokumenty OpenOffice.org Writer eZ Publish bezpośrednio do z tej strony. Zostaniesz(new line)
-zapytany, w którym miejscu chcesz umieścić dokument i następnie eZ Publish wykona resztę. Document jest konwertowany do(new line)
+        <translation>Importuj dokumenty OpenOffice.org Writer Exponential bezpośrednio do z tej strony. Zostaniesz(new line)
+zapytany, w którym miejscu chcesz umieścić dokument i następnie Exponential wykona resztę. Document jest konwertowany do(new line)
 zastosowanej klasy podczas importu i otrzymasz powiadomienie o zakończeniu importu.(new line)
 Obrazy są umieszczane w bibliotece mediów, więc możesz używac ich w innych artykułach.</translation>
     </message>

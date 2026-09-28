@@ -75,24 +75,24 @@
         <translation>Tuo</translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>Vie eZ Publish -sisältö OpenOffice.org:iin</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Vie Exponential -sisältö OpenOffice.org:iin</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>Täällä voit muuttaa minkä tahansa eZ Publish sisältöobjektin OpenOffice.org Writer-asiakirjamuotoon.</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Täällä voit muuttaa minkä tahansa Exponential sisältöobjektin OpenOffice.org Writer-asiakirjamuotoon.</translation>
     </message>
     <message>
         <source>The images are placed in the media library and can be re-used.</source>
         <translation>Kuvat on sijoitettu mediakirjastoon ja niitä voi käyttää uudelleen.</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Voit tuoda OpenOffice.org Writer-asiakirjat suoraan eZ Publish -ohjelmaan käyttämällä tätä sivua. Sinulta
-kysytään minne haluat sijoittaa asiakirjan ja eZ Publish tekee loput. Asiakirja käännetään
+        <translation>Voit tuoda OpenOffice.org Writer-asiakirjat suoraan Exponential -ohjelmaan käyttämällä tätä sivua. Sinulta
+kysytään minne haluat sijoittaa asiakirjan ja Exponential tekee loput. Asiakirja käännetään
 oikeaan luokkaan tuonnin aikana ja saat ilmoituksen, kun vienti on valmis.
 Kuvat on sijoitettu mediakirjastoon, joten voit käyttää niitä uudelleen muissa artikkeleissa.</translation>
     </message>

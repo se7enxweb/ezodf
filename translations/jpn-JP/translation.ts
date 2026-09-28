@@ -75,23 +75,23 @@
         <translation>インポート先: </translation>
     </message>
     <message>
-        <source>Export eZ Publish content to OpenOffice.org</source>
-        <translation>eZ PublishのコンテンツをOpenOffice.orgへエクスポート</translation>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>ExponentialのコンテンツをOpenOffice.orgへエクスポート</translation>
     </message>
     <message>
-        <source>Here you can export any eZ Publish content object to an OpenOffice.org Writer document format.</source>
-        <translation>eZ Publish のコンテンツをOpenOffice.org Writer へエクスポートします。</translation>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Exponential のコンテンツをOpenOffice.org Writer へエクスポートします。</translation>
     </message>
     <message>
         <source>The images are placed in the media library and can be re-used.</source>
         <translation>画像はメディアリソースへ保存されました。再利用が可能です。</translation>
     </message>
     <message>
-        <source>You can import OpenOffice.org Writer documents directly into eZ Publish from this page. You are
-asked where to place the document and eZ Publish does the rest. The document is converted into
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>OpenOffice.org WriterドキュメントをeZ Publishへインポートします。ドキュメントの配置先を指定して下さい。
+        <translation>OpenOffice.org WriterドキュメントをExponentialへインポートします。ドキュメントの配置先を指定して下さい。
 インポート完了後に通知が表示されます。画像はメディアリソースに保存されますので、後に再利用が可能です。</translation>
     </message>
     <message>
