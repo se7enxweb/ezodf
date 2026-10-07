@@ -658,7 +658,7 @@ class eZOOImport
                         {
                             if ( !isset( $xmlTextArray[$sectionName] ) )
                             {
-                                continue;
+                                break;
                             }
                             $eztextDom = new DOMDOcument( '1.0', 'UTF-8' );
                             $eztextDom->loadXML( $xmlTextArray[$sectionName] );
@@ -671,7 +671,7 @@ class eZOOImport
                         {
                             if ( !isset( $xmlTextArray[$sectionName] ) )
                             {
-                                continue;
+                                break;
                             }
                             $dataMap[$attributeIdentifier]->setAttribute( 'data_text', $xmlTextArray[$sectionName] );
                             $dataMap[$attributeIdentifier]->store();
@@ -684,7 +684,7 @@ class eZOOImport
                             // day/month/year
                             if ( !isset( $xmlTextArray[$sectionName] ) )
                             {
-                                continue;
+                                break;
                             }
                             $dateString = strip_tags( $xmlTextArray[$sectionName] );
 
@@ -712,7 +712,7 @@ class eZOOImport
                             // day/month/year 14:00
                             if ( !isset( $xmlTextArray[$sectionName] ) )
                             {
-                                continue;
+                                break;
                             }
                             $dateString = trim( strip_tags( $xmlTextArray[$sectionName] ) );
 
