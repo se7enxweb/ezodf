@@ -49,19 +49,64 @@ class eZOOGenerator
     const ERROR_TEMPLATE_NOT_READABLE = 1010;
     const ERROR_COULD_NOT_COPY = 1011;
 
+    const BASE_DIR = 'var/cache/ezodf/';
+    const DOCUMENT_NAME = 'document.odt';
+
     /*!
-     Constructor
+     Constructor. Every generator writes into a directory of its own below var/cache/ezodf/: all exports used to
+     share var/cache/ezodf/ootest.odt, so two exports at the same time handed out each other's documents (and
+     under PHP 8 the former eZOOGenerator() constructor was not called anyway).
+    */
+    function __construct()
+    {
+        $this->OORootDir = self::BASE_DIR . bin2hex( random_bytes( 16 ) ) . '/';
+        $this->OOExportDir = $this->OORootDir . 'export/';
+        $this->OOTemplateDir = $this->OORootDir . 'template/';
+    }
+
+    /*!
+     \deprecated Use eZOOGenerator::__construct() instead
     */
     function eZOOGenerator()
     {
+        self::__construct();
+    }
+
+    /*!
+     \static
+     Removes a document returned by writeDocument() together with the directory the generator created for it.
+     A file elsewhere is only deleted.
+    */
+    static function removeDocument( $fileName )
+    {
+        if ( !is_string( $fileName ) || $fileName === '' )
+        {
+            return;
+        }
+        $dir = dirname( $fileName );
+        if ( basename( $fileName ) === self::DOCUMENT_NAME &&
+             preg_match( '/^[0-9a-f]{32}$/', basename( $dir ) ) &&
+             basename( dirname( $dir ) ) === 'ezodf' )
+        {
+            eZOOImport::removeWorkDirectory( $dir );
+            return;
+        }
+        if ( is_file( $fileName ) || is_link( $fileName ) )
+        {
+            unlink( $fileName );
+        }
     }
 
     function writeDocument( )
     {
         $ooINI = eZINI::instance( 'odf.ini' );
 
-        // Initalize directories
-        eZDir::mkdir( $this->OORootDir );
+        // Initalize directories; the generator's own directory is readable by nobody else
+        if ( !is_dir( $this->OORootDir ) )
+        {
+            mkdir( $this->OORootDir, 0700, true );
+        }
+        chmod( $this->OORootDir, 0700 );
         eZDir::mkdir( $this->OOExportDir . "META-INF", false, true );
         eZDir::mkdir( $this->OOTemplateDir );
 
@@ -110,6 +155,7 @@ class eZOOGenerator
             // Copy styles.xml and images, if any to the document being generated
             if ( !copy( $this->OOTemplateDir . "styles.xml", $this->OOExportDir . "styles.xml" ) )
             {
+                eZOOImport::removeWorkDirectory( $this->OORootDir );
                 return array( self::ERROR_COULD_NOT_COPY, "Could not copy the styles.xml file." );
             }
 
@@ -263,7 +309,7 @@ class eZOOGenerator
 
         file_put_contents( $this->OOExportDir . "META-INF/manifest.xml", $manifestXML );
 
-        $fileName = $this->OORootDir . "ootest.odt";
+        $fileName = $this->OORootDir . self::DOCUMENT_NAME;
 
         $zipArchive = ezcArchive::open( $fileName, ezcArchive::ZIP );
         $zipArchive->truncate();

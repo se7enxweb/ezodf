@@ -55,7 +55,13 @@ class eZOOImport
     const ERROR_ACCESSDENIED = 12;
     const ERROR_IMPORTING = 13;
     const ERROR_UNKNOWNCLASS = 14;
+    const ERROR_ARCHIVE = 15;
+    const ERROR_CONVERSIONDISABLED = 16;
     const ERROR_UNKNOWN = 127;
+
+    // Upper limits for the entries of an uploaded document; an archive beyond them is refused before anything is extracted
+    const MAX_ARCHIVE_ENTRIES = 10000;
+    const MAX_UNPACKED_SIZE = 536870912; // 512 MiB
 
     const NAMESPACE_OFFICE = 'urn:oasis:names:tc:opendocument:xmlns:office:1.0';
     const NAMESPACE_TEXT = 'urn:oasis:names:tc:opendocument:xmlns:text:1.0';
@@ -70,16 +76,212 @@ class eZOOImport
     var $currentUserID;
 
     /*!
-     Constructor
+     Constructor. PHP 8 does not call a method named like the class, so the former eZOOImport() constructor never
+     ran: the objects an import created had no owner, and every import shared var/cache/ezodf/import/.
     */
-    function eZOOImport()
+    function __construct()
     {
         $this->ERROR['number'] = 0;
         $this->ERROR['value'] = '';
         $this->ERROR['description'] = '';
         $currentUser = eZUser::currentUser();
         $this->currentUserID  = $currentUser->id();
-        $this->ImportDir .= md5( time() ) . "/";
+        $this->ImportDir = self::newWorkDirectoryName( $this->ImportBaseDir );
+    }
+
+    /*!
+     \deprecated Use eZOOImport::__construct() instead
+    */
+    function eZOOImport()
+    {
+        self::__construct();
+    }
+
+    /*!
+     \static
+     A directory name below \a $baseDir that no other request shares or can guess, with a trailing slash.
+    */
+    static function newWorkDirectoryName( $baseDir )
+    {
+        return rtrim( $baseDir, '/' ) . '/' . bin2hex( random_bytes( 16 ) ) . '/';
+    }
+
+    /*!
+     \static
+     Removes the directory \a $dir and everything in it. Symbolic links are removed, never followed.
+    */
+    static function removeWorkDirectory( $dir )
+    {
+        $dir = rtrim( $dir, '/' );
+        if ( $dir === '' || ( !is_dir( $dir ) && !is_link( $dir ) ) )
+        {
+            return;
+        }
+        if ( is_link( $dir ) )
+        {
+            unlink( $dir );
+            return;
+        }
+        foreach ( scandir( $dir ) as $name )
+        {
+            if ( $name === '.' || $name === '..' )
+                continue;
+            $path = $dir . '/' . $name;
+            if ( is_dir( $path ) && !is_link( $path ) )
+                self::removeWorkDirectory( $path );
+            else
+                unlink( $path );
+        }
+        rmdir( $dir );
+    }
+
+    /*!
+     \static
+     Whether the archive entry path \a $path stays inside the directory it is extracted to: relative, without a
+     ".." segment, a back slash, a NUL or another control character. Uses the kernel's check where there is one.
+    */
+    static function safeEntryPath( $path )
+    {
+        if ( class_exists( 'eZPackageUploadInspector' ) && method_exists( 'eZPackageUploadInspector', 'safeEntryPath' ) )
+        {
+            return eZPackageUploadInspector::safeEntryPath( $path );
+        }
+        if ( !is_string( $path ) || $path === '' || strlen( $path ) > 4096 )
+            return false;
+        if ( preg_match( '/[\x00-\x1F\x7F\\\\]/', $path ) )
+            return false;
+        if ( $path[0] === '/' || preg_match( '/^[A-Za-z]:/', $path ) )
+            return false;
+        foreach ( explode( '/', $path ) as $segment )
+        {
+            if ( $segment === '..' )
+                return false;
+        }
+        return true;
+    }
+
+    /*!
+     \static
+     Whether the import reads the archive entry \a $path: content.xml and the pictures it embeds. Nothing else
+     of an uploaded document is extracted.
+    */
+    static function isImportedEntry( $path )
+    {
+        return $path === 'content.xml' ||
+               ( strpos( $path, 'Pictures/' ) === 0 && strlen( $path ) > 9 && substr( $path, -1 ) !== '/' );
+    }
+
+    /*!
+     \static
+     The first reason why the entries of the open archive \a $archive must not be extracted, as
+     array( 'code' => ..., 'path' => ... ), or null when they may: a path outside the target directory, a link,
+     a device, too many entries or too many bytes. The archive is rewound afterwards.
+    */
+    static function archiveEntriesProblem( $archive )
+    {
+        $count = 0;
+        $bytes = 0;
+        $archive->rewind();
+        foreach ( $archive as $entry )
+        {
+            $count++;
+            $path = $entry->getPath();
+            if ( $count > self::MAX_ARCHIVE_ENTRIES )
+                return array( 'code' => 'too_many_entries', 'path' => '' );
+            if ( !self::safeEntryPath( $path ) )
+                return array( 'code' => 'unsafe_path', 'path' => (string)$path );
+            $type = $entry->getType();
+            if ( $type !== ezcArchiveEntry::IS_FILE && $type !== ezcArchiveEntry::IS_DIRECTORY )
+                return array( 'code' => 'unsafe_type', 'path' => (string)$path );
+            $bytes += max( 0, (int)$entry->getSize() );
+            if ( $bytes > self::MAX_UNPACKED_SIZE )
+                return array( 'code' => 'too_large_unpacked', 'path' => '' );
+        }
+        $archive->rewind();
+        return null;
+    }
+
+    /*!
+     Checks the OpenDocument file \a $file and extracts the entries the import reads (isImportedEntry()) into
+     \a $targetDir, which is created with mode 0700. An archive with an entry pointing outside the target directory
+     (an absolute path, "..", a NUL), a link or a device is refused before anything is written.
+     \return true on success, false with the error set otherwise
+    */
+    function extractDocument( $file, $targetDir )
+    {
+        $targetDir = rtrim( $targetDir, '/' );
+        $archive = null;
+        try
+        {
+            $archive = ezcArchive::open( $file, null, new ezcArchiveOptions( array( 'readOnly' => true ) ) );
+            if ( !$archive instanceof ezcArchiveZip )
+            {
+                $this->setError( self::ERROR_ARCHIVE, 'not a zip archive' );
+                return false;
+            }
+            $problem = self::archiveEntriesProblem( $archive );
+            if ( $problem !== null )
+            {
+                eZDebug::writeError( "OpenDocument archive refused ({$problem['code']}: {$problem['path']})", __METHOD__ );
+                $this->setError( self::ERROR_ARCHIVE, $problem['code'] . ( $problem['path'] !== '' ? ': ' . $problem['path'] : '' ) );
+                return false;
+            }
+            if ( !is_dir( $targetDir ) && !mkdir( $targetDir, 0700, true ) && !is_dir( $targetDir ) )
+            {
+                $this->setError( self::ERROR_IMPORTING, 'the import directory could not be created' );
+                return false;
+            }
+            chmod( $targetDir, 0700 );
+            foreach ( $archive as $entry )
+            {
+                if ( $entry->getType() === ezcArchiveEntry::IS_FILE && self::isImportedEntry( $entry->getPath() ) )
+                {
+                    $archive->extractCurrent( $targetDir );
+                }
+            }
+        }
+        catch ( Exception $e )
+        {
+            eZDebug::writeError( 'OpenDocument archive could not be read: ' . $e->getMessage(), __METHOD__ );
+            $this->setError( self::ERROR_ARCHIVE, 'unreadable' );
+            return false;
+        }
+        finally
+        {
+            if ( $archive !== null )
+            {
+                $archive->close();
+            }
+        }
+        return true;
+    }
+
+    /*!
+     The extracted file a document refers to with \a $href ("Pictures/..."), or false when the reference leaves
+     the import directory or names nothing that was extracted.
+    */
+    function importFilePath( $href )
+    {
+        $href = ltrim( (string)$href, '#' );
+        if ( !self::safeEntryPath( $href ) || !self::isImportedEntry( $href ) || $href === 'content.xml' )
+        {
+            return false;
+        }
+        $path = $this->ImportDir . $href;
+        return ( is_file( $path ) && !is_link( $path ) ) ? $path : false;
+    }
+
+    /*!
+     \static
+     Whether documents may be sent to the document conversion daemon (scripts/daemon.php): odf.ini [ODFImport]
+     ConversionDaemon=enabled. Off by default; .doc import and the PDF and Word export then report that conversion
+     is not available instead of connecting to the daemon.
+    */
+    static function conversionDaemonEnabled()
+    {
+        $ooINI = eZINI::instance( 'odf.ini' );
+        return $ooINI->hasVariable( 'ODFImport', 'ConversionDaemon' ) &&
+               $ooINI->variable( 'ODFImport', 'ConversionDaemon' ) === 'enabled';
     }
 
     /*!
@@ -141,6 +343,12 @@ class eZOOImport
             case self::ERROR_UNKNOWNCLASS:
                 $this->ERROR['value'] = ezpI18n::tr( 'extension/ezodf/import/error', "Unknown content class specified in odf.ini:" );
                 break;
+            case self::ERROR_ARCHIVE:
+                $this->ERROR['value'] = ezpI18n::tr( 'extension/ezodf/import/error', "The file is not an OpenDocument file that can be imported." );
+                break;
+            case self::ERROR_CONVERSIONDISABLED:
+                $this->ERROR['value'] = ezpI18n::tr( 'extension/ezodf/import/error', "Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon)." );
+                break;
             default :
                 $this->ERROR['value'] = ezpI18n::tr( 'extension/ezodf/import/error', "Unknown error." );
                 break;
@@ -152,6 +360,11 @@ class eZOOImport
     */
     function daemonConvert( $sourceFile, $destFile )
     {
+        if ( !self::conversionDaemonEnabled() )
+        {
+            $this->setError( self::ERROR_CONVERSIONDISABLED );
+            return false;
+        }
         $ooINI = eZINI::instance( 'odf.ini' );
         $server = $ooINI->variable( "ODFImport", "OOConverterAddress" );
         $port = $ooINI->variable( "ODFImport", "OOConverterPort" );
@@ -226,6 +439,30 @@ class eZOOImport
      */
     function import( $file, $placeNodeID, $originalFileName, $importType = "import", $upload = null, $locale = false )
     {
+        // Every call works in a directory of its own, removed again whatever the outcome
+        $this->ImportDir = self::newWorkDirectoryName( $this->ImportBaseDir );
+        $this->TemporaryFiles = array();
+        try
+        {
+            return $this->importDocument( $file, $placeNodeID, $originalFileName, $importType, $upload, $locale );
+        }
+        finally
+        {
+            self::removeWorkDirectory( $this->ImportDir );
+            foreach ( $this->TemporaryFiles as $temporaryFile )
+            {
+                if ( is_file( $temporaryFile ) || is_link( $temporaryFile ) )
+                    unlink( $temporaryFile );
+            }
+            $this->TemporaryFiles = array();
+        }
+    }
+
+    /*!
+     The import itself, see import(); runs in $this->ImportDir.
+    */
+    protected function importDocument( $file, $placeNodeID, $originalFileName, $importType, $upload, $locale )
+    {
         $ooINI = eZINI::instance( 'odf.ini' );
         //$tmpDir = $ooINI->variable( 'ODFSettings', 'TmpDir' );
         // Use var-directory as temporary directory
@@ -288,9 +525,16 @@ class eZOOImport
         // Alex 2008/04/21 - added !== false
         if ( in_array( $originalFileType, $convertTypes, false ) !== false )
         {
-            $uniqueStamp = md5( time() );
+            if ( !self::conversionDaemonEnabled() )
+            {
+                $this->setError( self::ERROR_CONVERSIONDISABLED, $originalFileType );
+                return false;
+            }
+            $uniqueStamp = bin2hex( random_bytes( 16 ) );
             $tmpFromFile = $tmpDir . "/convert_from_$uniqueStamp.doc";
             $tmpToFile   = $tmpDir . "/ooo_converted_$uniqueStamp.odt";
+            $this->TemporaryFiles[] = $tmpFromFile;
+            $this->TemporaryFiles[] = $tmpToFile;
             copy( realpath( $file ),  $tmpFromFile );
 
            /// Convert document using the eZ Publish document conversion daemon
@@ -310,13 +554,14 @@ class eZOOImport
         $importResult = array();
         $unzipResult = "";
         $uniqueImportDir = $this->ImportDir;
-        eZDir::mkdir( $uniqueImportDir, false, true );
 
         $http = eZHTTPTool::instance();
 
-        $archiveOptions = new ezcArchiveOptions( array( 'readOnly' => true ) );
-        $archive = ezcArchive::open( $file, null, $archiveOptions );
-        $archive->extract( $uniqueImportDir );
+        // The entries are checked before anything is extracted, and only what the import reads is (zip slip)
+        if ( !$this->extractDocument( $file, $uniqueImportDir ) )
+        {
+            return false;
+        }
 
         $fileName = $uniqueImportDir . "content.xml";
         $dom = new DOMDocument( '1.0', 'UTF-8' );
@@ -765,9 +1010,9 @@ class eZOOImport
                                         if ( $imageNode && $imageNode->localName == "image" )
                                         {
                                             $fileName = ltrim( $imageNode->getAttributeNS( self::NAMESPACE_XLINK, 'href' ), '#' );
-                                            $filePath = $this->ImportDir . $fileName;
+                                            $filePath = $this->importFilePath( $fileName );
 
-                                            if ( file_exists( $filePath ) )
+                                            if ( $filePath !== false )
                                             {
                                                 $imageContent = $dataMap[$attributeIdentifier]->attribute( 'content' );
                                                 $imageContent->initializeFromFile( $filePath, false, basename( $filePath ) );
@@ -989,8 +1234,7 @@ class eZOOImport
         }
 
 
-        // Clean up
-        eZDir::recursiveDelete( $uniqueImportDir );
+        // The import directory is removed by import()
         return $importResult;
     }
 
@@ -1484,7 +1728,16 @@ class eZOOImport
                                     eZDebug::writeError( "Could not match filename in $href", __METHOD__ );
                             }
                             else
-                                $href = $this->ImportDir . $href;
+                            {
+                                // Only a picture extracted from the document itself, never a path out of it
+                                $localHref = $href;
+                                $href = $this->importFilePath( $localHref );
+                                if ( $href === false )
+                                {
+                                    eZDebug::writeError( "The document refers to an image it does not contain: $localHref", __METHOD__ );
+                                    break;
+                                }
+                            }
 
                             // Check image name
                             $imageName = $childNode->getAttributeNS( self::NAMESPACE_DRAWING, 'name' );
@@ -1862,6 +2115,7 @@ class eZOOImport
     var $AutomaticStyles = array();
     var $ImportDir = "var/cache/ezodf/import/";
     var $ImportBaseDir = "var/cache/ezodf/import/";
+    var $TemporaryFiles = array();
     var $InsideListType = false;
 
     var $IsSubList = false;

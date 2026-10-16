@@ -57,7 +57,8 @@ function daemonConvert( $server, $port, $sourceFile, $conversionCommand, $destFi
         }
         fclose( $fp );
 
-        return $result;
+        // The daemon answers "FilePath: ..." on success and "Error: ..." otherwise
+        return ( isset( $result ) && strpos( $result, 'FilePath:' ) === 0 ) ? $result : false;
     }
     return false;
 }
@@ -157,8 +158,15 @@ class Export extends \Exponential\Runnable\ModuleView
                 {
                     // Do the actual eZ Publish export
                     $fileName = \eZOOConverter::objectToOO( $nodeID );
+                    // The generated document and its directory are removed once it was sent or conversion failed
+                    $generatedFile = is_array( $fileName ) ? false : $fileName;
 
-                    if ( !is_array( $fileName ) )
+                    if ( $exportType !== false && !is_array( $fileName ) && !\eZOOImport::conversionDaemonEnabled() )
+                    {
+                        $tpl->setVariable( "error_string", \ezpI18n::tr( 'extension/ezodf/export/error', "Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon)." ) );
+                        $success = false;
+                    }
+                    else if ( !is_array( $fileName ) )
                     {
                         $nodeName = $node->attribute( 'name' );
 
@@ -168,7 +176,7 @@ class Export extends \Exponential\Runnable\ModuleView
                         $trans = \eZCharTransform::instance();
                         $nodeName = $trans->transformByGroup( $nodeName, 'urlalias' );
 
-                        $uniqueStamp = md5( time() );
+                        $uniqueStamp = bin2hex( random_bytes( 16 ) );
 
                         $server = $ooINI->variable( "ODFImport", "OOConverterAddress" );
                         $port = $ooINI->variable( "ODFImport", "OOConverterPort" );
@@ -242,13 +250,21 @@ class Export extends \Exponential\Runnable\ModuleView
                         fpassthru( $fh );
                         fclose( $fh );
 
-                        unlink( $fileName );
+                        if ( $fileName !== $generatedFile )
+                        {
+                            unlink( $fileName );
+                        }
+                        \eZOOGenerator::removeDocument( $generatedFile );
                         \eZExecution::cleanExit();
                     }
                     else
                     {
-                        $tpl->setVariable( "error_string", \ezpI18n::tr( 'extension/ezodf/export/error', "Unable to open file %1 on server side", null, array( $fileName ) ) );
+                        $tpl->setVariable( "error_string", \ezpI18n::tr( 'extension/ezodf/export/error', "Unable to open file %1 on server side", null, array( basename( $fileName ) ) ) );
                     }
+                }
+                if ( isset( $generatedFile ) )
+                {
+                    \eZOOGenerator::removeDocument( $generatedFile );
                 }
             }
         }

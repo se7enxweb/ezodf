@@ -40,33 +40,57 @@
 
 class eZOpenofficeUploadHandler extends eZContentUploadHandler
 {
+    /*!
+     Constructor. eZContentUpload creates the handler with "new $handlerClass()"; under PHP 8 the former
+     eZOpenofficeUploadHandler() constructor was not called, and eZContentUploadHandler::__construct() ended the
+     upload with an ArgumentCountError.
+    */
+    function __construct()
+    {
+        parent::__construct( 'OOo file handling', 'openoffice' );
+    }
+
+    /*!
+     \deprecated Use eZOpenofficeUploadHandler::__construct() instead
+    */
     function eZOpenofficeUploadHandler()
     {
-        $this->eZContentUploadHandler( 'OOo file handling', 'openoffice' );
+        self::__construct();
     }
 
     /*!
       Handling the uploading of OpenOffice.org docuemnt.
+      \return true when the document was imported, false with the reason in $result['errors'] otherwise
     */
     function handleFile( &$upload, &$result,
                          $filePath, $originalFilename, $mimeinfo,
                          $location, $existingNode )
     {
-        $tmpDir = getcwd() . "/" . eZSys::cacheDirectory();
-
+        // The upload is read where it is: import() extracts it into a directory of its own. A copy named after
+        // the browser's file name was shared by every upload of a file with that name.
         $originalFilename = basename( $originalFilename );
-        $tmpFile = $tmpDir . "/" . $originalFilename;
-        copy( $filePath, $tmpFile );
 
-        $import = new eZOOImport();
-        $tmpResult = $import->import( $tmpFile, $location, $originalFilename, 'import', $upload );
+        $import = $this->createImport();
+        $tmpResult = $import->import( $filePath, $location, $originalFilename, 'import', $upload );
+
+        if ( !is_array( $tmpResult ) || !isset( $tmpResult['Object'] ) || !is_object( $tmpResult['Object'] ) )
+        {
+            $result['errors'][] = array( 'description' => $import->getErrorMessage() );
+            return false;
+        }
 
         $result['contentobject'] = $tmpResult['Object'];
         $result['contentobject_main_node'] = $tmpResult['MainNode'];
-        unlink( $tmpFile );
-
 
         return true;
+    }
+
+    /*!
+     The importer handleFile() uses.
+    */
+    protected function createImport()
+    {
+        return new eZOOImport();
     }
 
 }

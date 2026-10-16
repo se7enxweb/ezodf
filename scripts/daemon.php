@@ -36,7 +36,27 @@ Needs the following in PHP Configuration
   --enable-pcntl
   --enable-sockets
 
+Usage: php extension/ezodf/scripts/daemon.php <directory>
+
+Only documents below <directory> are converted, and only into it: give the directory the installation writes its
+caches to (the absolute path of var/, or of the siteaccess's var directory). Without it the daemon does not start.
+Every request is checked by ezodfConversionRequestProblem() (conversion_request.php) before OpenOffice.org runs.
+
 */
+
+require_once __DIR__ . '/conversion_request.php';
+
+if ( PHP_SAPI !== 'cli' )
+{
+    die( "The document conversion daemon runs on the command line only\n" );
+}
+
+$allowedDir = isset( $argv[1] ) ? realpath( $argv[1] ) : false;
+if ( $allowedDir === false || !is_dir( $allowedDir ) )
+{
+    fwrite( STDERR, "Usage: php daemon.php <directory>\nThe directory the documents to convert are in (the installation's var directory) is missing or does not exist.\n" );
+    exit( 1 );
+}
 
 $host = "127.0.0.1";
 $port = 9090;
@@ -113,14 +133,19 @@ while ( $spawn = socket_accept( $socket ))
         // Parse input
         $input = socket_read( $spawn, 1024 );
 
-        $inputParts = explode( " ", $input );
+        $inputParts = explode( " ", trim( (string)$input ) );
 
         $command = trim( $inputParts[0] );
-        $fileName = trim( $inputParts[1] );
-        $destName = trim( $inputParts[2] );
+        $fileName = isset( $inputParts[1] ) ? trim( $inputParts[1] ) : '';
+        $destName = isset( $inputParts[2] ) ? trim( $inputParts[2] ) : '';
 
-
-        if ( file_exists( $fileName ) )
+        $problem = count( $inputParts ) === 3 ? ezodfConversionRequestProblem( $command, $fileName, $destName, $allowedDir ) : 'malformed request';
+        if ( $problem !== null )
+        {
+            echo( "Error: (1)-Request refused: $problem\n" );
+            socket_write( $spawn, "Error: (1)-Request refused: $problem" );
+        }
+        else if ( file_exists( $fileName ) )
         {
             $result = convert_to( $fileName, $command, $destName );
             if ( !( $result === true ) )

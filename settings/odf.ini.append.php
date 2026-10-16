@@ -20,6 +20,11 @@ RegisteredClassArray[]=documentation_page
 RegisteredClassArray[]=blog_post
 ImportedImagesMediaNodeName=Imported images
 PlaceImagesInMedia=false
+# The document conversion daemon (scripts/daemon.php, doc/README.daemon) converts .doc uploads (ConvertTypes)
+# to OpenDocument and exports to PDF and Word. It is disabled by default: then those uploads and exports report
+# that conversion is not available, and nothing connects to the port below. Enable it only together with a running
+# daemon, and add the Word upload handler mapping in upload.ini.
+ConversionDaemon=disabled
 OOConverterPort=9090
 # Currently only localhost (127.0.0.1) is allowed
 OOConverterAddress=127.0.0.1
@@ -90,6 +95,7 @@ Attribute[image]=image
 AllowedTypes[]
 AllowedTypes[]=odt
 # ConvertTypes are those documents which can be converted by oo and then it will publish it automatically.
+# They need [ODFImport] ConversionDaemon=enabled.
 ConvertTypes[]
 ConvertTypes[]=doc
 
