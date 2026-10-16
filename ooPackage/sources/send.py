@@ -2,7 +2,7 @@ import unohelper
 from com.sun.star.lang import XServiceName
 from com.sun.star.lang import XMain
 import string
-import httplib
+import http.client
 import base64
 
 g_ImplementationHelper = unohelper.ImplementationHelper()
@@ -31,13 +31,14 @@ class send( unohelper.Base, XServiceName, XMain ):
 
         # try to read the content of the file
         try:
-            content = open( filename, "r" ).read( )
+            # binary: the document is base64-encoded below (Python 3)
+            content = open( filename, "rb" ).read( )
         except:
             self.output = 'problem:Temporary file not found'
             return 0
             
         try:
-            content = base64.standard_b64encode( content )
+            content = base64.standard_b64encode( content ).decode( 'ascii' )
         except:
             self.output = 'problem:Conversion to Base64 impossible'
             return 0
@@ -80,10 +81,10 @@ class send( unohelper.Base, XServiceName, XMain ):
 
         # try to connect to the url and send the message
         try:
-            h = httplib.HTTPConnection( url)
-            h.request('POST', page, body, headers)
+            h = http.client.HTTPConnection( url)
+            h.request('POST', page, body.encode( 'utf-8' ), headers)
             res = h.getresponse( )
-            self.output = res.read( )
+            self.output = res.read( ).decode( 'utf-8', 'replace' )
             return 1
         except:
             output = ""
