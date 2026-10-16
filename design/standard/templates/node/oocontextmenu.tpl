@@ -1,11 +1,7 @@
-<script type="text/javascript">
-menuArray['OpenOffice'] = [];
-menuArray['OpenOffice']['depth'] = 1;
-menuArray['OpenOffice']['elements'] = [];
-</script>
-
+{* The OpenOffice submenu (node/oocontextsubmenu.tpl) is declared in data-menu-* attributes, no inline script
+   (doc/features/6.0/content-security-policy.md) *}
 <hr />
-<a id="menu-openoffice" class="more" href="#" onmouseover="ezpopmenu_showSubLevel( event, 'OpenOffice', 'menu-openoffice' ); return false;">{'OpenOffice.org'|i18n( 'extension/ezodf/popupmenu' )}</a>
+<a id="menu-openoffice" class="more" href="#" data-menu-submenu="OpenOffice">{'OpenOffice.org'|i18n( 'extension/ezodf/popupmenu' )}</a>
 
 {* Export to OOo / OASIS document *}
 <form id="menu-form-export-ooo" method="post" action={"/ezodf/export/"|ezurl}>
