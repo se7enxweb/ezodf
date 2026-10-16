@@ -442,6 +442,7 @@ class eZOOImport
         // Every call works in a directory of its own, removed again whatever the outcome
         $this->ImportDir = self::newWorkDirectoryName( $this->ImportBaseDir );
         $this->TemporaryFiles = array();
+        $this->PendingImages = array();
         try
         {
             return $this->importDocument( $file, $placeNodeID, $originalFileName, $importType, $upload, $locale );
@@ -455,6 +456,8 @@ class eZOOImport
                     unlink( $temporaryFile );
             }
             $this->TemporaryFiles = array();
+            // Images of a refused import are never created
+            $this->PendingImages = array();
         }
     }
 
@@ -819,6 +822,22 @@ class eZOOImport
 
         if ( $access['result'] )
         {
+            // The image objects of the document, now that the user may create or edit here
+            $pendingTexts = isset( $xmlTextArray ) ? $xmlTextArray : array();
+            if ( isset( $xmlTextBody ) )
+            {
+                $pendingTexts['ezodf-body'] = $xmlTextBody;
+            }
+            $pendingTexts = $this->createPendingImages( $pendingTexts );
+            if ( isset( $xmlTextBody ) )
+            {
+                $xmlTextBody = $pendingTexts['ezodf-body'];
+                unset( $pendingTexts['ezodf-body'] );
+            }
+            if ( isset( $xmlTextArray ) )
+            {
+                $xmlTextArray = $pendingTexts;
+            }
             // Check if we should replace the current object or import a new
             if ( $importType !== "replace" )
             {
@@ -1676,6 +1695,123 @@ class eZOOImport
     }
 
     /*!
+     Creates the image objects of the embeds handleInlineNode() found, and puts their object IDs in place of the
+     placeholders in \a $xmlTexts. Called only after the import's access check passed: a user who may not create
+     or edit at the target leaves no image objects behind.
+    */
+    function createPendingImages( array $xmlTexts )
+    {
+        $replacements = array();
+        foreach ( $this->PendingImages as $placeholder => $image )
+        {
+            $contentObjectID = $this->createImageObject( $image['href'], $image['name'] );
+            $replacements["object_id='$placeholder'"] = "object_id='$contentObjectID'";
+        }
+        $this->PendingImages = array();
+        foreach ( $xmlTexts as $key => $xmlText )
+        {
+            $xmlTexts[$key] = strtr( $xmlText, $replacements );
+        }
+        return $xmlTexts;
+    }
+
+    /*!
+     Creates (or finds by its checksum) the image object for the extracted picture \a $href and returns its ID.
+    */
+    function createImageObject( $href, $imageName )
+    {
+        // Calculate RemoteID based on image md5:
+        $remoteID = "ezoo-" . md5( file_get_contents( $href ) );
+
+
+/*
+
+        // Check if an image with the same remote ID already exists
+        $db = eZDB::instance();
+        $imageParentNodeID = $GLOBALS["OOImportObjectID"];
+        $resultArray = $db->arrayQuery( 'SELECT id, node_id, ezcontentobject.remote_id
+                                         FROM  ezcontentobject, ezcontentobject_tree
+                                         WHERE ezcontentobject.remote_id = "' . $remoteID. '" AND
+                                               ezcontentobject.id=ezcontentobject_tree.contentobject_id AND
+                                               ezcontentobject_tree.parent_node_id=' . $imageParentNodeID );
+
+        $contentObject = false;
+        if ( count( $resultArray ) >= 1 )
+        {
+            $contentObject = eZContentObject::fetch( $resultArray[0]['id'], true );
+            $contentObjectID = $resultArray[0]['id'];
+        }
+
+*/
+
+        $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
+
+        // If image does not already exist, create it as an object
+        if ( !$contentObject )
+        {
+
+            // Import image
+            $ooINI = eZINI::instance( 'odf.ini' );
+            $imageClassIdentifier = $ooINI->variable( "ODFImport", "DefaultImportImageClass" );
+            $class = eZContentClass::fetchByIdentifier( $imageClassIdentifier );
+            $creatorID = $this->currentUserID;
+
+            $contentObject = $class->instantiate( $creatorID, 1 );
+            $contentObject->setAttribute( "remote_id",  $remoteID );
+            $contentObject->store();
+
+            $version = $contentObject->version( 1 );
+            $version->setAttribute( 'modified', eZDateTime::currentTimeStamp() );
+            $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
+            $version->store();
+
+            $contentObjectID = $contentObject->attribute( 'id' );
+            $dataMap = $contentObject->dataMap();
+
+            // set image name
+            $dataMap['name']->setAttribute( 'data_text', $imageName );
+            $dataMap['name']->store();
+
+            // set image caption
+            if ( isset( $dataMap['caption'] ) )
+            {
+                $captionContentAttibute = $dataMap['caption'];
+                $captionText = "$imageName";
+
+                // create new xml for caption
+                $xmlInputParser = new eZXMLInputParser();
+                $dom = $xmlInputParser->createRootNode();
+
+                $captionNode = $dom->createElement( 'paragraph', $captionText );
+                $dom->documentElement->appendChild( $captionNode );
+
+                $xmlString = $dom->saveXML();
+
+                $captionContentAttibute->setAttribute( 'data_text', $xmlString );
+                $captionContentAttibute->store();
+            }
+            else
+            {
+                eZDebug::writeWarning( "The image class does not have 'caption' attribute", 'ODF import' );
+            }
+
+            // set image
+            $imageContent = $dataMap['image']->attribute( 'content' );
+            //echo "Initializing Image from $href<br>";
+            $imageContent->initializeFromFile( $href, false, basename( $href ) );
+            $dataMap['image']->store();
+
+        }
+        else
+            $contentObjectID = $contentObject->attribute( 'id' );
+
+        $this->RelatedImageArray[] = array( "ID" => $contentObjectID,
+                                            "ContentObject" => $contentObject );
+
+        return $contentObjectID;
+    }
+
+    /*!
       Handles the rendering of line nodes, e.g. inside paragraphs and headers.
 
       $nextLineBreak and $prevLineBreak attributes added by Alex (they were used but not defined)
@@ -1702,41 +1838,21 @@ class eZOOImport
                         {
                             $href = ltrim( $imageNode->getAttributeNS( self::NAMESPACE_XLINK, 'href' ), '#' );
 
-                            if ( 0 < preg_match( '@^(?:http://)([^/]+)@i', $href ) ) //if image is specified with url
+                            // Only images inside the document are imported. A reference with a scheme (http:, https:,
+                            // file:, ...) was fetched from wherever it pointed, on the server, while parsing.
+                            if ( preg_match( '@^[a-z][a-z0-9+.-]*:@i', $href ) )
                             {
-                                eZDebug::writeDebug( "handling http url: $href", __METHOD__ );
-                                $matches = array();
-                                if ( 0 < preg_match( '/.*\/(.*)?/i', $href, $matches ) )
-                                {
-                                    $fileName = $matches[1];
-                                    if ( false != ( $imageData = file_get_contents( $href ) ) )
-                                    {
-                                        $href = $this->ImportDir . $fileName;
-                                        $fileOut = fopen( $href, "wb" );
-                                        if ( fwrite( $fileOut, $imageData ) )
-                                        {
-                                            eZDebug::writeNotice( "External image stored in $href", __METHOD__ );
-                                        }
-                                        else
-                                            eZDebug::writeError( "Could not save file $href", __METHOD__ );
-                                        fclose( $fileOut );
-                                    }
-                                    else
-                                        eZDebug::writeError( "Downloading external image from $href has failed, broken link?", __METHOD__ );
-                                }
-                                else
-                                    eZDebug::writeError( "Could not match filename in $href", __METHOD__ );
+                                eZDebug::writeWarning( "External image not imported: $href", __METHOD__ );
+                                break;
                             }
-                            else
+
+                            // Only a picture extracted from the document itself, never a path out of it
+                            $localHref = $href;
+                            $href = $this->importFilePath( $localHref );
+                            if ( $href === false )
                             {
-                                // Only a picture extracted from the document itself, never a path out of it
-                                $localHref = $href;
-                                $href = $this->importFilePath( $localHref );
-                                if ( $href === false )
-                                {
-                                    eZDebug::writeError( "The document refers to an image it does not contain: $localHref", __METHOD__ );
-                                    break;
-                                }
+                                eZDebug::writeError( "The document refers to an image it does not contain: $localHref", __METHOD__ );
+                                break;
                             }
 
                             // Check image name
@@ -1814,96 +1930,11 @@ class eZOOImport
 
                             if ( file_exists( $href ) )
                             {
-                                // Calculate RemoteID based on image md5:
-                                $remoteID = "ezoo-" . md5( file_get_contents( $href ) );
-
-
-/*
-
-                                // Check if an image with the same remote ID already exists
-                                $db = eZDB::instance();
-                                $imageParentNodeID = $GLOBALS["OOImportObjectID"];
-                                $resultArray = $db->arrayQuery( 'SELECT id, node_id, ezcontentobject.remote_id
-                                                                 FROM  ezcontentobject, ezcontentobject_tree
-                                                                 WHERE ezcontentobject.remote_id = "' . $remoteID. '" AND
-                                                                       ezcontentobject.id=ezcontentobject_tree.contentobject_id AND
-                                                                       ezcontentobject_tree.parent_node_id=' . $imageParentNodeID );
-
-                                $contentObject = false;
-                                if ( count( $resultArray ) >= 1 )
-                                {
-                                    $contentObject = eZContentObject::fetch( $resultArray[0]['id'], true );
-                                    $contentObjectID = $resultArray[0]['id'];
-                                }
-
-*/
-
-                                $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
-
-                                // If image does not already exist, create it as an object
-                                if ( !$contentObject )
-                                {
-
-                                    // Import image
-                                    $ooINI = eZINI::instance( 'odf.ini' );
-                                    $imageClassIdentifier = $ooINI->variable( "ODFImport", "DefaultImportImageClass" );
-                                    $class = eZContentClass::fetchByIdentifier( $imageClassIdentifier );
-                                    $creatorID = $this->currentUserID;
-
-                                    $contentObject = $class->instantiate( $creatorID, 1 );
-                                    $contentObject->setAttribute( "remote_id",  $remoteID );
-                                    $contentObject->store();
-
-                                    $version = $contentObject->version( 1 );
-                                    $version->setAttribute( 'modified', eZDateTime::currentTimeStamp() );
-                                    $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
-                                    $version->store();
-
-                                    $contentObjectID = $contentObject->attribute( 'id' );
-                                    $dataMap = $contentObject->dataMap();
-
-                                    // set image name
-                                    $dataMap['name']->setAttribute( 'data_text', $imageName );
-                                    $dataMap['name']->store();
-
-                                    // set image caption
-                                    if ( isset( $dataMap['caption'] ) )
-                                    {
-                                        $captionContentAttibute = $dataMap['caption'];
-                                        $captionText = "$imageName";
-
-                                        // create new xml for caption
-                                        $xmlInputParser = new eZXMLInputParser();
-                                        $dom = $xmlInputParser->createRootNode();
-
-                                        $captionNode = $dom->createElement( 'paragraph', $captionText );
-                                        $dom->documentElement->appendChild( $captionNode );
-
-                                        $xmlString = $dom->saveXML();
-
-                                        $captionContentAttibute->setAttribute( 'data_text', $xmlString );
-                                        $captionContentAttibute->store();
-                                    }
-                                    else
-                                    {
-                                        eZDebug::writeWarning( "The image class does not have 'caption' attribute", 'ODF import' );
-                                    }
-
-                                    // set image
-                                    $imageContent = $dataMap['image']->attribute( 'content' );
-                                    //echo "Initializing Image from $href<br>";
-                                    $imageContent->initializeFromFile( $href, false, basename( $href ) );
-                                    $dataMap['image']->store();
-
-                                }
-                                else
-                                    $contentObjectID = $contentObject->attribute( 'id' );
-
-                                $this->RelatedImageArray[] = array( "ID" => $contentObjectID,
-                                                                    "ContentObject" => $contentObject );
-
-                                $frameContent .= "<embed object_id='$contentObjectID' align='$imageAlignment' size='$imageSize' />";
-
+                                // The image object is created only after the access check of the import passed
+                                // (createPendingImages()); until then the embed carries a placeholder
+                                $placeholder = 'ezodf-image-' . count( $this->PendingImages );
+                                $this->PendingImages[$placeholder] = array( 'href' => $href, 'name' => $imageName );
+                                $frameContent .= "<embed object_id='$placeholder' align='$imageAlignment' size='$imageSize' />";
                             }
 
                         }break;
@@ -2112,6 +2143,8 @@ class eZOOImport
 
 
     var $RelatedImageArray = array();
+    // Placeholder => array( 'href' => ..., 'name' => ... ) of the images found while parsing, see createPendingImages()
+    var $PendingImages = array();
     var $AutomaticStyles = array();
     var $ImportDir = "var/cache/ezodf/import/";
     var $ImportBaseDir = "var/cache/ezodf/import/";
