@@ -775,6 +775,10 @@ class eZRESTODFHandler extends eZRESTBaseHandler
     */
     function daemonConvert( $sourceFile, $destFile )
     {
+        if ( !eZOOImport::conversionDaemonEnabled() )
+        {
+            return false;
+        }
         $ooINI = eZINI::instance( 'odf.ini' );
         $server = $ooINI->variable( "ODFImport", "OOConverterAddress" );
         $port = $ooINI->variable( "ODFImport", "OOConverterPort" );

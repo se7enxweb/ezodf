@@ -11,7 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "se7enxweb/ezpublish-legacy-installer": "*"
+        "se7enxweb/ezpublish-legacy-installer": "*",
+        "ext-zip": "*"
     },
     "extra": {
         "ezpublish-legacy-extension-name": "ezodf"

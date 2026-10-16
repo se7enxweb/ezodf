@@ -260,6 +260,11 @@ class Export extends \Exponential\Runnable\ModuleView
                     else
                     {
                         $tpl->setVariable( "error_string", \ezpI18n::tr( 'extension/ezodf/export/error', "Unable to open file %1 on server side", null, array( basename( $fileName ) ) ) );
+                        // An empty converted file is removed as well, the generated document below
+                        if ( $fileName !== $generatedFile && is_file( $fileName ) )
+                        {
+                            unlink( $fileName );
+                        }
                     }
                 }
                 if ( isset( $generatedFile ) )

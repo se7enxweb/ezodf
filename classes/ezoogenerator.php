@@ -101,6 +101,9 @@ class eZOOGenerator
     {
         $ooINI = eZINI::instance( 'odf.ini' );
 
+        // What earlier exports left behind when they ended before their clean-up
+        eZOOImport::sweepWorkDirectories( self::BASE_DIR );
+
         // Initalize directories; the generator's own directory is readable by nobody else
         if ( !is_dir( $this->OORootDir ) )
         {

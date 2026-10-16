@@ -34,7 +34,7 @@ class eZOOImportAccessTest extends TestCase
     private function loadStubs()
     {
         foreach ( array( 'eZINI', 'eZSys', 'eZHTTPTool', 'eZTextCodec', 'eZContentObjectTreeNode', 'eZContentClass',
-                         'eZContentObject', 'eZContentFunctionCollection' ) as $class )
+                         'eZContentObject', 'eZContentFunctionCollection', 'eZDB' ) as $class )
         {
             if ( class_exists( $class, false ) )
             {
@@ -48,7 +48,7 @@ class eZOOImportAccessTest extends TestCase
         require_once __DIR__ . '/fixtures/kernel_stubs.php';
     }
 
-    private function document( $imageHref )
+    private function document( $imageHref, $picture = null )
     {
         $this->workDir = sys_get_temp_dir() . '/ezodf-test-' . bin2hex( random_bytes( 8 ) );
         mkdir( $this->workDir, 0700, true );
@@ -65,7 +65,7 @@ class eZOOImportAccessTest extends TestCase
         $zip = new ZipArchive();
         $zip->open( $file, ZipArchive::CREATE );
         $zip->addFromString( 'content.xml', $content );
-        $zip->addFromString( 'Pictures/a.png', base64_decode( self::PNG ) );
+        $zip->addFromString( 'Pictures/a.png', $picture === null ? base64_decode( self::PNG ) : $picture );
         $zip->close();
         return $file;
     }
@@ -161,5 +161,66 @@ class eZOOImportAccessTest extends TestCase
         $this->assertSame( 'no image', $texts['intro'] );
         $this->assertSame( array( array( 'a.png', 'A' ), array( 'b.png', 'B' ) ), $import->created );
         $this->assertSame( array(), $import->PendingImages );
+    }
+
+    #[RunInSeparateProcess]
+    public function testAPictureThatIsNoImageIsSkipped()
+    {
+        $this->loadStubs();
+        $file = $this->document( 'Pictures/a.png', 'not an image' );
+        $import = new eZOOImport();
+        $import->ImportDir = $this->workDir . '/import/z/';
+        $this->assertTrue( $import->extractDocument( $file, $import->ImportDir ) );
+
+        $dom = new DOMDocument();
+        $zip = new ZipArchive();
+        $zip->open( $file );
+        $dom->loadXML( $zip->getFromName( 'content.xml' ) );
+        $zip->close();
+        $frame = $dom->getElementsByTagNameNS( eZOOImport::NAMESPACE_DRAWING, 'frame' )->item( 0 );
+
+        $this->assertSame( '', $import->handleInlineNode( $frame ) );
+        $this->assertSame( array(), $import->PendingImages );
+    }
+
+    #[RunInSeparateProcess]
+    public function testAFailedImportRollsBackItsTransaction()
+    {
+        $this->loadStubs();
+        $file = $this->document( 'Pictures/a.png' );
+        eZOOImportTestLog::$access = true;
+
+        $import = new eZOOImport();
+        $import->ImportBaseDir = $this->workDir . '/import/';
+        $import->RelatedImageArray = array( array( 'ID' => 99, 'ContentObject' => null ) );
+        try
+        {
+            $import->import( $file, 2, 'document.odt', 'replace' );
+            $this->fail( 'the stand-in refuses to create the image object' );
+        }
+        catch ( RuntimeException $e )
+        {
+            $this->assertSame( 'An object of class image was created', $e->getMessage() );
+        }
+        $this->assertSame( array( 'eZDB::begin', 'eZDB::rollback' ),
+                           array_values( array_filter( eZOOImportTestLog::$calls, function ( $call ) { return strpos( $call, 'eZDB::' ) === 0; } ) ) );
+        $this->assertSame( array(), $import->RelatedImageArray, 'every import starts without the images of the previous one' );
+        $this->assertDirectoryDoesNotExist( $import->ImportDir );
+    }
+
+    #[RunInSeparateProcess]
+    public function testAnImportStoppedByItsSettingsRollsBack()
+    {
+        $this->loadStubs();
+        $file = $this->document( 'http://127.0.0.1:1/a.png' );
+        eZOOImportTestLog::$access = true;
+
+        $import = new eZOOImport();
+        $import->ImportBaseDir = $this->workDir . '/import/';
+        $this->assertFalse( $import->import( $file, 2, 'document.odt', 'replace' ) );
+        $this->assertSame( eZOOImport::ERROR_IMPORTING, $import->getErrorNumber() );
+        $this->assertContains( 'eZDB::begin', eZOOImportTestLog::$calls );
+        $this->assertContains( 'eZDB::rollback', eZOOImportTestLog::$calls );
+        $this->assertNotContains( 'eZDB::commit', eZOOImportTestLog::$calls );
     }
 }

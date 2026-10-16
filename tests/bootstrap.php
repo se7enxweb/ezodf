@@ -2,8 +2,8 @@
 /**
  * Bootstrap of the ezodf tests: no kernel, no database, no siteaccess.
  *
- * The extension lives at extension/ezodf of an installation; its vendor/autoload.php brings ezcArchive and the
- * kernel's class map. The stand-ins below are defined only when the real class is not loaded yet (checked without
+ * The extension lives at extension/ezodf of an installation; its vendor/autoload.php brings the kernel's class
+ * map. The import needs the PHP zip extension (ZipArchive). The stand-ins below are defined only when the real class is not loaded yet (checked without
  * autoloading), so the tests never reach the user session, the debug log or the translation system.
  *
  * Run from the installation root:

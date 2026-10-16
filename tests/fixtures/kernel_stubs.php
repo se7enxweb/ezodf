@@ -115,3 +115,26 @@ class eZContentFunctionCollection
         return array( 'result' => eZOOImportTestLog::$access );
     }
 }
+
+class eZDB
+{
+    public static function instance()
+    {
+        return new self();
+    }
+
+    public function begin()
+    {
+        eZOOImportTestLog::$calls[] = 'eZDB::begin';
+    }
+
+    public function commit()
+    {
+        eZOOImportTestLog::$calls[] = 'eZDB::commit';
+    }
+
+    public function rollback()
+    {
+        eZOOImportTestLog::$calls[] = 'eZDB::rollback';
+    }
+}

@@ -59,9 +59,13 @@ class eZOOImport
     const ERROR_CONVERSIONDISABLED = 16;
     const ERROR_UNKNOWN = 127;
 
-    // Upper limits for the entries of an uploaded document; an archive beyond them is refused before anything is extracted
+    // Upper limits for an uploaded document. The entry count is checked before anything is extracted; the sizes
+    // count the bytes actually inflated from the entries the import reads (a zip header may claim any size)
     const MAX_ARCHIVE_ENTRIES = 10000;
-    const MAX_UNPACKED_SIZE = 536870912; // 512 MiB
+    const MAX_ENTRY_SIZE = 67108864;     // 64 MiB per extracted entry
+    const MAX_UNPACKED_SIZE = 268435456; // 256 MiB for all extracted entries
+    // Work directories older than this are removed by sweepWorkDirectories()
+    const WORK_DIRECTORY_MAX_AGE = 86400;
 
     const NAMESPACE_OFFICE = 'urn:oasis:names:tc:opendocument:xmlns:office:1.0';
     const NAMESPACE_TEXT = 'urn:oasis:names:tc:opendocument:xmlns:text:1.0';
@@ -95,6 +99,16 @@ class eZOOImport
     function eZOOImport()
     {
         self::__construct();
+    }
+
+    /*!
+     \static
+     \a $text escaped for the eZXMLText markup the import builds as a string: text and attribute values of the
+     document must never become tags (a span with "<embed object_id='1'/>" used to become a real embed).
+    */
+    static function xmlText( $text )
+    {
+        return htmlspecialchars( (string)$text, ENT_QUOTES | ENT_XML1 | ENT_SUBSTITUTE, 'UTF-8' );
     }
 
     /*!
@@ -173,53 +187,58 @@ class eZOOImport
 
     /*!
      \static
-     The first reason why the entries of the open archive \a $archive must not be extracted, as
-     array( 'code' => ..., 'path' => ... ), or null when they may: a path outside the target directory, a link,
-     a device, too many entries or too many bytes. The archive is rewound afterwards.
+     The first reason why the entries of the open zip archive \a $zip must not be extracted, as
+     array( 'code' => ..., 'path' => ... ), or null when they may: too many entries, a path outside the target
+     directory, a link or a device. Reads the central directory only.
     */
-    static function archiveEntriesProblem( $archive )
+    static function zipEntriesProblem( ZipArchive $zip )
     {
-        $count = 0;
-        $bytes = 0;
-        $archive->rewind();
-        foreach ( $archive as $entry )
+        if ( $zip->numFiles > self::MAX_ARCHIVE_ENTRIES )
+            return array( 'code' => 'too_many_entries', 'path' => '' );
+        for ( $i = 0; $i < $zip->numFiles; $i++ )
         {
-            $count++;
-            $path = $entry->getPath();
-            if ( $count > self::MAX_ARCHIVE_ENTRIES )
-                return array( 'code' => 'too_many_entries', 'path' => '' );
+            $path = $zip->getNameIndex( $i, ZipArchive::FL_UNCHANGED );
             if ( !self::safeEntryPath( $path ) )
                 return array( 'code' => 'unsafe_path', 'path' => (string)$path );
-            $type = $entry->getType();
-            if ( $type !== ezcArchiveEntry::IS_FILE && $type !== ezcArchiveEntry::IS_DIRECTORY )
-                return array( 'code' => 'unsafe_type', 'path' => (string)$path );
-            $bytes += max( 0, (int)$entry->getSize() );
-            if ( $bytes > self::MAX_UNPACKED_SIZE )
-                return array( 'code' => 'too_large_unpacked', 'path' => '' );
+            $opsys = 0;
+            $attributes = 0;
+            if ( $zip->getExternalAttributesIndex( $i, $opsys, $attributes ) && $opsys === ZipArchive::OPSYS_UNIX )
+            {
+                $type = ( $attributes >> 16 ) & 0170000;
+                if ( $type !== 0 && $type !== 0100000 && $type !== 0040000 )
+                    return array( 'code' => 'unsafe_type', 'path' => (string)$path );
+            }
         }
-        $archive->rewind();
         return null;
     }
 
     /*!
      Checks the OpenDocument file \a $file and extracts the entries the import reads (isImportedEntry()) into
      \a $targetDir, which is created with mode 0700. An archive with an entry pointing outside the target directory
-     (an absolute path, "..", a NUL), a link or a device is refused before anything is written.
+     (an absolute path, "..", a NUL), a link or a device is refused before anything is written. The entries are
+     copied in chunks, and an entry that inflates to more than $MaxEntrySize bytes, or all of them to more than
+     $MaxUnpackedSize, stops the extraction (a zip bomb exhausted the memory and ended the request before any
+     clean-up ran).
      \return true on success, false with the error set otherwise
     */
     function extractDocument( $file, $targetDir )
     {
         $targetDir = rtrim( $targetDir, '/' );
-        $archive = null;
+        if ( !class_exists( 'ZipArchive' ) )
+        {
+            eZDebug::writeError( 'The PHP zip extension is needed to import OpenDocument files', __METHOD__ );
+            $this->setError( self::ERROR_ARCHIVE, 'the PHP zip extension is missing' );
+            return false;
+        }
+        $zip = new ZipArchive();
+        if ( !is_file( $file ) || $zip->open( $file, ZipArchive::RDONLY ) !== true )
+        {
+            $this->setError( self::ERROR_ARCHIVE, 'not a zip archive' );
+            return false;
+        }
         try
         {
-            $archive = ezcArchive::open( $file, null, new ezcArchiveOptions( array( 'readOnly' => true ) ) );
-            if ( !$archive instanceof ezcArchiveZip )
-            {
-                $this->setError( self::ERROR_ARCHIVE, 'not a zip archive' );
-                return false;
-            }
-            $problem = self::archiveEntriesProblem( $archive );
+            $problem = self::zipEntriesProblem( $zip );
             if ( $problem !== null )
             {
                 eZDebug::writeError( "OpenDocument archive refused ({$problem['code']}: {$problem['path']})", __METHOD__ );
@@ -232,28 +251,100 @@ class eZOOImport
                 return false;
             }
             chmod( $targetDir, 0700 );
-            foreach ( $archive as $entry )
+            $total = 0;
+            for ( $i = 0; $i < $zip->numFiles; $i++ )
             {
-                if ( $entry->getType() === ezcArchiveEntry::IS_FILE && self::isImportedEntry( $entry->getPath() ) )
+                $path = $zip->getNameIndex( $i, ZipArchive::FL_UNCHANGED );
+                if ( !self::isImportedEntry( $path ) )
+                    continue;
+                $problem = $this->copyEntry( $zip, $i, $targetDir . '/' . $path, $total );
+                if ( $problem !== null )
                 {
-                    $archive->extractCurrent( $targetDir );
+                    eZDebug::writeError( "OpenDocument archive refused ($problem: $path)", __METHOD__ );
+                    $this->setError( self::ERROR_ARCHIVE, "$problem: $path" );
+                    return false;
                 }
             }
         }
-        catch ( Exception $e )
-        {
-            eZDebug::writeError( 'OpenDocument archive could not be read: ' . $e->getMessage(), __METHOD__ );
-            $this->setError( self::ERROR_ARCHIVE, 'unreadable' );
-            return false;
-        }
         finally
         {
-            if ( $archive !== null )
-            {
-                $archive->close();
-            }
+            $zip->close();
         }
         return true;
+    }
+
+    /*!
+     Copies entry \a $index of \a $zip to \a $destination in chunks, adding the bytes to \a $total.
+     \return null, or why the entry was not extracted (the partial file is removed)
+    */
+    private function copyEntry( ZipArchive $zip, $index, $destination, &$total )
+    {
+        $directory = dirname( $destination );
+        if ( !is_dir( $directory ) && !mkdir( $directory, 0700, true ) && !is_dir( $directory ) )
+            return 'unwritable';
+        $in = method_exists( $zip, 'getStreamIndex' ) ? $zip->getStreamIndex( $index ) : $zip->getStream( $zip->getNameIndex( $index ) );
+        if ( !$in )
+            return 'unreadable';
+        $out = @fopen( $destination, 'xb' );
+        if ( !$out )
+        {
+            fclose( $in );
+            return 'duplicate_entry';
+        }
+        $bytes = 0;
+        $problem = null;
+        while ( !feof( $in ) )
+        {
+            $chunk = fread( $in, 65536 );
+            if ( $chunk === false )
+            {
+                $problem = 'unreadable';
+                break;
+            }
+            $bytes += strlen( $chunk );
+            $total += strlen( $chunk );
+            if ( $bytes > $this->MaxEntrySize )
+            {
+                $problem = 'entry_too_large';
+                break;
+            }
+            if ( $total > $this->MaxUnpackedSize )
+            {
+                $problem = 'too_large_unpacked';
+                break;
+            }
+            fwrite( $out, $chunk );
+        }
+        fclose( $in );
+        fclose( $out );
+        if ( $problem !== null )
+            unlink( $destination );
+        return $problem;
+    }
+
+    /*!
+     \static
+     Removes the import and export work directories below \a $baseDir (var/cache/ezodf/<hex>/ and
+     var/cache/ezodf/import/<hex>/) that are older than \a $maxAge seconds: what a request left behind that ended
+     before its own clean-up ran.
+    */
+    static function sweepWorkDirectories( $baseDir = 'var/cache/ezodf/', $maxAge = self::WORK_DIRECTORY_MAX_AGE )
+    {
+        $baseDir = rtrim( $baseDir, '/' );
+        $limit = time() - $maxAge;
+        foreach ( array( $baseDir, $baseDir . '/import' ) as $dir )
+        {
+            if ( !is_dir( $dir ) || is_link( $dir ) )
+                continue;
+            foreach ( scandir( $dir ) as $name )
+            {
+                $path = $dir . '/' . $name;
+                if ( preg_match( '/^[0-9a-f]{32}$/', $name ) && is_dir( $path ) && !is_link( $path ) && filemtime( $path ) < $limit )
+                {
+                    self::removeWorkDirectory( $path );
+                }
+            }
+        }
     }
 
     /*!
@@ -440,9 +531,11 @@ class eZOOImport
     function import( $file, $placeNodeID, $originalFileName, $importType = "import", $upload = null, $locale = false )
     {
         // Every call works in a directory of its own, removed again whatever the outcome
+        self::sweepWorkDirectories( dirname( rtrim( $this->ImportBaseDir, '/' ) ) );
         $this->ImportDir = self::newWorkDirectoryName( $this->ImportBaseDir );
         $this->TemporaryFiles = array();
         $this->PendingImages = array();
+        $this->RelatedImageArray = array();
         try
         {
             return $this->importDocument( $file, $placeNodeID, $originalFileName, $importType, $upload, $locale );
@@ -568,7 +661,7 @@ class eZOOImport
 
         $fileName = $uniqueImportDir . "content.xml";
         $dom = new DOMDocument( '1.0', 'UTF-8' );
-        $success = $dom->load( $fileName );
+        $success = $dom->load( $fileName, LIBXML_NONET );
         $sectionNodeHash = array();
 
         // At this point we could unlink the destination file from the conversion, if conversion was used
@@ -822,6 +915,11 @@ class eZOOImport
 
         if ( $access['result'] )
         {
+          // Everything the import writes, from the image objects to the publishing, is one transaction
+          $db = eZDB::instance();
+          $db->begin();
+          try
+          {
             // The image objects of the document, now that the user may create or edit here
             $pendingTexts = isset( $xmlTextArray ) ? $xmlTextArray : array();
             if ( isset( $xmlTextBody ) )
@@ -853,6 +951,7 @@ class eZOOImport
                 {
                     eZDebug::writeError( "Content class <strong>$importClassIdentifier</strong> specified in odf.ini does not exist." );
                     $this->setError( self::ERROR_UNKNOWNCLASS, $importClassIdentifier );
+                    $db->rollback();
                     return false;
                 }
 
@@ -888,6 +987,7 @@ class eZOOImport
                     if ( (!isset( $dataMap[ $titleAttribute ] ) ) || ( !isset( $dataMap[ $bodyAttribute ] ) ) )
                     {
                         $this->setError( self::ERROR_IMPORTING, "Error in configuration for $placeClassIdentifier, please check configuration file." );
+                        $db->rollback();
                         return false;
                     }
                     unset( $dataMap );
@@ -895,6 +995,7 @@ class eZOOImport
                 else
                 {
                     $this->setError( self::ERROR_IMPORTING, "No settings for replacing node of type $placeClassIdentifier. Stopping.");
+                    $db->rollback();
                     return false;
                 }
 
@@ -1245,6 +1346,13 @@ class eZOOImport
                 $importResult['NodeName'] = false;
             }
             $importResult['ClassIdentifier'] = $importClassIdentifier;
+          }
+          catch ( Throwable $e )
+          {
+            $db->rollback();
+            throw $e;
+          }
+          $db->commit();
         }
         else
         {
@@ -1346,7 +1454,7 @@ class eZOOImport
                     {
                         $customName = substr( $styleName, 12, strlen( $styleName ) - 12 );
                         $this->CollapsingTagName = "custom";
-                        $this->CollapsingTagAttribute = "name='$customName'";
+                        $this->CollapsingTagAttribute = "name='" . self::xmlText( $customName ) . "'";
                     }
                     else
                     {
@@ -1882,6 +1990,11 @@ class eZOOImport
 
                             // Check if image should be set to original
                             $sizeArray = getimagesize( $href );
+                            if ( $sizeArray === false )
+                            {
+                                eZDebug::writeError( "The document's picture $localHref is not an image", __METHOD__ );
+                                break;
+                            }
                             if ( $imageSize != "small" and $sizeArray[0] < 650 )
                                 $imageSize = "original";
 
@@ -1961,7 +2074,7 @@ class eZOOImport
             case 'date':
             case 'initial-creator':
             {
-                $paragraphContent .= $childNode->textContent;
+                $paragraphContent .= self::xmlText( $childNode->textContent );
             }break;
 
             case "s" :
@@ -1972,18 +2085,12 @@ class eZOOImport
             case "a" :
             {
                 $href = $childNode->getAttributeNS( self::NAMESPACE_XLINK, 'href' );
-                $paragraphContent .= "<link href='$href'>" . $childNode->textContent . "</link>";
+                $paragraphContent .= "<link href='" . self::xmlText( $href ) . "'>" . self::xmlText( $childNode->textContent ) . "</link>";
             }break;
 
             case "#text" :
             {
-                $tagContent = str_replace( "&", "&amp;", $childNode->textContent );
-                $tagContent = str_replace( ">", "&gt;", $tagContent );
-                $tagContent = str_replace( "<", "&lt;", $tagContent );
-                $tagContent = str_replace( "'", "&apos;", $tagContent );
-                $tagContent = str_replace( '"', "&quot;", $tagContent );
-
-                $paragraphContent .= $tagContent;
+                $paragraphContent .= self::xmlText( $childNode->textContent );
             }break;
 
             case "span" :
@@ -2027,14 +2134,14 @@ class eZOOImport
                     $inlineCustomTagName = substr( $styleName, 18 );
 
                 if ( $inlineCustomTagName != false )
-                    $paragraphContent .= "<custom name='$inlineCustomTagName'>";
+                    $paragraphContent .= "<custom name='" . self::xmlText( $inlineCustomTagName ) . "'>";
 
                 if ( $fontWeight == "bold" )
                     $paragraphContent .= "<strong>";
                 if ( $fontStyle == "italic" )
                     $paragraphContent .= "<emphasize>";
 
-                $paragraphContent .= $childNode->textContent;
+                $paragraphContent .= self::xmlText( $childNode->textContent );
 
                 if ( $fontStyle == "italic" )
                     $paragraphContent .= "</emphasize>";
@@ -2149,6 +2256,8 @@ class eZOOImport
     var $ImportDir = "var/cache/ezodf/import/";
     var $ImportBaseDir = "var/cache/ezodf/import/";
     var $TemporaryFiles = array();
+    var $MaxEntrySize = self::MAX_ENTRY_SIZE;
+    var $MaxUnpackedSize = self::MAX_UNPACKED_SIZE;
     var $InsideListType = false;
 
     var $IsSubList = false;

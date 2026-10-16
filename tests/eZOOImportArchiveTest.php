@@ -181,4 +181,67 @@ class eZOOImportArchiveTest extends TestCase
             $this->assertFalse( eZOOImport::safeEntryPath( $path ), json_encode( $path ) );
         }
     }
+
+    public function testAnEntryThatInflatesBeyondTheLimitIsRefused()
+    {
+        $file = $this->archive( array( 'content.xml' => str_repeat( "\0", 2 * 1048576 ) ) );
+        $target = $this->workDir . '/import/bomb';
+
+        $import = new eZOOImport();
+        $import->MaxEntrySize = 1048576;
+        $this->assertFalse( $import->extractDocument( $file, $target ) );
+        $this->assertStringContainsString( 'entry_too_large: content.xml', $import->getErrorMessage() );
+        $this->assertSame( array(), $this->filesBelow( $target ) );
+    }
+
+    public function testAllEntriesTogetherAreLimited()
+    {
+        $file = $this->archive( array( 'content.xml' => $this->content(),
+                                       'Pictures/a.png' => str_repeat( 'a', 700000 ),
+                                       'Pictures/b.png' => str_repeat( 'b', 700000 ) ) );
+        $import = new eZOOImport();
+        $import->MaxUnpackedSize = 1048576;
+        $this->assertFalse( $import->extractDocument( $file, $this->workDir . '/import/total' ) );
+        $this->assertStringContainsString( 'too_large_unpacked', $import->getErrorMessage() );
+    }
+
+    public function testALargeEntryTheImportDoesNotReadIsNoReason()
+    {
+        $file = $this->archive( array( 'content.xml' => $this->content(),
+                                       'Thumbnails/large.png' => str_repeat( "\0", 2 * 1048576 ) ) );
+        $target = $this->workDir . '/import/thumb';
+        $import = new eZOOImport();
+        $import->MaxEntrySize = 1048576;
+        $import->MaxUnpackedSize = 1048576;
+        $this->assertTrue( $import->extractDocument( $file, $target ), $import->getErrorMessage() );
+        $this->assertSame( array( 'content.xml' ), $this->filesBelow( $target ) );
+    }
+
+    public function testStaleWorkDirectoriesAreSwept()
+    {
+        $base = $this->workDir . '/ezodf';
+        $old = array( $base . '/' . str_repeat( 'a', 32 ), $base . '/import/' . str_repeat( 'b', 32 ) );
+        $fresh = array( $base . '/' . str_repeat( 'c', 32 ), $base . '/import/' . str_repeat( 'd', 32 ) );
+        $other = $base . '/keep';
+        foreach ( array_merge( $old, $fresh, array( $other ) ) as $dir )
+        {
+            mkdir( $dir . '/sub', 0700, true );
+            file_put_contents( $dir . '/sub/file', 'x' );
+        }
+        foreach ( array_merge( $old, array( $other ) ) as $dir )
+        {
+            touch( $dir, time() - 2 * 86400 );
+        }
+
+        eZOOImport::sweepWorkDirectories( $base );
+
+        foreach ( $old as $dir )
+        {
+            $this->assertDirectoryDoesNotExist( $dir );
+        }
+        foreach ( array_merge( $fresh, array( $other ) ) as $dir )
+        {
+            $this->assertDirectoryExists( $dir );
+        }
+    }
 }
