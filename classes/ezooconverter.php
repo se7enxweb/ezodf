@@ -43,8 +43,16 @@ class eZOOConverter
     /*!
      Constructor
     */
+    function __construct()
+    {
+    }
+
+    /*!
+     \deprecated Use eZOOConverter::__construct() instead
+    */
     function eZOOConverter()
     {
+        self::__construct();
     }
 
     /*!

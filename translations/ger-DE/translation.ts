@@ -120,6 +120,10 @@ Images are placed in the media library so you can re-use them in other articles.
 <context>
     <name>extension/ezodf/export/error</name>
     <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Die Konvertierung nach PDF oder Word ist abgeschaltet (odf.ini [ODFImport] ConversionDaemon).</translation>
+    </message>
+    <message>
         <source>Destination file format not supported</source>
         <translation>Das Zieldateiformat wird nicht unterstützt</translation>
     </message>
@@ -142,6 +146,14 @@ Images are placed in the media library so you can re-use them in other articles.
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
+    <message>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>Die Datei ist keine OpenDocument-Datei, die importiert werden kann.</translation>
+    </message>
+    <message>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Die Dokumentkonvertierung ist abgeschaltet (odf.ini [ODFImport] ConversionDaemon).</translation>
+    </message>
     <message>
         <source>File extension or type is not allowed.</source>
         <translation>Dateiendung oder Dateityp ist nicht erlaubt.</translation>

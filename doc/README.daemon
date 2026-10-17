@@ -1,13 +1,34 @@
 
 Document conversion daemon.
 
+The daemon is off by default. It converts uploaded Word (.doc) documents to OpenDocument before they are
+imported, and exports to PDF and Word. To use it:
+
+1. Start the daemon (below) as the user the web server runs as, so that it can read the documents the site writes
+   and the site can read what it converts.
+2. Set in odf.ini:
+     [ODFImport]
+     ConversionDaemon=enabled
+3. For Word uploads through content/upload, add in upload.ini:
+     [CreateSettings]
+     MimeUploadHandlerMap[application/msword]=ezopenofficeuploadhandler
+
+Without ConversionDaemon=enabled a .doc import and a PDF or Word export end with "Document conversion is
+disabled", and nothing connects to the daemon's port.
+
+The daemon listens on 127.0.0.1 without authentication: every local user can send it requests. It therefore
+converts only below the directory given on its command line (the installation's var directory), only into a
+destination with the suffix of the command that does not exist yet, and only paths of letters, digits and . _ / -
+(scripts/conversion_request.php). The OpenOffice.org macros it calls are in doc/eZconversion.zip (source in
+doc/eZconversion.txt); install them as the Basic library "eZconversion" of the daemon user.
+
 
 The document conversion daemon is a php script which is bundled with the extension. 
 It communicates with OpenOffice.org and does the actual conversion of documents. 
 The script needs to be started with the command-line version of PHP, which means 
 that you need to execute the following command from the command line:
 
-$ php extension/ezodf/daemon.php
+$ php extension/ezodf/scripts/daemon.php /path/to/installation/var
 
 
 Note: The document conversion daemon will only run under Linux since the socket support in PHP does not work under Windows.
@@ -34,7 +55,7 @@ service ezpconvertdaemon
         protocol        = tcp
         port            = 9090
         server          = /opt/ezpublish/bin/php
-        server_args     = /opt/ezpublish/sites/trunk/extension/ezodf/converttooo.php
+        server_args     = /opt/ezpublish/sites/trunk/extension/ezodf/scripts/converttooo.php /opt/ezpublish/sites/trunk/var
         user            = sp
         group = sp
         wait            = no
@@ -43,7 +64,8 @@ service ezpconvertdaemon
 
 Where:
   /opt/ezpublish/bin/php - is the full path to your php cli executable
-  /opt/ezpublish/sites/trunk/extension/ezodf/converttooo.php - is the full path to your convert script.
+  /opt/ezpublish/sites/trunk/extension/ezodf/scripts/converttooo.php - is the full path to your convert script,
+  followed by the directory documents are converted in (the installation's var directory).
   user  = sp
   group = sp - user and usergroup from which covert tool will be started.
 

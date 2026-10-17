@@ -43,7 +43,21 @@ Needs the following in PHP Configuration
   --enable-pcntl
   --enable-sockets
 
+Usage (as the xinetd server, see doc/README.daemon): php extension/ezodf/scripts/converttooo.php <directory>
+
+Only documents below <directory> are converted, and only into it: give the directory the installation writes its
+caches to. Every request is checked by ezodfConversionRequestProblem() (conversion_request.php) first.
+
 */
+
+require_once __DIR__ . '/conversion_request.php';
+
+if ( PHP_SAPI !== 'cli' )
+{
+    die( "The document conversion script runs on the command line only\n" );
+}
+
+$allowedDir = isset( $argv[1] ) ? realpath( $argv[1] ) : false;
 
 $homeDir = "/tmp";
 #$ooexecutable = "openoffice.org-2.0";
@@ -93,14 +107,19 @@ echo "eZ Publish document conversion daemon\n";
 // Parse input
 $input = fread( STDIN, 1024 );
 
-$inputParts = explode( " ", $input );
+$inputParts = explode( " ", trim( (string)$input ) );
 
 $command = trim( $inputParts[0] );
-$fileName = trim( $inputParts[1] );
-$destName = trim( $inputParts[2] );
+$fileName = isset( $inputParts[1] ) ? trim( $inputParts[1] ) : '';
+$destName = isset( $inputParts[2] ) ? trim( $inputParts[2] ) : '';
 
 try
 {
+    $problem = count( $inputParts ) === 3 ? ezodfConversionRequestProblem( $command, $fileName, $destName, $allowedDir ) : 'malformed request';
+    if ( $problem !== null )
+    {
+        throw new Exception( "Request refused: $problem", 1 );
+    }
     if ( !file_exists( $fileName ) )
     {
         throw new Exception( "File not found: $fileName", 2 );

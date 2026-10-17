@@ -600,7 +600,7 @@ class eZRESTODFHandler extends eZRESTBaseHandler
         $ooDocumentElement->setAttribute( 'filename', $node->attribute( 'name' ) . '.odt' );
         $ooDocumentElement->appendChild( $domDocument->createCDATASection( base64_encode( file_get_contents( $fileName ) ) ) );
 
-        unlink( $fileName );
+        eZOOGenerator::removeDocument( $fileName );
 
         return $ooDocumentElement;
     }
@@ -634,22 +634,31 @@ class eZRESTODFHandler extends eZRESTBaseHandler
         $ooDocumentElement->setAttribute( 'base64Encoded', '1' );
         $ooDocumentElement->setAttribute( 'filename', $node->attribute( 'name' ) . '.doc' );
 
-        // need to generate? a file name
-        $convertedFile = '/tmp/word.doc';
-        //if ( file_exists( $convertedFile ) )
+        if ( !eZOOImport::conversionDaemonEnabled() )
         {
-        //    unlink( $convertedFile );
+            eZOOGenerator::removeDocument( $fileName );
+            throw new Exception( 'Conversion to Word is disabled (odf.ini [ODFImport] ConversionDaemon)' );
         }
 
-        $this->daemonConvert( realpath( $fileName ), $convertedFile );
+        // A name of its own instead of the shared /tmp/word.doc
+        $convertedFile = getcwd() . '/' . eZSys::cacheDirectory() . '/ooo_converted_' . bin2hex( random_bytes( 16 ) ) . '.doc';
 
-        // need to see if the conversion was successful
-
-        $ooDocumentElement->appendChild( $domDocument->createCDATASection( base64_encode( file_get_contents( $convertedFile ) ) ) );
-        unlink( $fileName );
-
-        // need to delete the converted file (does not work?)
-        // unlink( $convertedFile );
+        try
+        {
+            if ( !$this->daemonConvert( realpath( $fileName ), $convertedFile ) || !is_file( $convertedFile ) )
+            {
+                throw new Exception( 'Could not convert the document to Word, ID: ' . $node->attribute( 'node_id' ) );
+            }
+            $ooDocumentElement->appendChild( $domDocument->createCDATASection( base64_encode( file_get_contents( $convertedFile ) ) ) );
+        }
+        finally
+        {
+            eZOOGenerator::removeDocument( $fileName );
+            if ( is_file( $convertedFile ) )
+            {
+                unlink( $convertedFile );
+            }
+        }
 
         return $ooDocumentElement;
     }
@@ -766,6 +775,10 @@ class eZRESTODFHandler extends eZRESTBaseHandler
     */
     function daemonConvert( $sourceFile, $destFile )
     {
+        if ( !eZOOImport::conversionDaemonEnabled() )
+        {
+            return false;
+        }
         $ooINI = eZINI::instance( 'odf.ini' );
         $server = $ooINI->variable( "ODFImport", "OOConverterAddress" );
         $port = $ooINI->variable( "ODFImport", "OOConverterPort" );

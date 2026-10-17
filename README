@@ -16,8 +16,9 @@ For documentation look under doc/*
 Known limitations
 -----------------
 
-- Access checking while importing documents with images in them is not complete.
-  The access to create images are not checked properly.
+- Images in an imported document are created only after the import's create (or edit) check on the
+  target node has passed, but the right to create image objects where they are placed is not checked
+  separately.
 - While exporting, if the user has not access to read images, they are just ignored. 
   Should replace them with a dummy image which says "no access".
 - Importing document with images and storing the images in media does not work properly.

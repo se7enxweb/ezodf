@@ -73,6 +73,10 @@ Images are placed in the media library so you can re-use them in other articles.
 <context>
     <name>extension/ezodf/export/error</name>
     <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</translation>
+    </message>
+    <message>
         <source>Destination file format not supported</source>
         <translation>Destination file format not supported</translation>
     </message>
@@ -95,6 +99,14 @@ Images are placed in the media library so you can re-use them in other articles.
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
+    <message>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>The file is not an OpenDocument file that can be imported.</translation>
+    </message>
+    <message>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</translation>
+    </message>
     <message>
         <source>Access denied.</source>
         <translation>Access denied.</translation>

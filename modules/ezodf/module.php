@@ -48,20 +48,6 @@ $ViewList['export'] = array(
                                  'export_type' => 'ExportType' ) );
 
 
-/*
-$ViewList['upload_import'] = array(
-    'script' => 'upload_import.php',
-    'params' => array() );
-
-$ViewList['authenticate'] = array(
-    'script' => 'authenticate.php',
-    'params' => array() );
-
-$ViewList['upload_export'] = array(
-    'script' => 'upload_export.php',
-    'params' => array() );
-*/
-
 $FunctionList = array();
 $FunctionList['import'] = array();
 $FunctionList['export'] = array();
