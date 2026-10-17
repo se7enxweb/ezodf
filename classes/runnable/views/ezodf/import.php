@@ -30,8 +30,8 @@
 
 namespace
 {
-if ( !function_exists( 'makeErrorArray' ) ) {
-function makeErrorArray( $num, $msg )
+if ( !function_exists( 'expModuleViewEzodfImportMakeErrorArray' ) ) {
+function expModuleViewEzodfImportMakeErrorArray( $num, $msg )
 {
     return array( 'number' => $num, 'message' => $msg );
 }
@@ -147,11 +147,11 @@ class Import extends \Exponential\Runnable\ModuleView
                     {
                         if( $import->getErrorNumber() != 0 )
                         {
-                            $tpl->setVariable( 'error', makeErrorArray( $import->getErrorNumber(), $import->getErrorMessage() ) );
+                            $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( $import->getErrorNumber(), $import->getErrorMessage() ) );
                         }
                         else
                         {
-                            $tpl->setVariable( 'error', makeErrorArray( \eZOOImport::ERROR_DOCNOTSUPPORTED,
+                            $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( \eZOOImport::ERROR_DOCNOTSUPPORTED,
                                                                         \ezpI18n::tr( 'extension/ezodf/import/error', "Document is not supported." ) ) );
                         }
 
@@ -164,14 +164,14 @@ class Import extends \Exponential\Runnable\ModuleView
                 else
                 {
                     \eZDebug::writeError( "Cannot import. File not found. Already imported?" );
-                    $tpl->setVariable( 'error', makeErrorArray( \eZOOImport::ERROR_FILENOTFOUND,
+                    $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( \eZOOImport::ERROR_FILENOTFOUND,
                                                                 \ezpI18n::tr( 'extension/ezodf/import/error', "Cannot import. File not found. Already imported?" ) ) );
                 }
             }
             else
             {
                 \eZDebug::writeError( "Cannot import document, supplied placement nodeID is not valid." );
-                $tpl->setVariable( 'error', makeErrorArray( \eZOOImport::ERROR_PLACEMENTINVALID,
+                $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( \eZOOImport::ERROR_PLACEMENTINVALID,
                                                             \ezpI18n::tr( 'extension/ezodf/import/error', "Cannot import document, supplied placement nodeID is not valid." ) ) );
             }
 
@@ -221,11 +221,11 @@ class Import extends \Exponential\Runnable\ModuleView
                             {
                                 if( $import->getErrorNumber() != 0 )
                                 {
-                                    $tpl->setVariable( 'error', makeErrorArray( $import->getErrorNumber(), $import->getErrorMessage() ) );
+                                    $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( $import->getErrorNumber(), $import->getErrorMessage() ) );
                                 }
                                 else
                                 {
-                                    $tpl->setVariable( 'error', makeErrorArray( \eZOOImport::ERROR_DOCNOTSUPPORTED,
+                                    $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( \eZOOImport::ERROR_DOCNOTSUPPORTED,
                                                                                 \ezpI18n::tr( 'extension/ezodf/import/error',"Document is not supported." ) ) );
                                 }
                             }
@@ -251,7 +251,7 @@ class Import extends \Exponential\Runnable\ModuleView
                     else
                     {
                         \eZDebug::writeError( "Cannot store uploaded file, cannot import" );
-                        $tpl->setVariable( 'error', makeErrorArray( \eZOOImport::ERROR_CANNOTSTORE,
+                        $tpl->setVariable( 'error', expModuleViewEzodfImportMakeErrorArray( \eZOOImport::ERROR_CANNOTSTORE,
                                                                     \ezpI18n::tr( 'extension/ezodf/import/error',"Cannot store uploaded file, cannot import." ) ) );
                     }
                 }

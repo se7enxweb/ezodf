@@ -30,11 +30,11 @@
 
 namespace
 {
-if ( !function_exists( 'daemonConvert' ) ) {
+if ( !function_exists( 'expModuleViewEzodfExportDaemonConvert' ) ) {
 /*!
       Connects to the eZ Publish document conversion daemon and converts the document to specified format
 */
-function daemonConvert( $server, $port, $sourceFile, $conversionCommand, $destFile )
+function expModuleViewEzodfExportDaemonConvert( $server, $port, $sourceFile, $conversionCommand, $destFile )
 {
     $fp = fsockopen( $server,
                      $port,
@@ -185,7 +185,7 @@ class Export extends \Exponential\Runnable\ModuleView
                         {
                             case "PDF" :
                             {
-                                if ( ( $result = daemonConvert( $server, $port, realpath( $fileName ), "convertToPDF", $tmpDir . "/ooo_converted_$uniqueStamp.pdf" ) ) )
+                                if ( ( $result = expModuleViewEzodfExportDaemonConvert( $server, $port, realpath( $fileName ), "convertToPDF", $tmpDir . "/ooo_converted_$uniqueStamp.pdf" ) ) )
                                 {
                                     $originalFileName = $nodeName . ".pdf";
                                     $contentType = "application/pdf";
@@ -200,7 +200,7 @@ class Export extends \Exponential\Runnable\ModuleView
 
                             case "Word" :
                             {
-                                if ( ( $result = daemonConvert( $server, $port, realpath( $fileName ), "convertToDoc", $tmpDir . "/ooo_converted_$uniqueStamp.doc" ) ) )
+                                if ( ( $result = expModuleViewEzodfExportDaemonConvert( $server, $port, realpath( $fileName ), "convertToDoc", $tmpDir . "/ooo_converted_$uniqueStamp.doc" ) ) )
                                 {
                                     $originalFileName = $nodeName . ".doc";
                                     $contentType = "application/ms-word";
