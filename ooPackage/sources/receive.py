@@ -2,7 +2,8 @@ import unohelper
 from com.sun.star.lang import XServiceName
 from com.sun.star.lang import XMain
 import string
-import urllib
+import urllib.parse
+import urllib.request
 import base64
 
 g_ImplementationHelper = unohelper.ImplementationHelper()
@@ -30,14 +31,16 @@ class receive( unohelper.Base, XServiceName, XMain ):
 
         # send the request to the server
         try:
-            params = urllib.urlencode( { "Username": username, "Password": password, "NodeID": nodeID } )
-            f = urllib.urlopen( url, params )
+            # Python 3 (LibreOffice ships no Python 2): urllib.request, POST body as bytes;
+            # the answer is base64, the decoded document binary
+            params = urllib.parse.urlencode( { "Username": username, "Password": password, "NodeID": nodeID } ).encode( 'utf-8' )
+            f = urllib.request.urlopen( url, params )
             output = f.read()
-            if output.find( 'problem:' ) == 0:
-                self.output = output
+            if output.find( b'problem:' ) == 0:
+                self.output = output.decode( 'utf-8', 'replace' )
             output = base64.standard_b64decode( output )
             try:
-                fobject = file( filename, 'w' )
+                fobject = open( filename, 'wb' )
                 fobject.write( output )
                 fobject.close( )
             except:
