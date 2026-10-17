@@ -245,6 +245,12 @@ class eZOOImport
                 $this->setError( self::ERROR_ARCHIVE, $problem['code'] . ( $problem['path'] !== '' ? ': ' . $problem['path'] : '' ) );
                 return false;
             }
+            // The target is a directory of the import's own; a link there would lead the entries elsewhere
+            if ( is_link( $targetDir ) )
+            {
+                $this->setError( self::ERROR_IMPORTING, 'the import directory is a link' );
+                return false;
+            }
             if ( !is_dir( $targetDir ) && !mkdir( $targetDir, 0700, true ) && !is_dir( $targetDir ) )
             {
                 $this->setError( self::ERROR_IMPORTING, 'the import directory could not be created' );
@@ -262,6 +268,8 @@ class eZOOImport
                 {
                     eZDebug::writeError( "OpenDocument archive refused ($problem: $path)", __METHOD__ );
                     $this->setError( self::ERROR_ARCHIVE, "$problem: $path" );
+                    // What was extracted before the refusal goes too: a refused archive leaves nothing to read
+                    self::removeWorkDirectory( $targetDir );
                     return false;
                 }
             }
@@ -280,7 +288,8 @@ class eZOOImport
     private function copyEntry( ZipArchive $zip, $index, $destination, &$total )
     {
         $directory = dirname( $destination );
-        if ( !is_dir( $directory ) && !mkdir( $directory, 0700, true ) && !is_dir( $directory ) )
+        // A file of the same name as the directory (Pictures/a and Pictures/a/b) is refused, without a warning
+        if ( !is_dir( $directory ) && !@mkdir( $directory, 0700, true ) && !is_dir( $directory ) )
             return 'unwritable';
         $in = method_exists( $zip, 'getStreamIndex' ) ? $zip->getStreamIndex( $index ) : $zip->getStream( $zip->getNameIndex( $index ) );
         if ( !$in )
@@ -296,7 +305,8 @@ class eZOOImport
         while ( !feof( $in ) )
         {
             $chunk = fread( $in, 65536 );
-            if ( $chunk === false )
+            // A damaged entry can answer with an empty read without ever reaching its end: stop instead of looping
+            if ( $chunk === false || ( $chunk === '' && !feof( $in ) ) )
             {
                 $problem = 'unreadable';
                 break;
@@ -313,7 +323,11 @@ class eZOOImport
                 $problem = 'too_large_unpacked';
                 break;
             }
-            fwrite( $out, $chunk );
+            if ( fwrite( $out, $chunk ) !== strlen( $chunk ) )
+            {
+                $problem = 'unwritable';
+                break;
+            }
         }
         fclose( $in );
         fclose( $out );
@@ -1978,7 +1992,8 @@ class eZOOImport
                             // Check image size
                             $imageSize = "large";
                             $pageWidth = 6;
-                            $width = $childNode->getAttributeNS( self::NAMESPACE_SVG_COMPATIBLE, 'width' );
+                            // "16.51cm" or "6.5in": the number counts; a missing width is 0 (PHP 8 throws on '' / 6)
+                            $width = (float)$childNode->getAttributeNS( self::NAMESPACE_SVG_COMPATIBLE, 'width' );
 
                             $sizePercentage = $width / $pageWidth * 100;
 
