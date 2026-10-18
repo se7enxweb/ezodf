@@ -5,23 +5,23 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar ou atualizar a tradução em:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduções existentes</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Novas traduções</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar em:</translation>
     </message>
 </context>
 <context>
@@ -109,7 +109,7 @@ the appropriate class during the import, you get a notice about this after the i
 Images are placed in the media library so you can re-use them in other articles.</source>
         <translation>Você pode importar documentos OpenOffice.org / BrOffice.org Writer diretamente para o Exponential a partir desta página.
 Você escolhe onde colocar o documento e o Exponential fará o resto. O documento será convertido para
-o tipo de conteúdo apropriado durante a importação, você receberá um aviso sobre isto depois de concluída a importação
+a classe apropriada durante a importação, você receberá um aviso sobre isto depois de concluída a importação
 As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outros artigos.</translation>
     </message>
     <message>
@@ -118,7 +118,7 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar documento</translation>
     </message>
 </context>
 <context>
@@ -215,7 +215,7 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>Tipo de documento:</translation>
+        <translation>Tipo de arquivo: </translation>
     </message>
     <message>
         <source>Unable to fetch node with id  </source>

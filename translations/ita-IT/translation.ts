@@ -5,23 +5,23 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>File:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea o aggiorna la traduzione in:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduzioni esistenti</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuove traduzioni</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa in:</translation>
     </message>
 </context>
 <context>
@@ -91,7 +91,9 @@
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Puoi importare documenti OpenOffice.org Writer direttamente in Exponential da questa pagina. Ti verrà chiesto dove posizionare i documenti e Exponential farà il resto. Il documento viene convertito nella classe appropriata durante l&apos;importazione, ne riceverai notifica al completamento dell&apos;importazione.
+        <translation>Puoi importare documenti OpenOffice.org Writer direttamente in Exponential da questa pagina. Ti verrà chiesto
+dove posizionare i documenti e Exponential farà il resto. Il documento viene convertito nella classe
+appropriata durante l&apos;importazione, ne riceverai notifica al completamento dell&apos;importazione.
 Le immagini vengono collocate nella libreria media in modo da poter essere riutilizzate.</translation>
     </message>
     <message>
@@ -100,7 +102,7 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa documento</translation>
     </message>
 </context>
 <context>
@@ -116,9 +118,10 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
         <translation>Scegli la collocazione per l&apos;oggetto OpenOffice.org.
-    Scegli le tue collocazioni e premi il pulsante %buttonname.
-    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
-    Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
+
+    Seleziona la collocazione e premi il pulsante %buttonname.
+    È possibile usare anche gli elementi recenti e i preferiti per una collocazione veloce.
+    Clicca sui nomi delle collocazioni per cambiare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
         <source>Select</source>
@@ -160,7 +163,7 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation>Impossibile aprire il socket. Controllare che il demone extension/ezodf/daemon.php sia in esecuzione.</translation>
+        <translation>Impossibile aprire il socket. Controlla che extension/ezodf/daemon.php sia in esecuzione.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
@@ -216,7 +219,7 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation>Impossibile trovare il nodo con id</translation>
+        <translation>Impossibile recuperare il nodo con ID </translation>
     </message>
     <message>
         <source>Document is not supported.</source>

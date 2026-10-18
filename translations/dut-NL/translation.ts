@@ -5,104 +5,107 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>De vertaling aanmaken of bijwerken in:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestaande vertalingen</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe vertalingen</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren in:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
     <message>
         <source>OpenOffice.org export</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice.org-export</translation>
     </message>
     <message>
         <source>Export Exponential content to OpenOffice.org</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponential-inhoud exporteren naar OpenOffice.org</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fout</translation>
+        <translation>Fout</translation>
     </message>
     <message>
         <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier kun je elk inhoudsobject van Exponential exporteren naar het documentformaat van OpenOffice.org Writer.</translation>
     </message>
     <message>
         <source>Export Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Object exporteren</translation>
     </message>
     <message>
         <source>Document is now imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Het document is geïmporteerd</translation>
     </message>
     <message>
         <source>OpenOffice.org import</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice.org-import</translation>
     </message>
     <message>
         <source>The object was imported as: %class_name</source>
-        <translation type="unfinished"></translation>
+        <translation>Het object is geïmporteerd als: %class_name</translation>
     </message>
     <message>
         <source>Document imported as</source>
-        <translation type="unfinished"></translation>
+        <translation>Document geïmporteerd als</translation>
     </message>
     <message>
         <source>The images are placed in the media library and can be re-used.</source>
-        <translation type="unfinished"></translation>
+        <translation>De afbeeldingen worden in de mediabibliotheek geplaatst en kunnen opnieuw worden gebruikt.</translation>
     </message>
     <message>
         <source>Import another document</source>
-        <translation type="unfinished"></translation>
+        <translation>Een ander document importeren</translation>
     </message>
     <message>
         <source>Import OpenOffice.org document</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice.org-document importeren</translation>
     </message>
     <message>
         <source>Replace document</source>
-        <translation type="unfinished"></translation>
+        <translation>Document vervangen</translation>
     </message>
     <message>
         <source>Import to</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren naar</translation>
     </message>
     <message>
         <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanaf deze pagina kun je OpenOffice.org Writer-documenten rechtstreeks in Exponential importeren. Er wordt je
+gevraagd waar het document moet komen, en Exponential doet de rest. Het document wordt tijdens het importeren omgezet
+in de juiste klasse; na afloop van de import krijg je daarover een melding.
+Afbeeldingen worden in de mediabibliotheek geplaatst, zodat je ze in andere artikelen opnieuw kunt gebruiken.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het geïmporteerde document wacht op goedkeuring om te worden gepubliceerd.</translation>
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Document importeren</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/browse</name>
     <message>
         <source>Choose document placement</source>
-        <translation type="unfinished"></translation>
+        <translation>Locatie voor het document kiezen</translation>
     </message>
     <message>
         <source>Please choose the placement for the OpenOffice.org object.
@@ -110,136 +113,140 @@ Images are placed in the media library so you can re-use them in other articles.
     Select the placements and click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies de locatie voor het OpenOffice.org-object.
+
+    Selecteer de locaties en klik op de knop %buttonname.
+    Je kunt ook de recente items en favorieten gebruiken om snel een locatie te kiezen.
+    Klik op de namen van locaties om de bladerlijst te wijzigen.</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteren</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Doelbestandsformaat niet ondersteund</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF-conversie mislukt</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Word-conversie mislukt</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan node niet ophalen, of geen leestoegang</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand %1 op de server niet openen</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandsextensie of -type is niet toegestaan.</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon XML niet parsen.</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan socket niet openen. Controleer of extension/ezodf/daemon.php draait.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan het opgegeven document niet converteren.</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan daemon niet aanroepen. Fork kan geen onderliggend proces aanmaken.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Daemon meldde een fout.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende node.</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toegang geweigerd.</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout tijdens het importeren.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende inhoudsklasse opgegeven in odf.ini:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende fout.</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandstype: </translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan node niet ophalen met ID </translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Map voor afbeeldingen kon niet worden aangemaakt, toegang geweigerd.</translation>
     </message>
     <message>
         <source>Document is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Document wordt niet ondersteund.</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan niet importeren. Bestand niet gevonden. Al geïmporteerd?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan document niet importeren, de opgegeven node-ID voor de plaatsing is ongeldig.</translation>
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan geüpload bestand niet opslaan, kan niet importeren.</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/popupmenu</name>
     <message>
         <source>OpenOffice.org</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice.org</translation>
     </message>
     <message>
         <source>Export OpenOffice</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice exporteren</translation>
     </message>
     <message>
         <source>Export PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF exporteren</translation>
     </message>
     <message>
         <source>Export Word</source>
-        <translation type="unfinished"></translation>
+        <translation>Word exporteren</translation>
     </message>
     <message>
         <source>Import OpenOffice</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice importeren</translation>
     </message>
     <message>
         <source>Replace OpenOffice</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOffice vervangen</translation>
     </message>
 </context>
 </TS>
