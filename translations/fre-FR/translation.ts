@@ -5,23 +5,23 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier :</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer ou mettre à jour la traduction dans :</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traductions existantes</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelles traductions</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer dans :</translation>
     </message>
 </context>
 <context>
@@ -94,7 +94,7 @@ Images are placed in the media library so you can re-use them in other articles.
         <translation>Vous pouvez directement importer des documents OpenOffice.org Writer vers Exponential à partir de cette page. Vous devez
 indiquer l&apos;emplacement du document et Exponential s&apos;occupe du reste. Le document est converti dans
 la classe appropriée lors de l&apos;import. Vous recevrez des informations concernant cette conversion une fois l&apos;import terminé.
-Les images sont placées dans la médiathèque : vous pouvez les réutiliser dans d&apos;autres articles. </translation>
+Les images sont placées dans la médiathèque : vous pouvez les réutiliser dans d&apos;autres articles.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>
@@ -102,7 +102,7 @@ Les images sont placées dans la médiathèque : vous pouvez les réutiliser dan
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer un document</translation>
     </message>
 </context>
 <context>
@@ -144,7 +144,7 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>Impossible de récupérer le nœud ou de lire le chemin d&apos;accès</translation>
+        <translation>Impossible de récupérer le nœud, ou pas d&apos;accès en lecture</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
@@ -171,7 +171,7 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>Impossible d&apos;appeler le démon (daemon). La processus ne peut créer de processus enfant.</translation>
+        <translation>Impossible d&apos;appeler le démon (daemon). Le processus ne peut pas créer de processus enfant.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
@@ -199,7 +199,7 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>Type de fichier :</translation>
+        <translation>Type de fichier : </translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
@@ -211,7 +211,7 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation>Impossible d&apos;importer le fichier. Fichier introuvable. A-t-il déja été importé ?</translation>
+        <translation>Impossible d&apos;importer le fichier. Fichier introuvable. A-t-il déjà été importé ?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
