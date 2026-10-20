@@ -5,31 +5,27 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stvori ili ažuriraj prijevod na jeziku:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Postojeći prijevodi</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Novi prijevodi</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvezi u:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
-    <message>
-        <source>Upload file</source>
-        <translation type="obsolete">Učitaj datoteku</translation>
-    </message>
     <message>
         <source>Error</source>
         <translation>Greška</translation>
@@ -102,7 +98,11 @@ Slike će biti smještene u biblioteku medija da ih možete koristiti u člancim
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvezi dokument</translation>
+    </message>
+    <message>
+        <source>Upload file</source>
+        <translation type="obsolete">Učitaj datoteku</translation>
     </message>
 </context>
 <context>
@@ -149,6 +149,10 @@ Slike će biti smještene u biblioteku medija da ih možete koristiti u člancim
     <message>
         <source>Unable to open file %1 on server side</source>
         <translation>Nije moguće otvoriti datoteku %1 na serveru</translation>
+    </message>
+    <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Pretvorba u PDF ili Word je onemogućena (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
@@ -224,6 +228,14 @@ Slike će biti smještene u biblioteku medija da ih možete koristiti u člancim
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
         <translation>Uvoz nije moguć. Nije moguće pohraniti učitanu datoteku.</translation>
+    </message>
+    <message>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>Datoteka nije OpenDocument datoteka koja se može uvesti.</translation>
+    </message>
+    <message>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Pretvorba dokumenata je onemogućena (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>

@@ -5,27 +5,101 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar ou atualizar a tradução em:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduções existentes</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Novas traduções</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar em:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
+    <message>
+        <source>Error</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <source>Export Object</source>
+        <translation>Exportar objeto</translation>
+    </message>
+    <message>
+        <source>OpenOffice.org import</source>
+        <translation>Importação OpenOffice.org / BrOffice.org</translation>
+    </message>
+    <message>
+        <source>OpenOffice.org export</source>
+        <translation>Exportação OpenOffice.org / BrOffice.org</translation>
+    </message>
+    <message>
+        <source>Document is now imported</source>
+        <translation>O documento foi importado com sucesso</translation>
+    </message>
+    <message>
+        <source>The object was imported as: %class_name</source>
+        <translation>O objeto foi importado como: %class_name</translation>
+    </message>
+    <message>
+        <source>Document imported as</source>
+        <translation>O documento foi importado como</translation>
+    </message>
+    <message>
+        <source>Import another document</source>
+        <translation>Importar outro documento</translation>
+    </message>
+    <message>
+        <source>Import OpenOffice.org document</source>
+        <translation>Importar documento OpenOffice.org / BrOffice.org</translation>
+    </message>
+    <message>
+        <source>Replace document</source>
+        <translation>Substituir documento</translation>
+    </message>
+    <message>
+        <source>Import to</source>
+        <translation>Importar para</translation>
+    </message>
+    <message>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Exportar conteúdo do Exponential para o OpenOffice.org / BrOffice.org</translation>
+    </message>
+    <message>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Aqui você pode exportar qualquer objeto de conteúdo do Exponential para um documento OpenOffice.org / BrOffice Writer.</translation>
+    </message>
+    <message>
+        <source>The images are placed in the media library and can be re-used.</source>
+        <translation>As imagens foram colocadas na biblioteca e podem ser reutilizadas.</translation>
+    </message>
+    <message>
+        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
+asked where to place the document and Exponential does the rest. The document is converted into
+the appropriate class during the import, you get a notice about this after the import is done.
+Images are placed in the media library so you can re-use them in other articles.</source>
+        <translation>Você pode importar documentos OpenOffice.org / BrOffice.org Writer diretamente para o Exponential a partir desta página.
+Você escolhe onde colocar o documento e o Exponential fará o resto. O documento será convertido para
+o tipo de conteúdo apropriado durante a importação, você receberá um aviso sobre isto depois de concluída a importação
+As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outros artigos.</translation>
+    </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation>O documento importado está esperando uma aprovação para ser publicado.</translation>
+    </message>
+    <message>
+        <source>Import document</source>
+        <translation>Importar documento</translation>
+    </message>
     <message>
         <source>Import</source>
         <translation type="obsolete">Importar</translation>
@@ -45,80 +119,6 @@
     <message>
         <source>Upload file</source>
         <translation type="obsolete">Enviar arquivo</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erro</translation>
-    </message>
-    <message>
-        <source>Export Object</source>
-        <translation>Exportar objeto</translation>
-    </message>
-    <message>
-        <source>OpenOffice.org import</source>
-        <translation>Importação OpenOffice.org / BrOffice.org</translation>
-    </message>
-    <message>
-        <source>OpenOffice.org export</source>
-        <translation>Exportação OpenOffice.org / BrOffice.org</translation>
-    </message>
-    <message>
-        <source>Export Exponential content to OpenOffice.org</source>
-        <translation>Exportar conteúdo do Exponential para o OpenOffice.org / BrOffice.org</translation>
-    </message>
-    <message>
-        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
-        <translation>Aqui você pode exportar qualquer objeto de conteúdo do Exponential para um documento OpenOffice.org / BrOffice Writer.</translation>
-    </message>
-    <message>
-        <source>Document is now imported</source>
-        <translation>O documento foi importado com sucesso</translation>
-    </message>
-    <message>
-        <source>The object was imported as: %class_name</source>
-        <translation>O objeto foi importado como: %class_name</translation>
-    </message>
-    <message>
-        <source>Document imported as</source>
-        <translation>O documento foi importado como</translation>
-    </message>
-    <message>
-        <source>The images are placed in the media library and can be re-used.</source>
-        <translation>As imagens foram colocadas na biblioteca e podem ser reutilizadas.</translation>
-    </message>
-    <message>
-        <source>Import another document</source>
-        <translation>Importar outro documento</translation>
-    </message>
-    <message>
-        <source>Import OpenOffice.org document</source>
-        <translation>Importar documento OpenOffice.org / BrOffice.org</translation>
-    </message>
-    <message>
-        <source>Replace document</source>
-        <translation>Substituir documento</translation>
-    </message>
-    <message>
-        <source>Import to</source>
-        <translation>Importar para</translation>
-    </message>
-    <message>
-        <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
-asked where to place the document and Exponential does the rest. The document is converted into
-the appropriate class during the import, you get a notice about this after the import is done.
-Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Você pode importar documentos OpenOffice.org / BrOffice.org Writer diretamente para o Exponential a partir desta página.
-Você escolhe onde colocar o documento e o Exponential fará o resto. O documento será convertido para
-o tipo de conteúdo apropriado durante a importação, você receberá um aviso sobre isto depois de concluída a importação
-As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outros artigos.</translation>
-    </message>
-    <message>
-        <source>The imported document is waiting for an approbation to be published.</source>
-        <translation>O documento importado está esperando uma aprovação para ser publicado.</translation>
-    </message>
-    <message>
-        <source>Import document</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -165,6 +165,10 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     <message>
         <source>Unable to open file %1 on server side</source>
         <translation>Não foi possível abrir o documento %1 no lado do servidor</translation>
+    </message>
+    <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>A conversão para PDF ou Word está desativada (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
@@ -215,19 +219,19 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>Tipo de documento:</translation>
+        <translation>Tipo de arquivo: </translation>
     </message>
     <message>
-        <source>Unable to fetch node with id  </source>
-        <translation type="obsolete">Não foi possível carregar o nó com o id  </translation>
+        <source>Unable to fetch node with id </source>
+        <translation>Não foi possível encontrar o nó com o id </translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
         <translation>A pasta para imagens não pôde ser criada, acesso negado.</translation>
     </message>
     <message>
-        <source>Document is not suported.</source>
-        <translation type="obsolete">O documento não é suportado.</translation>
+        <source>Document is not supported.</source>
+        <translation>Documento não é suportado.</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
@@ -242,20 +246,24 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
         <translation>Não foi possível armazenar o documento enviado, importação cancelada.</translation>
     </message>
     <message>
-        <source>Unable to fetch node with id </source>
-        <translation>Não foi possível encontrar o nó com o id </translation>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>O arquivo não é um arquivo OpenDocument que possa ser importado.</translation>
     </message>
     <message>
-        <source>Document is not supported.</source>
-        <translation>Documento não é suportado.</translation>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>A conversão de documentos está desativada (odf.ini [ODFImport] ConversionDaemon).</translation>
+    </message>
+    <message>
+        <source>Unable to fetch node with id  </source>
+        <translation type="obsolete">Não foi possível carregar o nó com o id  </translation>
+    </message>
+    <message>
+        <source>Document is not suported.</source>
+        <translation type="obsolete">O documento não é suportado.</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/popupmenu</name>
-    <message>
-        <source>Export OpenOffice</source>
-        <translation>Exportar OpenOffice</translation>
-    </message>
     <message>
         <source>Export PDF</source>
         <translation>Exportar PDF</translation>
@@ -265,16 +273,20 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
         <translation>Exportar Word</translation>
     </message>
     <message>
+        <source>OpenOffice.org</source>
+        <translation>OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>Export OpenOffice</source>
+        <translation>Exportar OpenOffice</translation>
+    </message>
+    <message>
         <source>Import OpenOffice</source>
         <translation>Importar OpenOffice</translation>
     </message>
     <message>
         <source>Replace OpenOffice</source>
         <translation>Substituir OpenOffice</translation>
-    </message>
-    <message>
-        <source>OpenOffice.org</source>
-        <translation>OpenOffice.org</translation>
     </message>
 </context>
 </TS>

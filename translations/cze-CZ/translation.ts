@@ -5,54 +5,46 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit nebo aktualizovat překlad v jazyce:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Existující překlady</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Nové překlady</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat do:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
     <message>
-        <source>OpenOffice.org export</source>
-        <translation>OpenOffice.org export</translation>
-    </message>
-    <message>
-        <source>Export Exponential content to OpenOffice.org</source>
-        <translation>Exportovat obsah Exponential do OpenOffice.org</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Chyba</translation>
-    </message>
-    <message>
-        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
-        <translation>Zde můžete exportovat jakýkoli předmět obsahu Exponential do formátu dokumentu OpenOffice.org Writer.</translation>
     </message>
     <message>
         <source>Export Object</source>
         <translation>Exportovat Předmět</translation>
     </message>
     <message>
-        <source>Document is now imported</source>
-        <translation>Dokument je nyní importovaný</translation>
-    </message>
-    <message>
         <source>OpenOffice.org import</source>
         <translation>Import OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>OpenOffice.org export</source>
+        <translation>Export do OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>Document is now imported</source>
+        <translation>Dokument je nyní importovaný</translation>
     </message>
     <message>
         <source>The object was imported as: %class_name</source>
@@ -63,16 +55,8 @@
         <translation>Dokument importovaný jako</translation>
     </message>
     <message>
-        <source>The images are placed in the media library and can be re-used.</source>
-        <translation>Obrázky jsou vkládány do mediální knihovny a mohou býti znovu použity.</translation>
-    </message>
-    <message>
         <source>Import another document</source>
         <translation>Importovat další dokument</translation>
-    </message>
-    <message>
-        <source>Upload file</source>
-        <translation type="obsolete">Nahrát soubor</translation>
     </message>
     <message>
         <source>Import OpenOffice.org document</source>
@@ -87,19 +71,38 @@
         <translation>Importovat do</translation>
     </message>
     <message>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Exportovat obsah Exponential do OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Zde můžete exportovat jakýkoli předmět obsahu Exponential do formátu dokumentu OpenOffice.org Writer.</translation>
+    </message>
+    <message>
+        <source>The images are placed in the media library and can be re-used.</source>
+        <translation>Obrázky jsou vkládány do mediální knihovny a mohou býti znovu použity.</translation>
+    </message>
+    <message>
         <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Můžete importovat dokumenty OpenOffice.org Writer přímo do Exponential z této stránky. Jste optáni kam umístit dokument a Exponential se postará o zbytek. Dokument je  převeden do odpovídající třídy během importu, poté co je import hotový, obdržíte o tom zprávu. Obrázky jsou umístěny v mediální knihovně, tudíž je můžete znovu použít v dalších článcích.</translation>
+        <translation>Z této stránky můžete importovat dokumenty OpenOffice.org Writer přímo do Exponential. Budete
+dotázáni, kam dokument umístit, a Exponential se postará o zbytek. Dokument se během importu převede do
+odpovídající třídy, po dokončení importu o tom obdržíte upozornění.
+Obrázky se umístí do knihovny médií, takže je můžete znovu použít v dalších článcích.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovaný dokument čeká na schválení k publikování.</translation>
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat dokument</translation>
+    </message>
+    <message>
+        <source>Upload file</source>
+        <translation type="obsolete">Nahrát soubor</translation>
     </message>
 </context>
 <context>
@@ -114,11 +117,11 @@ Images are placed in the media library so you can re-use them in other articles.
     Select the placements and click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Prosím vyberte umístění pro předmět OpenOffice.org.
-Vyberte umístění a klikněte na %buttonname tlačítko.
-Pro rychlé umístění je také možné použít již zmíněné a záložky
-Klikněte na uspořádání jmen pro změnu prohlížení seznamu.
-</translation>
+        <translation>Vyberte umístění pro objekt OpenOffice.org.
+
+    Vyberte umístění a klikněte na tlačítko %buttonname.
+    Pro rychlé umístění lze použít také nedávné položky a záložky.
+    Kliknutím na název umístění změníte zobrazený seznam.</translation>
     </message>
     <message>
         <source>Select</source>
@@ -129,111 +132,114 @@ Klikněte na uspořádání jmen pro změnu prohlížení seznamu.
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation type="unfinished">Není podporován cílový formát souboru
-</translation>
+        <translation>Cílový formát souboru není podporován</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation type="unfinished">PDF konverze selhala</translation>
+        <translation>Převod do PDF se nezdařil</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation type="unfinished">Word konverze selhala</translation>
+        <translation>Převod do formátu Word se nezdařil</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation type="unfinished">Není možné dosáhnout uzlu nebo přečíst přístup</translation>
+        <translation>Nelze načíst uzel nebo chybí oprávnění ke čtení</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation type="unfinished">Není možné otevřít file %1 na straně serveru</translation>
+        <translation>Nelze otevřít soubor %1 na straně serveru</translation>
+    </message>
+    <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Převod do PDF nebo Word je vypnutý (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation type="unfinished">Není povolen typ nebo přípona souboru.</translation>
+        <translation>Přípona nebo typ souboru nejsou povoleny.</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation type="unfinished">Není možné analyzovat XML.</translation>
+        <translation>Nelze zpracovat XML.</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation type="unfinished">Nemůže otevřít port. Prosím zkontrolujte, zda funguje extension/ezodf/daemon.php.</translation>
+        <translation>Nelze otevřít socket. Zkontrolujte, zda běží extension/ezodf/daemon.php.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation type="unfinished">Nemůže konvertovat daný dokument.</translation>
+        <translation>Daný dokument nelze převést.</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation type="unfinished">Není možné se spojit s daemon. Fork nemůže vytvořit podřízený proces.</translation>
+        <translation>Nelze zavolat démona. Fork nemůže vytvořit podřízený proces.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation type="unfinished">Daemon nahlásil chybu.</translation>
+        <translation>Démon nahlásil chybu.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation type="unfinished">Neznámý uzel.</translation>
+        <translation>Neznámý uzel.</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation type="unfinished">Přístup odmítnut.</translation>
+        <translation>Přístup odepřen.</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation type="unfinished">Chyba během importu.</translation>
+        <translation>Chyba během importu.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation type="unfinished">Neznámá kvalita obsahu specifikovaná v odf. ini:</translation>
+        <translation>Neznámá třída obsahu zadaná v odf.ini:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation type="unfinished">Neznámá chyba.</translation>
+        <translation>Neznámá chyba.</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation type="unfinished">Tip souboru:</translation>
-    </message>
-    <message>
-        <source>Folder for images could not be created, access denied.</source>
-        <translation type="unfinished">Složka pro obrázky nemůže být vytvořena, přístup byl odmítnut.</translation>
-    </message>
-    <message>
-        <source>Document is not supported.</source>
-        <translation type="unfinished">Dokument není podporován.</translation>
-    </message>
-    <message>
-        <source>Cannot import. File not found. Already imported?</source>
-        <translation type="unfinished">Nemůže importovat. Soubor nenalezen. Již importováno?</translation>
-    </message>
-    <message>
-        <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation type="unfinished">Nemůže importovat dokument, podporované umístění uzluID není platné.</translation>
-    </message>
-    <message>
-        <source>Cannot store uploaded file, cannot import.</source>
-        <translation type="unfinished">Nemůže uložit nahraný soubor, nemůže importovat.</translation>
+        <translation>Typ souboru: </translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze načíst uzel s ID </translation>
+    </message>
+    <message>
+        <source>Folder for images could not be created, access denied.</source>
+        <translation>Složku pro obrázky nelze vytvořit, přístup odepřen.</translation>
+    </message>
+    <message>
+        <source>Document is not supported.</source>
+        <translation>Dokument není podporován.</translation>
+    </message>
+    <message>
+        <source>Cannot import. File not found. Already imported?</source>
+        <translation>Nelze importovat. Soubor nenalezen. Byl již importován?</translation>
+    </message>
+    <message>
+        <source>Cannot import document, supplied placement nodeID is not valid.</source>
+        <translation>Dokument nelze importovat, zadané ID uzlu pro umístění není platné.</translation>
+    </message>
+    <message>
+        <source>Cannot store uploaded file, cannot import.</source>
+        <translation>Nahraný soubor nelze uložit, import nelze provést.</translation>
+    </message>
+    <message>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>Soubor není dokument OpenDocument, který lze importovat.</translation>
+    </message>
+    <message>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Převod dokumentů je vypnutý (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/popupmenu</name>
-    <message>
-        <source>OpenOffice.org</source>
-        <translation>OpenOffice.org</translation>
-    </message>
-    <message>
-        <source>Export OpenOffice</source>
-        <translation>Exportovat OpenOffice</translation>
-    </message>
     <message>
         <source>Export PDF</source>
         <translation>Exportovat PDF</translation>
@@ -241,6 +247,14 @@ Klikněte na uspořádání jmen pro změnu prohlížení seznamu.
     <message>
         <source>Export Word</source>
         <translation>Exportovat Word</translation>
+    </message>
+    <message>
+        <source>OpenOffice.org</source>
+        <translation>OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>Export OpenOffice</source>
+        <translation>Exportovat OpenOffice</translation>
     </message>
     <message>
         <source>Import OpenOffice</source>

@@ -5,31 +5,27 @@
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>File:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea o aggiorna la traduzione in:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduzioni esistenti</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuove traduzioni</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa in:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
-    <message>
-        <source>Upload file</source>
-        <translation type="obsolete">Carica file</translation>
-    </message>
     <message>
         <source>Error</source>
         <translation>Errore</translation>
@@ -91,8 +87,10 @@
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Puoi importare documenti OpenOffice.org Writer direttamente in Exponential da questa pagina. Ti verrà chiesto dove posizionare i documenti e Exponential farà il resto. Il documento viene convertito nella classe appropriata durante l&apos;importazione, ne riceverai notifica al completamento dell&apos;importazione.
-Le immagini vengono collocate nella libreria media in modo da poter essere riutilizzate.</translation>
+        <translation>Puoi importare documenti OpenOffice.org Writer direttamente in Exponential da questa pagina. Ti verrà
+chiesto dove collocare il documento ed Exponential farà il resto. Durante l&apos;importazione il documento viene convertito
+nella classe appropriata; al termine riceverai una notifica.
+Le immagini vengono collocate nella libreria media, così puoi riutilizzarle in altri articoli.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>
@@ -100,7 +98,11 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa documento</translation>
+    </message>
+    <message>
+        <source>Upload file</source>
+        <translation type="obsolete">Carica file</translation>
     </message>
 </context>
 <context>
@@ -116,8 +118,9 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
         <translation>Scegli la collocazione per l&apos;oggetto OpenOffice.org.
-    Scegli le tue collocazioni e premi il pulsante %buttonname.
-    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
+
+    Seleziona le collocazioni e premi il pulsante %buttonname.
+    Per una collocazione rapida puoi usare anche gli elementi recenti e i preferiti.
     Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
@@ -146,6 +149,10 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
     <message>
         <source>Unable to open file %1 on server side</source>
         <translation>Impossibile aprire il file %1 sul server</translation>
+    </message>
+    <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>La conversione in PDF o Word è disattivata (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
@@ -199,8 +206,16 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
         <translation>Tipo di file: </translation>
     </message>
     <message>
+        <source>Unable to fetch node with id </source>
+        <translation>Impossibile trovare il nodo con id </translation>
+    </message>
+    <message>
         <source>Folder for images could not be created, access denied.</source>
         <translation>La cartella per le immagini non può essere creata, accesso negato.</translation>
+    </message>
+    <message>
+        <source>Document is not supported.</source>
+        <translation>Documento non supportato.</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
@@ -215,12 +230,12 @@ Le immagini vengono collocate nella libreria media in modo da poter essere riuti
         <translation>Impossibile salvare il file caricato, impossibile importare.</translation>
     </message>
     <message>
-        <source>Unable to fetch node with id </source>
-        <translation>Impossibile trovare il nodo con id</translation>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>Il file non è un file OpenDocument importabile.</translation>
     </message>
     <message>
-        <source>Document is not supported.</source>
-        <translation>Documento non supportato.</translation>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>La conversione dei documenti è disattivata (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
