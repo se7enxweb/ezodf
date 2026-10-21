@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Export Exponential content to OpenOffice.org</source>
-        <translation>Exponential içeriğini OpenOffice.org'a aktar</translation>
+        <translation>Exponential içeriğini OpenOffice.org&apos;a aktar</translation>
     </message>
     <message>
         <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
@@ -87,7 +87,7 @@
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Bu sayfadan OpenOffice.org Writer belgelerini doğrudan Exponential'a aktarabilirsiniz. Size belgenin
+        <translation>Bu sayfadan OpenOffice.org Writer belgelerini doğrudan Exponential&apos;a aktarabilirsiniz. Size belgenin
 nereye yerleştirileceği sorulur ve gerisini Exponential halleder. Belge içe aktarma sırasında uygun
 sınıfa dönüştürülür; içe aktarma bittikten sonra bununla ilgili bir bildirim alırsınız.
 Görseller medya kitaplığına yerleştirilir; böylece onları başka makalelerde yeniden kullanabilirsiniz.</translation>
@@ -148,7 +148,7 @@ Görseller medya kitaplığına yerleştirilir; böylece onları başka makalele
     </message>
     <message>
         <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
-        <translation>PDF veya Word'e dönüştürme devre dışı (odf.ini [ODFImport] ConversionDaemon).</translation>
+        <translation>PDF veya Word&apos;e dönüştürme devre dışı (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
@@ -254,7 +254,7 @@ Görseller medya kitaplığına yerleştirilir; böylece onları başka makalele
     </message>
     <message>
         <source>Import OpenOffice</source>
-        <translation>OpenOffice'ten içe aktar</translation>
+        <translation>OpenOffice&apos;ten içe aktar</translation>
     </message>
     <message>
         <source>Replace OpenOffice</source>
