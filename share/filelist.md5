@@ -10,7 +10,7 @@ a65c763ef0340e232cfe8c274f56fca0  .github/FUNDING.yml
 f4468e03e367a03a056d70ef50c24ee8  classes/converter/expodfaiassist.php
 df17145cf30139dc0342dd112b4c476e  classes/converter/expodfbatch.php
 af1c81a9e6b7f2e85441de374b604937  classes/converter/expodfcleanup.php
-223d5e7025776d66baa14eaef7eeebb4  classes/converter/expodfconverter.php
+ff284c07f7b96bf6326c3d0033164a73  classes/converter/expodfconverter.php
 97b5ee8e00b1f46ef0b16456189b48a0  classes/converter/expodfconverteradmin.php
 d7f32e3ae989517267393dd15006f8f5  classes/converter/expodfconverterexception.php
 7a5077d0448690b148bdeab6812ec1f6  classes/converter/expodfconvertertest.php
@@ -20,7 +20,7 @@ d713542f8f8a49fce3017b0f95b36e6b  classes/converter/expodfdocumentsadmin.php
 64925222e9a6624de1ab093444a83854  classes/converter/expodfinstallation.php
 e838f4fe9543ffae73e7e0de65c43dbc  classes/converter/expodfinstaller.php
 3cf910c265b6b191b9275688b42c50d5  classes/converter/expodfjobs.php
-ed0f383f1662d7803c7dfab413d104f8  classes/converter/expodfpaths.php
+03ece7764c70c1ce2f889f8fb847ad43  classes/converter/expodfpaths.php
 7b248ec51e965ddb88588c4bbf5621f7  classes/converter/expodfphpconverter.php
 2db6fb9db6373d6ba5e2ac1c7e049441  classes/converter/expodfqueuehandler.php
 33341613209cbdf7170e57c5a8e52d29  classes/converter/expodfremotefetcher.php
@@ -52,7 +52,7 @@ ce97b9a1fab1e789b67ecf85e823597f  classes/sqliimport/expodfimportonedrivesource.
 127323e17799ab027ccdf00f49531bd2  design/standard/templates/ezodf/batch.tpl
 4f6471760b3359337552c3711e8a73e2  design/standard/templates/ezodf/browse_place.tpl
 f3f0a6abc5851b1d3856a41e60e37bb6  design/standard/templates/ezodf/converter.tpl
-4ddf6296053a04d8bc24237bc4f78574  design/standard/templates/ezodf/documents.tpl
+de84d244f2ae157a226a819e544407e3  design/standard/templates/ezodf/documents.tpl
 3ec9e58b36c83dd4f9fbddc72a9a38eb  design/standard/templates/ezodf/export.tpl
 3bd068cd7cb3415a1c8550c8bc9a28ce  design/standard/templates/ezodf/export_documents.tpl
 8d7778abb793ac004a8573a9a2eeb99c  design/standard/templates/ezodf/icon.tpl
