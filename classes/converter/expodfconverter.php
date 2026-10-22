@@ -271,8 +271,13 @@ class expOdfConverter
         $start = microtime( true );
         // the server may have other jobs before this one: wait for the queue plus this job's timeout
         $deadline = $start + $timeout + 30 + 5 * count( glob( expOdfServer::spoolDir() . '/*/request.json' ) ?: array() );
-        while ( !is_file( $dir . '/result.json' ) )
+        while ( true )
         {
+            // the server writes result.json and takes request.json: forget what the stat functions remembered, as a
+            // Velocity worker keeps their answers for the whole request (without this the export waited forever on :8080)
+            clearstatcache();
+            if ( is_file( $dir . '/result.json' ) )
+                break;
             if ( microtime( true ) > $deadline || ( is_file( $dir . '/request.json' ) && !expOdfServer::running() ) )
             {
                 expOdfPaths::remove( $dir );
@@ -317,6 +322,7 @@ class expOdfConverter
                                             array( 'seconds' => $timeout, 'memory' => expOdfSettings::get( 'converter.memory_megabytes' ),
                                                    'fsize' => max( 256, expOdfSettings::get( 'converter.max_megabytes' ) * 8 ), 'cpu' => $timeout * 2 ) );
             $r = expOdfSandbox::run( $argv, $timeout + 10 );
+            clearstatcache(); // LibreOffice wrote the output: no remembered "not there"
         }
         finally
         {

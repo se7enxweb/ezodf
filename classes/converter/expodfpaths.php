@@ -132,6 +132,9 @@ class expOdfPaths
     /** @return array the JSON of a file, array() when missing or broken */
     public static function readJson( $file )
     {
+        // written by another process (the conversion server, a job): in a Velocity worker an earlier answer about the
+        // file is remembered for the request until clearstatcache()
+        clearstatcache( true, $file );
         if ( !is_file( $file ) )
             return array();
         $data = json_decode( (string)@file_get_contents( $file ), true );
