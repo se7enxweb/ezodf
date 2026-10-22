@@ -1,38 +1,57 @@
-eZ Publish OpenOffice.org extension
-===================================
-This extension enables import and export of OpenOffice.org Writer documents within 
-eZ Publish. It comes with a general OpenOffice.org Writer document generation library 
-as well, if you have custom modules that needs to generate OpenOffice.org Writer 
-documents.
+ezodf: documents in and out of Exponential
+==========================================
 
-Requires OpenOffice (or deratives like LibreOffice*) 2.4 or higher
+ezodf imports documents into Exponential and exports items as documents: Word (DOCX, DOC), OpenDocument, RTF,
+PDF, Markdown, HTML, spreadsheets, presentations and the formats of OpenOffice.org 1.x and StarOffice, with
+LibreOffice as the converter.
 
-For documentation look under doc/*
+Everything is done in the administration (no command line needed):
 
-* You might need to customize $ooexecutable in scripts/*.php to support this.
+- Setup > System > Document converter: install LibreOffice with one click (the official build, checked against
+  its checksum and signature, into var/, no root needed) or use the system's; a sandboxed conversion server;
+  test conversions; limits; a remote unoserver or Gotenberg.
+- Documents > Import documents: files, a whole folder (its tree becomes folders), ZIP archives and web addresses,
+  converted and published by background jobs, with a live page per import and retry.
+- Documents > Export documents: any item as DOCX, PDF, ODT, RTF, DOC, XHTML, EPUB or text; a folder as a ZIP.
+- With 7x SQLI Import: document formats with mapping, dry run, undo and schedules (an upload or ZIP, web
+  addresses, feeds, WebDAV/Nextcloud, Google Drive, OneDrive, mailboxes).
 
+The manual is in doc/index.md (German: doc/ger-de/index.md) and in the help center of the administration.
 
+Requirements
+------------
+
+- Exponential 6 with the extension expqueue (the job queue) for the background work; the cron job every
+  installation runs (runcronjobs.php expqueue, every minute).
+- PHP 8.1 or later with zip, dom, curl; proc_open allowed.
+- For the converter: Linux; bubblewrap (bwrap) for the sandbox; about 2 GB below var/ for a LibreOffice installed
+  from the administration, or LibreOffice from the system packages (doc/hosting.md).
+
+Upgrading to 7.0
+----------------
+
+- The 4.x conversion daemon (scripts/daemon.php, odf.ini [ODFImport] ConversionDaemon) is no longer needed.
+  Sites that run it keep it by leaving ConversionDaemon=enabled; otherwise the new converter is used.
+- odf.ini [DocumentType] ConvertTypes[] lists every format the converter takes; a site override of it keeps
+  working (it narrows the formats).
+- New right: ezodf/converter (the Document converter page). ezodf/import and ezodf/export keep their meaning.
+- Settings changed on the Document converter page are kept in var/<site>/ezodf/settings.json, over odf.ini.
+- The PHP zip extension (ext-zip) is required: uploaded documents are checked before anything is extracted.
+- Tests: vendor/bin/phpunit --no-configuration --bootstrap extension/ezodf/tests/bootstrap.php extension/ezodf/tests/
 
 Known limitations
 -----------------
 
-- Images in an imported document are created only after the import's create (or edit) check on the
-  target node has passed, but the right to create image objects where they are placed is not checked
-  separately.
-- While exporting, if the user has not access to read images, they are just ignored. 
-  Should replace them with a dummy image which says "no access".
-- Importing document with images and storing the images in media does not work properly.
-
+- Images in an imported document are created only after the import's create (or edit) check on the target node
+  has passed, but the right to create image objects where they are placed is not checked separately.
+- While exporting, images the user may not read are left out.
+- Importing a document with odf.ini [ODFImport] PlaceImagesInMedia=true does not place its images properly.
 
 Upgrading to 6.1.10
 -------------------
 
-- The PHP zip extension (ext-zip) is required: uploaded OpenDocument files are checked and extracted
-  with ZipArchive. Every entry is checked before anything is written, only content.xml and Pictures/*
-  are extracted, with real byte limits (64 MiB per entry, 256 MiB in all, 10000 entries).
-- The document conversion daemon is disabled by default (odf.ini [ODFImport] ConversionDaemon=disabled).
-  Word (.doc) import and the PDF and Word export need it: set ConversionDaemon=enabled, start the daemon
-  with the directory it may convert in, and add the Word upload handler mapping (doc/README.daemon).
-- The OpenOffice.org client package (ooPackage/) and the server views it needed (authenticate,
-  upload_import, upload_export, which were already disabled) are removed.
-- Tests: vendor/bin/phpunit --bootstrap extension/ezodf/tests/bootstrap.php extension/ezodf/tests/
+- Uploaded OpenDocument files are checked and extracted with ZipArchive: every entry is checked before anything is
+  written, only content.xml and Pictures/* are extracted, with real byte limits (64 MiB per entry, 256 MiB in all,
+  10000 entries).
+- The OpenOffice.org client package (ooPackage/) and the server views it needed (authenticate, upload_import,
+  upload_export, which were already disabled) were removed.
