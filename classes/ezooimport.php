@@ -178,6 +178,39 @@ class eZOOImport
 
     /*!
      \static
+     A heading inside a list (the outline numbering of Word headings, as LibreOffice writes them) would become a
+     <header> in a list item, which the rich text refuses: the whole body was then stored as empty. A list whose
+     items hold nothing but headings (and such lists) is replaced by its headings, in their order; in a list with
+     other paragraphs a heading becomes a paragraph where it stands.
+    */
+    static function unwrapHeadingLists( DOMDocument $dom )
+    {
+        $xpath = new DOMXPath( $dom );
+        $xpath->registerNamespace( 'text', self::NAMESPACE_TEXT );
+        foreach ( iterator_to_array( $xpath->query( '//text:list[not(ancestor::text:list)][.//text:h]' ) ) as $list )
+        {
+            $other = $xpath->query( './/text:list-item/*[not(self::text:h) and not(self::text:list)] | .//text:list-header/*[not(self::text:h) and not(self::text:list)]', $list );
+            $headings = iterator_to_array( $xpath->query( './/text:h', $list ) );
+            if ( $other->length === 0 )
+            {
+                foreach ( $headings as $h )
+                    $list->parentNode->insertBefore( $h, $list );
+                $list->parentNode->removeChild( $list );
+                continue;
+            }
+            // a list with paragraphs and headings: the headings become bold paragraphs where they stand
+            foreach ( $headings as $h )
+            {
+                $p = $dom->createElementNS( self::NAMESPACE_TEXT, 'text:p' );
+                while ( $h->firstChild )
+                    $p->appendChild( $h->firstChild );
+                $h->parentNode->replaceChild( $p, $h );
+            }
+        }
+    }
+
+    /*!
+     \static
      Whether the import reads the archive entry \a $path: content.xml and the pictures it embeds. Nothing else
      of an uploaded document is extracted.
     */
@@ -708,6 +741,9 @@ class eZOOImport
             $this->setError( self::ERROR_PARSEXML );
             return false;
         }
+
+        // Word and RTF documents converted by LibreOffice number their headings with an outline list
+        self::unwrapHeadingLists( $dom );
 
 
         // Fetch the automatic document styles

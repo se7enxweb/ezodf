@@ -80,21 +80,30 @@ class eZOOConverter
 
         // @bf 2008-08-21: Fetch the current class identifier and the .ini settings for the enabled attributes for this
         $classIdentifier = $object->contentClassIdentifier();
-        $enabledClassAttributes = $odfINI->hasVariable( $classIdentifier, 'Attribute' ) ? $odfINI->variable( $classIdentifier, 'Attribute' ) : array();
+        // A class without an [<class>] Attribute[] list in odf.ini (ezodf 7: any item can be exported) gives every
+        // attribute of a supported datatype, in the order of the class
+        $enabledClassAttributes = $odfINI->hasVariable( $classIdentifier, 'Attribute' ) ? $odfINI->variable( $classIdentifier, 'Attribute' ) : null;
 
         foreach ( $attributes as $attribute )
         {
             $datatype = $attribute->attribute( 'data_type_string' );
             $identifier = $attribute->attribute( "contentclass_attribute_identifier" );
 
-            if ( !in_array( $datatype, $supportedDatatypes ) )
+            // @bf 2008-08-21: Only export attribute if it is enabled
+            if ( $enabledClassAttributes !== null && !array_key_exists( $identifier, $enabledClassAttributes ) )
             {
-                eZDebug::writeError( "Attribute '$identifier' with unsupported datatype '$datatype' for OO conversion" );
                 continue;
             }
 
-            // @bf 2008-08-21: Only export attribute if it is enabled
-            if ( !array_key_exists( $identifier, $enabledClassAttributes ) )
+            if ( !in_array( $datatype, $supportedDatatypes ) )
+            {
+                if ( $enabledClassAttributes !== null )
+                    eZDebug::writeError( "Attribute '$identifier' with unsupported datatype '$datatype' for OO conversion" );
+                continue;
+            }
+
+            // an empty attribute of a class without a list adds nothing (no empty heading)
+            if ( $enabledClassAttributes === null && !$attribute->hasContent() )
             {
                 continue;
             }
@@ -390,7 +399,8 @@ class eZOOConverter
 
                 foreach ( $child->childNodes as $inlineNode )
                 {
-                    $return = self::handleInlineNode( $inlineNode );
+                    // (the generator was missing: bold and italic text ended every export on PHP 8)
+                    $return = self::handleInlineNode( $inlineNode, $generator );
                     $paragraphParameters = array_merge( $paragraphParameters, $return['paragraph_parameters'] );
                 }
 

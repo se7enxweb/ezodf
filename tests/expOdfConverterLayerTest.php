@@ -227,6 +227,24 @@ class expOdfConverterLayerTest extends TestCase
         $this->assertSame( array( 'odt' => array( 'text' ), 'sxw' => array( 'text' ) ), expOdfFilterCatalogue::importExtensions( $filters ) );
     }
 
+    public function testHeadingListsBecomeHeadings()
+    {
+        $t = 'urn:oasis:names:tc:opendocument:xmlns:text:1.0';
+        $dom = new DOMDocument();
+        $dom->loadXML( '<o:body xmlns:o="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:text="' . $t . '"><o:text>'
+            . '<text:list><text:list-item><text:h text:outline-level="1">One</text:h><text:list><text:list-item><text:h text:outline-level="2">One.one</text:h></text:list-item></text:list></text:list-item></text:list>'
+            . '<text:p>Body</text:p>'
+            . '<text:list><text:list-item><text:p>A point</text:p></text:list-item><text:list-item><text:h>Odd</text:h></text:list-item></text:list>'
+            . '</o:text></o:body>' );
+        eZOOImport::unwrapHeadingLists( $dom );
+        $body = $dom->getElementsByTagNameNS( 'urn:oasis:names:tc:opendocument:xmlns:office:1.0', 'text' )->item( 0 );
+        $names = array();
+        foreach ( $body->childNodes as $n )
+            $names[] = $n->localName . ':' . trim( $n->textContent );
+        $this->assertSame( array( 'h:One', 'h:One.one', 'p:Body', 'list:A pointOdd' ), $names, 'the outline list is gone, the mixed list stays' );
+        $this->assertSame( 2, $dom->getElementsByTagNameNS( $t, 'h' )->length, 'the heading inside the mixed list became a paragraph' );
+    }
+
     public function testRemoveNeverLeavesTheBase()
     {
         $outside = sys_get_temp_dir() . '/ezodf-outside-' . bin2hex( random_bytes( 4 ) );
