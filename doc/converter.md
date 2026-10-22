@@ -69,6 +69,15 @@ Instead of LibreOffice on this server: an existing **unoserver** (its XML-RPC ad
 every format) or **Gotenberg** (`http://gotenberg:3000`; PDF only, other conversions fall back to this server), with
 an optional user and password. **Save and test** checks that it answers.
 
+## AI assist
+
+With Exponential Intelligence (expai) installed, **Offer AI suggestions on the import page** adds the option
+**Suggest a summary, keywords and image texts with AI** to Import documents. For each document of such an import the
+AI suggests a summary for the intro and keywords; they are listed on the page of the import and written into the item
+(a new version) only when someone clicks **Apply to the item** or **Apply all AI suggestions**. Only the document's
+own text (its first 6000 characters) is sent, under the gate and the data policy of Exponential Intelligence, and
+every call is in its usage log. Off by default.
+
 ## Log, formats, disk use
 
 The server's log, the formats of the active LibreOffice (OpenOffice.org 1.x and StarOffice formats are marked), and
