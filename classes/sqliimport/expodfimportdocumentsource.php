@@ -253,7 +253,7 @@ class expOdfImportDocumentSource extends expImportJsonSource
     {
         $name = basename( $path );
         $parent = dirname( $path );
-        $base = array( 'id' => $path, 'kind' => 'document', 'path' => $path, 'folder' => $parent === '.' ? '' : $parent,
+        $base = array( 'id' => isset( $extra['id'] ) && $extra['id'] !== '' ? (string)$extra['id'] : $path, 'kind' => 'document', 'path' => $path, 'folder' => $parent === '.' ? '' : $parent,
                        'parent_path' => $parent === '.' ? '' : $parent, 'name' => $name ) + $extra;
         try
         {
@@ -371,7 +371,7 @@ class expOdfImportDocumentSource extends expImportJsonSource
                 $extra = $doc;
                 unset( $extra['file'], $extra['path'] );
                 if ( isset( $doc['error'] ) )
-                    $record = array( 'id' => $doc['path'], 'kind' => 'document', 'path' => $doc['path'], 'name' => basename( $doc['path'] ), '_error' => $doc['error'] ) + $extra;
+                    $record = array( 'id' => isset( $doc['id'] ) && $doc['id'] !== '' ? (string)$doc['id'] : $doc['path'], 'kind' => 'document', 'path' => $doc['path'], 'name' => basename( $doc['path'] ), '_error' => $doc['error'] ) + $extra;
                 else
                 {
                     // the original file stays with the run: a mapping can store it in a file attribute

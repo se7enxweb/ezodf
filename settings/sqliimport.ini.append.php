@@ -7,6 +7,10 @@
 Sources[]=documents
 Sources[]=document_urls
 Sources[]=document_feed
+Sources[]=webdav
+Sources[]=google_drive
+Sources[]=onedrive
+Sources[]=mailbox_documents
 
 [Source_documents]
 Class=expOdfImportDocumentSource
@@ -16,5 +20,17 @@ Class=expOdfImportDocumentUrlsSource
 
 [Source_document_feed]
 Class=expOdfImportDocumentFeedSource
+
+[Source_webdav]
+Class=expOdfImportWebdavSource
+
+[Source_google_drive]
+Class=expOdfImportGoogleDriveSource
+
+[Source_onedrive]
+Class=expOdfImportOneDriveSource
+
+[Source_mailbox_documents]
+Class=expOdfImportMailboxDocumentsSource
 
 */ ?>
