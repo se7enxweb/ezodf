@@ -152,7 +152,7 @@ class expOdfExporter
             if ( in_array( $job['state'], array( 'failed', 'cancelled' ), true ) )
             {
                 $data['state'] = 'failed';
-                $data['message'] = $job['message'];
+                $data['message'] = expOdfConverter::scrub( $job['message'] );
             }
         }
         return $data;
@@ -227,7 +227,7 @@ class expOdfExporter
             catch ( Throwable $ex ) // one item that cannot be written never stops the others
             {
                 $data['failed']++;
-                $data['errors'][] = $path . ': ' . $ex->getMessage();
+                $data['errors'][] = $path . ': ' . expOdfConverter::scrub( $ex->getMessage() );
             }
         }
         if ( $data['errors'] )

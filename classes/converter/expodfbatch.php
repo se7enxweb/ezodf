@@ -354,7 +354,7 @@ class expOdfBatch
         }
         catch ( Throwable $e ) // a PHP Error of a parser too: the item must not stay "running"
         {
-            $message = $e->getMessage();
+            $message = expOdfConverter::scrub( $e->getMessage() );
             $batch->setItem( $itemID, array( 'state' => 'failed', 'message' => $message, 'finished' => time(),
                                              'code' => $e instanceof expOdfConverterException ? $e->code() : 'error' ) );
             throw $e instanceof expOdfConverterException ? $e : new expOdfConverterException( 'convert', $message );
@@ -387,7 +387,7 @@ class expOdfBatch
             foreach ( $stale as $id => $job )
             {
                 $run['items'][$id]['state'] = $job['state'] === 'cancelled' ? 'cancelled' : 'failed';
-                $run['items'][$id]['message'] = $job['message'] !== '' ? $job['message'] : 'the background job ended without a result';
+                $run['items'][$id]['message'] = $job['message'] !== '' ? expOdfConverter::scrub( $job['message'] ) : 'the background job ended without a result';
                 $run['items'][$id]['finished'] = time();
             }
         } );

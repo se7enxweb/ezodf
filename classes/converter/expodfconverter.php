@@ -405,6 +405,12 @@ class expOdfConverter
         }
     }
 
+    /** @return string a message without server paths (a path becomes its file name), for a page an editor reads */
+    public static function scrub( $text )
+    {
+        return self::shorten( $text );
+    }
+
     protected static function shorten( $text )
     {
         // no server path in a message an editor reads: a path becomes its file name
