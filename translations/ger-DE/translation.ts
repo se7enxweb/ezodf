@@ -254,4 +254,23 @@ Images are placed in the media library so you can re-use them in other articles.
         <translation>OpenOffice ersetzen</translation>
     </message>
 </context>
+<context>
+    <name>kernel/transfer</name>
+    <message>
+        <source>Word and OpenDocument</source>
+        <translation>Word und OpenDocument</translation>
+    </message>
+    <message>
+        <source>Turn a Word or OpenDocument text into an item (or a translation of one), or download an item as a document to edit in a word processor.</source>
+        <translation>Einen Word- oder OpenDocument-Text zu einem Objekt (oder der Übersetzung eines Objekts) machen, oder ein Objekt als Dokument herunterladen, um es in einer Textverarbeitung zu bearbeiten.</translation>
+    </message>
+    <message>
+        <source>Import a Word or OpenDocument file here…</source>
+        <translation>Eine Word- oder OpenDocument-Datei hier importieren …</translation>
+    </message>
+    <message>
+        <source>Download as an OpenDocument text…</source>
+        <translation>Als OpenDocument-Text herunterladen …</translation>
+    </message>
+</context>
 </TS>
