@@ -1301,8 +1301,8 @@ class eZOOImport
 
                 $objectName = basename( $originalFileName );
 
-                // Remove extension from name
-                $objectName = preg_replace( "/(\....)$/", "", $objectName );
+                // Remove the extension from the name (any: docx, xlsx, markdown ..., not only three letters)
+                $objectName = preg_replace( "/\.[A-Za-z0-9]{1,8}$/", "", $objectName );
                 // Convert _ to spaces and upcase the first character
                 $objectName = ucfirst( str_replace( "_", " ", $objectName ) );
 
@@ -1522,6 +1522,9 @@ class eZOOImport
                         {
                             foreach ( $style->childNodes as $styleChild )
                             {
+                                // whitespace between the properties of a style is a text node: it has no attributes
+                                if ( $styleChild->nodeType !== XML_ELEMENT_NODE )
+                                    continue;
                                 $fontWeight = $styleChild->getAttributeNS( self::NAMESPACE_FO, 'font-weight' );
                                 $fontStyle = $styleChild->getAttributeNS( self::NAMESPACE_FO, 'font-style' );
                             }
@@ -1777,10 +1780,10 @@ class eZOOImport
                                     $rowContent = "";
                                     foreach ( $headerRow->childNodes as $tableCell )
                                     {
-                                        $colSpan = $tableCell->getAttributeNS( self::NAMESPACE_TABLE, 'number-columns-spanned' );
-
+                                        // whitespace between header cells is a text node: only a cell has the attribute
                                         if ( $tableCell->localName == 'table-cell' )
                                         {
+                                            $colSpan = $tableCell->getAttributeNS( self::NAMESPACE_TABLE, 'number-columns-spanned' );
                                             $cellContent = "";
                                             foreach ( $tableCell->childNodes as $tableContentNode )
                                             {
@@ -2050,7 +2053,7 @@ class eZOOImport
                                     if ( $style->childNodes->length == 1 )
                                     {
                                         $properties = $style->childNodes->item( 0 );
-                                        $alignment = $properties->getAttributeNS( self::NAMESPACE_STYLE, "horizontal-pos" );
+                                        $alignment = $properties instanceof DOMElement ? $properties->getAttributeNS( self::NAMESPACE_STYLE, "horizontal-pos" ) : '';
                                     }
 
                                     // Check image alignment
