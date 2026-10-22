@@ -58,3 +58,6 @@
 /* space between the parts below the form */
 .a4-ezodf-section { margin: var(--a4-space-4) 0 0; }
 .a4-page.a4-ezodf > .box-bc .a4-card + .a4-card { margin-top: var(--a4-space-3); }
+
+/* ---- Export documents: the format buttons in a row that wraps ---- */
+.a4-ezodf-formats-list { display: flex; flex-wrap: wrap; gap: var(--a4-space-2); margin: 0; padding: 0; list-style: none; }

@@ -8,7 +8,9 @@
  *   batch           one import of documents with each document's state, retry, cancel
  *   batchstatus     the live state of a batch as JSON
  *   runs            the imports of documents
- *   export          one item as ODT (6.x, kept)
+ *   export          Export documents: one item as ODT, DOCX, PDF, RTF, DOC, XHTML, EPUB or text; a folder as a ZIP
+ *   exportfile      the ZIP of a folder export
+ *   exportstatus    whether a folder export still runs (JSON)
  *   converter       Document converter: the LibreOffice installation (one-click install, the installed one, update,
  *                   remove), the conversion server (on, off, restart, status, log), test conversions, a remote server,
  *                   the limits, the formats, cleanup; policy ezodf/converter
@@ -61,6 +63,16 @@ $ViewList['runs'] = array(
     'params' => array(),
     'functions' => array( 'import' ),
     'default_navigation_part' => 'ezsetupnavigationpart' );
+
+$ViewList['exportfile'] = array(
+    'script' => 'exportfile.php',
+    'params' => array( 'ExportID' ),
+    'functions' => array( 'export' ) );
+
+$ViewList['exportstatus'] = array(
+    'script' => 'exportstatus.php',
+    'params' => array(),
+    'functions' => array( 'export' ) );
 
 $ViewList['converter'] = array(
     'script' => 'converter.php',
