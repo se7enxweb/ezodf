@@ -250,6 +250,23 @@
 </div>
 </section>
 
+{* ---- AI assist (expai, opt-in) ---- *}
+<section class="a4-card" aria-labelledby="ezodf-ai">
+<div class="a4-card-head"><h2 class="a4-h2" id="ezodf-ai"><span class="a4-icon a4-bi-stars" aria-hidden="true"></span> {'AI assist'|i18n( $t )}</h2></div>
+<div class="a4-card-body">
+<p class="a4-help">{'When an import asks for it, the AI suggests a summary for the intro and keywords for each imported document. The suggestions are shown on the page of the import and applied only when someone clicks Apply. Only the document\'s own text is sent, under the rules and the data policy of Exponential Intelligence.'|i18n( $t )}</p>
+{if $c.ai_installed|not}
+<p class="a4-meta">{'Exponential Intelligence (expai) is not installed.'|i18n( $t )}</p>
+{else}
+<form method="post" action={$here|ezurl} class="a4-form"><input type="hidden" name="ConverterAction" value="ai" />
+<label class="a4-check"><input type="checkbox" name="AIEnabled" value="1"{if $c.settings['ai.enabled']} checked="checked"{/if}{if $c.writable|not} disabled="disabled"{/if} /> {'Offer AI suggestions on the import page'|i18n( $t )}</label>
+{if and( $c.settings['ai.enabled'], $c.ai_available|not )}<p class="a4-meta">{'Turned on, but Exponential Intelligence is switched off for this site.'|i18n( $t )}</p>{/if}
+{if $c.writable}<div class="a4-toolbar"><button type="submit" class="a4-btn">{'Save'|i18n( $t )}</button></div>{/if}
+</form>
+{/if}
+</div>
+</section>
+
 {* ---- log ---- *}
 <section class="a4-card" aria-labelledby="ezodf-log">
 <div class="a4-card-head"><h2 class="a4-h2" id="ezodf-log"><span class="a4-icon a4-bi-journal-text" aria-hidden="true"></span> {'Server log'|i18n( $t )}</h2></div>

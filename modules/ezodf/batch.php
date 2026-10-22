@@ -21,6 +21,28 @@ if ( strtoupper( (string)eZSys::serverVariable( 'REQUEST_METHOD', true ) ) === '
         $message = array( 'kind' => 'ok', 'message' => ezpI18n::tr( $t, '%n document(s) queued again.', null, array( '%n' => $batch->retryFailed() ) ) );
     elseif ( $http->hasPostVariable( 'RetryItem' ) )
         $message = array( 'kind' => 'ok', 'message' => ezpI18n::tr( $t, '%n document(s) queued again.', null, array( '%n' => $batch->retryFailed( array( (string)$http->postVariable( 'RetryItem' ) ) ) ) ) );
+    elseif ( $http->hasPostVariable( 'ApplyAI' ) )
+    {
+        // the AI suggestions of one item (or of every item: ApplyAI=all), applied by the person who clicked
+        $which = (string)$http->postVariable( 'ApplyAI' );
+        $done = 0;
+        $errors = array();
+        foreach ( $batch->run()['items'] as $id => $item )
+        {
+            if ( ( $which !== 'all' && $which !== $id ) || empty( $item['ai'] ) || isset( $item['ai']['error'] ) || !empty( $item['ai_applied'] ) || empty( $item['object_id'] ) )
+                continue;
+            $object = eZContentObject::fetch( (int)$item['object_id'] );
+            $error = $object ? expOdfAiAssist::apply( $object, $item['ai'] ) : 'the item is gone';
+            if ( $error === null )
+            {
+                $batch->setItem( $id, array( 'ai_applied' => time() ) );
+                $done++;
+            }
+            else
+                $errors[] = $item['name'] . ': ' . $error;
+        }
+        $message = array( 'kind' => $errors ? 'warn' : 'ok', 'message' => ezpI18n::tr( $t, 'Suggestions applied to %n item(s).', null, array( '%n' => $done ) ) . ( $errors ? ' ' . implode( '; ', $errors ) : '' ) );
+    }
     elseif ( $http->hasPostVariable( 'CancelButton' ) )
     {
         $batch->cancel();

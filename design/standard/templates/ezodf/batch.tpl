@@ -27,6 +27,7 @@
 <div class="a4-toolbar">
 {if $b.can_retry}<form method="post" action={concat( '/ezodf/batch/', $b.id )|ezurl} class="a4-ezodf-inline"><button type="submit" class="a4-btn a4-btn-primary" name="RetryFailedButton" value="1"><span class="a4-icon a4-bi-arrow-clockwise" aria-hidden="true"></span> {'Retry the failed documents'|i18n( $t )}</button></form>{/if}
 {if $b.busy}<form method="post" action={concat( '/ezodf/batch/', $b.id )|ezurl} class="a4-ezodf-inline" data-a4-confirm="{'Cancel the documents that have not started yet?'|i18n( $t )|wash}"><button type="submit" class="a4-btn a4-btn-outline-danger" name="CancelButton" value="1">{'Cancel'|i18n( $t )}</button></form>{/if}
+{if $b.ai_pending}<form method="post" action={concat( '/ezodf/batch/', $b.id )|ezurl} class="a4-ezodf-inline"><button type="submit" class="a4-btn" name="ApplyAI" value="all"><span class="a4-icon a4-bi-stars" aria-hidden="true"></span> {'Apply all AI suggestions (%n)'|i18n( $t,, hash( '%n', $b.ai_pending ) )}</button></form>{/if}
 <a class="a4-btn" href={concat( '/ezodf/import', cond( $b.parent, concat( '/(node_id)/', $b.parent.node_id ), '' ) )|ezurl}>{'Import more'|i18n( $t )}</a>
 <a class="a4-btn" href={'/ezodf/runs'|ezurl}>{'All imports'|i18n( $t )}</a>
 </div>
@@ -40,7 +41,12 @@
 <td class="a4-ezodf-path">{if eq( $i.kind, 'url' )}<span class="a4-icon a4-bi-link-45deg" aria-hidden="true"></span> {/if}{if eq( $i.kind, 'zip' )}<span class="a4-icon a4-bi-archive" aria-hidden="true"></span> {/if}{$i.name|wash}{if $i.url}<br /><span class="a4-meta">{$i.url|wash}</span>{/if}</td>
 <td class="a4-ezodf-hide-narrow a4-ezodf-path">{$i.folder|wash}</td>
 <td><span class="a4-badge{if eq( $i.state, 'done' )} is-ok{elseif eq( $i.state, 'failed' )} is-bad{elseif eq( $i.state, 'running' )} is-warn{/if}" data-ezodf-item-state>{$i.state_label|wash}</span></td>
-<td class="a4-ezodf-error" data-ezodf-item-message>{if and( $i.node_id, ne( $i.state, 'failed' ) )}<a href={concat( '/content/view/full/', $i.node_id )|ezurl}>{if $i.title}{$i.title|wash}{else}{'open'|i18n( $t )}{/if}</a>{if $i.class} <span class="a4-meta">{$i.class|wash}{if $i.backend} · {$i.backend|wash}{/if}</span>{/if}{if $i.message}<br />{/if}{/if}{$i.message|wash}</td>
+<td class="a4-ezodf-error" data-ezodf-item-message>{if and( $i.node_id, ne( $i.state, 'failed' ) )}<a href={concat( '/content/view/full/', $i.node_id )|ezurl}>{if $i.title}{$i.title|wash}{else}{'open'|i18n( $t )}{/if}</a>{if $i.class} <span class="a4-meta">{$i.class|wash}{if $i.backend} · {$i.backend|wash}{/if}</span>{/if}{if $i.message}<br />{/if}{/if}{$i.message|wash}
+{if $i.ai}{if is_set( $i.ai.error )}<p class="a4-meta">{'AI suggestion not available: %reason'|i18n( $t,, hash( '%reason', $i.ai.error ) )|wash}</p>{else}
+<details class="a4-fold a4-ezodf-ai"{if $i.ai_applied|not} open="open"{/if}><summary>{if $i.ai_applied}{'AI suggestion applied'|i18n( $t )}{else}{'AI suggestion'|i18n( $t )}{/if}</summary>
+<p>{$i.ai.summary|wash}</p>{if $i.ai.keywords|count}<ul class="a4-chips">{foreach $i.ai.keywords as $k}<li class="a4-chip">{$k|wash}</li>{/foreach}</ul>{/if}
+{if $i.ai_applied|not}<form method="post" action={concat( '/ezodf/batch/', $b.id )|ezurl} class="a4-ezodf-inline"><button type="submit" class="a4-btn a4-btn-small" name="ApplyAI" value="{$i.id|wash}">{'Apply to the item'|i18n( $t )}</button></form>{/if}
+</details>{/if}{/if}</td>
 <td class="a4-num a4-ezodf-hide-narrow">{if $i.seconds}{$i.seconds|l10n( 'number' )}{/if}</td>
 <td class="a4-end">{if and( or( eq( $i.state, 'failed' ), eq( $i.state, 'cancelled' ) ), ne( $i.code, 'refused' ) )}<form method="post" action={concat( '/ezodf/batch/', $b.id )|ezurl} class="a4-ezodf-inline"><button type="submit" class="a4-btn a4-btn-small" name="RetryItem" value="{$i.id|wash}">{'Retry'|i18n( $t )}</button></form>{/if}</td>
 </tr>

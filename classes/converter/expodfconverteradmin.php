@@ -97,6 +97,8 @@ class expOdfConverterAdmin
             'usage' => expOdfCleanup::usage(),
             'samples' => array_keys( expOdfConverterTest::SAMPLES ),
             'busy' => self::busy(),
+            'ai_installed' => class_exists( 'expAiConfig' ),
+            'ai_available' => expOdfAiAssist::available(),
         );
     }
 
@@ -168,7 +170,7 @@ class expOdfConverterAdmin
     public static function action( $action, eZHTTPTool $http )
     {
         $post = function ( $name, $default = '' ) use ( $http ) { return $http->hasPostVariable( $name ) ? $http->postVariable( $name ) : $default; };
-        $needsWrite = array( 'install', 'update', 'remove', 'use', 'on', 'off', 'limits', 'remote', 'mode' );
+        $needsWrite = array( 'install', 'update', 'remove', 'use', 'on', 'off', 'limits', 'remote', 'mode', 'ai' );
         if ( in_array( $action, $needsWrite, true ) && !expOdfSettings::writable() )
             return self::msg( 'bad', 'The configuration is managed by the deployment: the converter cannot be changed here.' );
         switch ( $action )
@@ -256,6 +258,8 @@ class expOdfConverterAdmin
                     return $m;
                 $t = expOdfRemoteServer::test();
                 return self::msg( $t['ok'] ? 'ok' : 'warn', 'Saved. Test: %result', array( '%result' => $t['message'] ) );
+            case 'ai':
+                return self::save( array( 'ai.enabled' => $post( 'AIEnabled' ) ? '1' : '0' ), false );
             case 'remotetest':
                 $t = expOdfRemoteServer::test();
                 return self::msg( $t['ok'] ? 'ok' : 'bad', $t['message'] );

@@ -18,7 +18,7 @@ class expOdfDocumentsAdmin
         $get = function ( $name ) use ( $http ) { return $http->hasPostVariable( $name ) ? $http->postVariable( $name ) : ''; };
         return array( 'parent_node' => (int)$nodeID, 'tree' => (bool)$get( 'Tree' ), 'replace' => (bool)$get( 'Replace' ),
                       'other_files' => (bool)$get( 'OtherFiles' ), 'language' => (string)$get( 'Language' ),
-                      'ai' => (bool)$get( 'AIAssist' ) && expOdfSettings::get( 'ai.enabled' ), 'title' => (string)$get( 'Title' ) );
+                      'ai' => (bool)$get( 'AIAssist' ) && expOdfAiAssist::available(), 'title' => (string)$get( 'Title' ) );
     }
 
     /**
@@ -70,7 +70,7 @@ class expOdfDocumentsAdmin
             'max_doc_mb' => expOdfSettings::get( 'converter.max_megabytes' ),
             'max_uploads' => (int)ini_get( 'max_file_uploads' ),
             'languages' => $languages,
-            'ai' => expOdfSettings::get( 'ai.enabled' ) && class_exists( 'expAI' ),
+            'ai' => expOdfAiAssist::available(),
             'cron' => expOdfJobs::cronState(),
             'can_converter' => self::can( 'converter' ),
             'recent' => array_slice( self::runs(), 0, 5 ),
@@ -98,7 +98,7 @@ class expOdfDocumentsAdmin
                 $item['state_label'] = self::label( 'unpacked' );
             else
                 $item['state_label'] = self::label( $item['state'] );
-            $item += array( 'code' => '', 'node_id' => 0, 'url_alias' => '', 'title' => '', 'class' => '', 'backend' => '', 'seconds' => 0, 'url' => '', 'path' => '' );
+            $item += array( 'ai' => null, 'ai_applied' => 0, 'code' => '', 'node_id' => 0, 'url_alias' => '', 'title' => '', 'class' => '', 'backend' => '', 'seconds' => 0, 'url' => '', 'path' => '' );
             $item['folder'] = strpos( $item['path'], '/' ) !== false ? dirname( $item['path'] ) : '';
             $items[] = $item;
         }
@@ -115,6 +115,7 @@ class expOdfDocumentsAdmin
             'user' => $user ? $user->attribute( 'name' ) : '',
             'folders' => isset( $run['folders'] ) ? count( $run['folders'] ) : 0,
             'cron' => expOdfJobs::cronState(),
+            'ai_pending' => count( array_filter( $items, function ( $i ) { return is_array( $i['ai'] ) && !isset( $i['ai']['error'] ) && !$i['ai_applied']; } ) ),
             'can_retry' => (bool)array_filter( $items, function ( $i ) { return in_array( $i['state'], array( 'failed', 'cancelled' ), true ) && $i['code'] !== 'refused'; } ),
         );
     }

@@ -61,3 +61,7 @@
 
 /* ---- Export documents: the format buttons in a row that wraps ---- */
 .a4-ezodf-formats-list { display: flex; flex-wrap: wrap; gap: var(--a4-space-2); margin: 0; padding: 0; list-style: none; }
+
+/* ---- AI suggestions on the page of an import ---- */
+.a4-ezodf-ai { margin: var(--a4-space-2) 0 0; }
+.a4-ezodf-ai p { margin: var(--a4-space-1) 0; }

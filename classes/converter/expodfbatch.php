@@ -502,7 +502,16 @@ class expOdfBatch
                 $object->store();
             }
             $info = $import->ConversionInfo ?: array();
-            return array( 'state' => 'done', 'message' => '', 'object_id' => (int)$object->attribute( 'id' ),
+            // AI assist (opt-in per import): a summary and keywords to apply on the batch page, never applied here
+            $ai = null;
+            if ( !empty( $options['ai'] ) && expOdfAiAssist::available() && $object instanceof eZContentObject )
+            {
+                $progress( 0, 0, 'AI suggestions for ' . $item['name'] );
+                eZContentObject::clearCache( array( (int)$object->attribute( 'id' ) ) );
+                $fresh = eZContentObject::fetch( (int)$object->attribute( 'id' ) );
+                $ai = expOdfAiAssist::suggest( $fresh ?: $object, expOdfAiAssist::textOf( $fresh ?: $object ) );
+            }
+            return array( 'state' => 'done', 'message' => '', 'object_id' => (int)$object->attribute( 'id' ), 'ai' => $ai,
                           'node_id' => $result['MainNode'] ? (int)$result['MainNode']->attribute( 'node_id' ) : 0,
                           'url_alias' => (string)$result['URLAlias'], 'title' => (string)$result['NodeName'], 'class' => (string)$result['ClassIdentifier'],
                           'backend' => isset( $info['backend'] ) ? $info['backend'] : 'odt', 'filter' => isset( $info['filter'] ) ? $info['filter'] : '',
