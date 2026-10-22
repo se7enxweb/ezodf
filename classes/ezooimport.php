@@ -78,6 +78,8 @@ class eZOOImport
 
     var $ERROR = array();
     var $currentUserID;
+    /// what the converter of ezodf 7 did for the last import (backend, filter, seconds), when it converted
+    var $ConversionInfo = null;
 
     /*!
      Constructor. PHP 8 does not call a method named like the class, so the former eZOOImport() constructor never
@@ -635,27 +637,44 @@ class eZOOImport
         // Alex 2008/04/21 - added !== false
         if ( in_array( $originalFileType, $convertTypes, false ) !== false )
         {
-            if ( !self::conversionDaemonEnabled() )
-            {
-                $this->setError( self::ERROR_CONVERSIONDISABLED, $originalFileType );
-                return false;
-            }
             $uniqueStamp = bin2hex( random_bytes( 16 ) );
-            $tmpFromFile = $tmpDir . "/convert_from_$uniqueStamp.doc";
             $tmpToFile   = $tmpDir . "/ooo_converted_$uniqueStamp.odt";
-            $this->TemporaryFiles[] = $tmpFromFile;
             $this->TemporaryFiles[] = $tmpToFile;
-            copy( realpath( $file ),  $tmpFromFile );
-
-           /// Convert document using the eZ Publish document conversion daemon
-            if ( !$this->daemonConvert( $tmpFromFile, $tmpToFile ) )
+            if ( class_exists( 'expOdfConverter' ) && !self::conversionDaemonEnabled() )
             {
-                if( $this->getErrorNumber() == 0 )
-                    $this->setError( self::ERROR_CONVERT );
-                return false;
+                // ezodf 7: LibreOffice in its sandbox (server, per call or remote), else the PHP readers
+                try
+                {
+                    $converted = expOdfConverter::toOdt( $file, $originalFileName );
+                    copy( $converted['file'], $tmpToFile );
+                    expOdfConverter::cleanup( $converted );
+                    $this->ConversionInfo = $converted;
+                }
+                catch ( expOdfConverterException $e )
+                {
+                    $this->setError( self::ERROR_CONVERT, $e->getMessage() );
+                    return false;
+                }
             }
-            // At this point we can unlink the sourcefile for conversion
-            unlink( $tmpFromFile );
+            else
+            {
+                // the 4.x conversion daemon (odf.ini [ODFImport] ConversionDaemon=enabled), kept for sites that run it
+                if ( !self::conversionDaemonEnabled() )
+                {
+                    $this->setError( self::ERROR_CONVERSIONDISABLED, $originalFileType );
+                    return false;
+                }
+                $tmpFromFile = $tmpDir . "/convert_from_$uniqueStamp.doc";
+                $this->TemporaryFiles[] = $tmpFromFile;
+                copy( realpath( $file ),  $tmpFromFile );
+                if ( !$this->daemonConvert( $tmpFromFile, $tmpToFile ) )
+                {
+                    if( $this->getErrorNumber() == 0 )
+                        $this->setError( self::ERROR_CONVERT );
+                    return false;
+                }
+                unlink( $tmpFromFile );
+            }
 
             // Overwrite the file location
             $file = $tmpToFile;

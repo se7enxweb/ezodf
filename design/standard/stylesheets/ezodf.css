@@ -1,0 +1,36 @@
+/* ezodf: the pages of Documents (Document converter, import, runs). Built from the administration's shared
+   components (.a4-page, .a4-card, .a4-figures, .a4-table, .a4-btn, .a4-notice, .a4-meter, .a4-chips, .a4-facts,
+   .a4-fold, .a4-toolbar) and their --a4-* tokens, which have a light and a dark value. This file holds only what
+   the components cannot do, as .a4-ezodf-* classes, and takes every colour, radius and space from the tokens.
+   Loaded through design.ini [StylesheetSettings] BackendCSSFileList. */
+
+/* an action of a row or a toolbar: a small POST form that sits in the line like a button */
+.a4-ezodf-inline { display: inline-block; margin: 0 var(--a4-space-1) var(--a4-space-1) 0; }
+
+/* cards that take the whole width of the grid */
+.a4-ezodf-span { grid-column: 1 / -1; }
+
+/* paths and error texts wrap instead of widening the page */
+.a4-ezodf-path, .a4-ezodf-error { overflow-wrap: anywhere; word-break: break-word; }
+
+/* the install box below the table */
+.a4-ezodf-install { margin: var(--a4-space-4) 0 0; padding: var(--a4-space-3) 0 0; border-top: 1px solid var(--a4-line); }
+.a4-ezodf-progress { margin: var(--a4-space-2) 0; }
+.a4-ezodf-meter { height: var(--a4-space-3); margin: var(--a4-space-1) 0; }
+
+/* logs: one line per item, a fixed height that scrolls in its region */
+.a4-ezodf-log { max-height: 18rem; overflow: auto; margin: 0; padding: var(--a4-space-2); list-style: none; border: 1px solid var(--a4-line); border-radius: var(--a4-radius-s); background: var(--a4-soft); }
+.a4-ezodf-log li { margin: 0; padding: 0; overflow-wrap: anywhere; }
+.a4-ezodf-log code { font-family: var(--a4-mono); font-size: var(--a4-text-xs); color: var(--a4-ink); background: none; padding: 0; white-space: pre-wrap; }
+
+/* number fields side by side where there is room */
+.a4-ezodf-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--a4-space-3); }
+.a4-ezodf-fields .a4-toolbar { grid-column: 1 / -1; }
+
+/* the extension lists of the formats wrap anywhere */
+.a4-ezodf-exts { overflow-wrap: anywhere; line-height: 1.6; }
+
+/* columns that make way on narrow screens (and at 200% zoom) */
+@media (max-width: 760px) {
+    .a4-ezodf-hide-narrow { display: none; }
+}
