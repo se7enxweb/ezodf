@@ -82,7 +82,8 @@ class expOdfPhpConverter
                 return $out;
         }
         $html = expOdfReaders::toHtml( $file, $ext, $dir );
-        expOdfHtmlToOdt::write( $html['html'], $html['images'], $out, $html['title'] );
+        $family = expOdfConverter::family( $ext );
+        expOdfHtmlToOdt::write( $html['html'], $html['images'], $out, in_array( $family, array( 'spreadsheet', 'presentation', 'drawing' ), true ) ? '' : $html['title'] );
         return $out;
     }
 

@@ -153,7 +153,7 @@ class expOdfSandbox
      * @param string|null $cwd
      * @return array( 'code' => int, 'stdout' => string, 'stderr' => string, 'seconds' => float, 'timedout' => bool )
      */
-    public static function run( array $command, $seconds = 120, $cwd = null, array $env = null )
+    public static function run( array $command, $seconds = 120, $cwd = null, ?array $env = null )
     {
         $start = microtime( true );
         $spec = array( 0 => array( 'file', '/dev/null', 'r' ), 1 => array( 'pipe', 'w' ), 2 => array( 'pipe', 'w' ) );

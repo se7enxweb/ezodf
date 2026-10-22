@@ -5,6 +5,7 @@
     i18n_hash=hash(
     'Documents',  'Documents'|i18n( 'extension/ezodf/menu' ),
     'import',     'Import documents'|i18n( 'extension/ezodf/menu' ),
+    'runs',       'Document imports'|i18n( 'extension/ezodf/menu' ),
     'converter',  'Document converter'|i18n( 'extension/ezodf/menu' ),
     'queue',      'Job queue'|i18n( 'extension/ezodf/menu' ),
 )}

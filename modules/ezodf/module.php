@@ -2,7 +2,12 @@
 /**
  * The module ezodf: documents in and out.
  *
- *   import          one document into a folder or as a new version (6.x, kept), every format the converter reads
+ *   import          Import documents: files, a folder (its tree), ZIP archives and URLs into a folder, as background
+ *                   jobs; the 6.x single-document flow (a new version: import_type/replace) is kept
+ *   upload          the uploads of the import page with JavaScript (JSON)
+ *   batch           one import of documents with each document's state, retry, cancel
+ *   batchstatus     the live state of a batch as JSON
+ *   runs            the imports of documents
  *   export          one item as ODT (6.x, kept)
  *   converter       Document converter: the LibreOffice installation (one-click install, the installed one, update,
  *                   remove), the conversion server (on, off, restart, status, log), test conversions, a remote server,
@@ -34,6 +39,28 @@ $ViewList['export'] = array(
     'post_actions' => array( 'BrowseActionName' ),
     'unordered_params' => array( 'node_id' => 'NodeID',
                                  'export_type' => 'ExportType' ) );
+
+$ViewList['upload'] = array(
+    'script' => 'upload.php',
+    'params' => array(),
+    'functions' => array( 'import' ) );
+
+$ViewList['batch'] = array(
+    'script' => 'batch.php',
+    'params' => array( 'BatchID' ),
+    'functions' => array( 'import' ),
+    'default_navigation_part' => 'ezsetupnavigationpart' );
+
+$ViewList['batchstatus'] = array(
+    'script' => 'batchstatus.php',
+    'params' => array( 'BatchID' ),
+    'functions' => array( 'import' ) );
+
+$ViewList['runs'] = array(
+    'script' => 'runs.php',
+    'params' => array(),
+    'functions' => array( 'import' ),
+    'default_navigation_part' => 'ezsetupnavigationpart' );
 
 $ViewList['converter'] = array(
     'script' => 'converter.php',

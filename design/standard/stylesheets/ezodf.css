@@ -34,3 +34,27 @@
 @media (max-width: 760px) {
     .a4-ezodf-hide-narrow { display: none; }
 }
+
+/* ---- Import documents ---- */
+
+/* the drop zone: a dashed area that marks itself while files are dragged over it */
+.a4-ezodf-drop { padding: var(--a4-space-4); border: 2px dashed var(--a4-line-strong); border-radius: var(--a4-radius); background: var(--a4-soft); text-align: center; }
+.a4-ezodf-drop.is-over { border-color: var(--a4-accent); background: var(--a4-accent-soft); }
+.a4-ezodf-drop-text { margin: 0 0 var(--a4-space-2); font-size: var(--a4-text-m); }
+.a4-ezodf-pickers { justify-content: center; }
+.a4-ezodf-pickers label.a4-btn { cursor: pointer; }
+.a4-ezodf-pickers input:focus-visible + label, .a4-ezodf-pickers label:focus-within { box-shadow: 0 0 0 3px var(--a4-ring); }
+
+/* the chosen files below the drop zone */
+.a4-ezodf-selection { margin: var(--a4-space-3) 0; }
+.a4-ezodf-selection .a4-table-wrap { max-height: 16rem; overflow: auto; }
+
+/* the URL list takes the card's width */
+.a4-ezodf-urls { width: 100%; box-sizing: border-box; font-family: var(--a4-mono); }
+
+/* a field that spans the option grid */
+.a4-ezodf-wide { grid-column: 1 / -1; }
+
+/* space between the parts below the form */
+.a4-ezodf-section { margin: var(--a4-space-4) 0 0; }
+.a4-page.a4-ezodf > .box-bc .a4-card + .a4-card { margin-top: var(--a4-space-3); }

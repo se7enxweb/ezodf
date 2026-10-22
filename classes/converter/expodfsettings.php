@@ -24,6 +24,9 @@ class expOdfSettings
     /** @var array|null the store, read once per request (reset() forgets it) */
     protected static $store = null;
 
+    /** @var array|null odf.ini values group => name => value used instead of the INI files (tests); null: the INI files */
+    public static $iniOverride = null;
+
     /**
      * The settings: key => array( type, default, INI group, INI name, [min, max | choices], label ).
      * @return array
@@ -222,13 +225,20 @@ class expOdfSettings
     /** @return mixed|null the odf.ini value, null when not set */
     protected static function iniValue( array $spec )
     {
-        if ( !class_exists( 'eZINI' ) || empty( $spec['ini'] ) )
+        if ( empty( $spec['ini'] ) )
             return null;
-        $ini = eZINI::instance( 'odf.ini' );
         list( $group, $name ) = $spec['ini'];
-        if ( !$ini->hasVariable( $group, $name ) )
+        if ( self::$iniOverride !== null )
+            $value = isset( self::$iniOverride[$group][$name] ) ? self::$iniOverride[$group][$name] : null;
+        else
+        {
+            if ( !class_exists( 'eZINI' ) )
+                return null;
+            $ini = eZINI::instance( 'odf.ini' );
+            $value = $ini->hasVariable( $group, $name ) ? $ini->variable( $group, $name ) : null;
+        }
+        if ( $value === null )
             return null;
-        $value = $ini->variable( $group, $name );
         return $value === '' && $spec['type'] !== 'string' && $spec['type'] !== 'path' ? null : $value;
     }
 

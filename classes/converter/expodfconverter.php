@@ -74,7 +74,7 @@ class expOdfConverter
             throw new expOdfConverterException( 'no_backend', self::noBackendMessage( $ext, $target ) );
         $parts = array();
         foreach ( $errors as $backend => $message )
-            $parts[] = "$backend: $message";
+            $parts[] = "$backend: " . self::shorten( $message );
         $e = new expOdfConverterException( count( $errors ) === 1 && isset( $e ) ? $e->code() : 'convert', implode( '; ', $parts ) );
         $e->tried = $errors;
         throw $e;
@@ -132,7 +132,8 @@ class expOdfConverter
         {
             $html = expOdfReaders::toHtml( $source, $sourceExt, $dir, array( 'name' => $name ) );
             $out = $dir . '/out.odt';
-            expOdfHtmlToOdt::write( $html['html'], $html['images'], $out, $html['title'] );
+            // a sheet or slide heading follows; the title of a spreadsheet or presentation would repeat it (the item is named after the file)
+            expOdfHtmlToOdt::write( $html['html'], $html['images'], $out, in_array( $family, array( 'spreadsheet', 'presentation', 'drawing' ), true ) ? '' : $html['title'] );
         }
         catch ( Exception $e )
         {
@@ -165,7 +166,7 @@ class expOdfConverter
     }
 
     /** @return string[] the backends in the order the settings give */
-    public static function backends( array $only = null )
+    public static function backends( ?array $only = null )
     {
         $mode = expOdfSettings::get( 'converter.mode' );
         $remote = expOdfSettings::get( 'converter.remote_url' ) !== '';
@@ -406,7 +407,9 @@ class expOdfConverter
 
     protected static function shorten( $text )
     {
-        $text = preg_replace( '/\s+/', ' ', (string)$text );
+        // no server path in a message an editor reads: a path becomes its file name
+        $text = preg_replace_callback( '#(?:file://)?/(?:[^\s/:]+/)+([^\s/:]+)#', function ( $m ) { return $m[1]; }, (string)$text );
+        $text = preg_replace( '/\s+/', ' ', $text );
         return strlen( $text ) > 300 ? substr( $text, 0, 300 ) . '…' : $text;
     }
 }
