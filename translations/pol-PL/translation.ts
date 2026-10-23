@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation>Utwórz lub zaktualizuj tłumaczenie w języku:</translation>
+        <translation>Utworzyć lub zaktualizować tłumaczenie w języku:</translation>
     </message>
     <message>
         <source>Existing translations</source>
@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Import in:</source>
-        <translation>Importuj do:</translation>
+        <translation>Zaimportować do:</translation>
     </message>
 </context>
 <context>
@@ -56,19 +56,19 @@
     </message>
     <message>
         <source>Import another document</source>
-        <translation>Importuj inny dokument</translation>
+        <translation>Zaimportować inny dokument</translation>
     </message>
     <message>
         <source>Import OpenOffice.org document</source>
-        <translation>Importuj dokument OpenOffice.org</translation>
+        <translation>Zaimportować dokument OpenOffice.org</translation>
     </message>
     <message>
         <source>Replace document</source>
-        <translation>Zamień dokument</translation>
+        <translation>Zamienić dokument</translation>
     </message>
     <message>
         <source>Import to</source>
-        <translation>Importuj do</translation>
+        <translation>Zaimportować do</translation>
     </message>
     <message>
         <source>Export Exponential content to OpenOffice.org</source>
@@ -98,7 +98,7 @@ Obrazy są umieszczane w bibliotece mediów, więc możesz używac ich w innych 
     </message>
     <message>
         <source>Import document</source>
-        <translation>Importuj dokument</translation>
+        <translation>Zaimportować dokument</translation>
     </message>
     <message>
         <source>Upload file</source>
@@ -109,7 +109,7 @@ Obrazy są umieszczane w bibliotece mediów, więc możesz używac ich w innych 
     <name>extension/ezodf/browse</name>
     <message>
         <source>Choose document placement</source>
-        <translation>Wybierz umiejscowienie dokumentu</translation>
+        <translation>Wybrać umiejscowienie dokumentu</translation>
     </message>
     <message>
         <source>Please choose the placement for the OpenOffice.org object.
@@ -125,7 +125,7 @@ Obrazy są umieszczane w bibliotece mediów, więc możesz używac ich w innych 
     </message>
     <message>
         <source>Select</source>
-        <translation>Wybierz</translation>
+        <translation>Wybrać</translation>
     </message>
 </context>
 <context>
@@ -258,11 +258,11 @@ Obrazy są umieszczane w bibliotece mediów, więc możesz używac ich w innych 
     </message>
     <message>
         <source>Import OpenOffice</source>
-        <translation>Importuj z OpenOffice</translation>
+        <translation>Zaimportować z OpenOffice</translation>
     </message>
     <message>
         <source>Replace OpenOffice</source>
-        <translation>Zamień OpenOffice</translation>
+        <translation>Zamienić OpenOffice</translation>
     </message>
 </context>
 </TS>
