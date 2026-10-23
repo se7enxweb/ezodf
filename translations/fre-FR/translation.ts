@@ -219,7 +219,7 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation>Impossible d&apos;enregistrer le fichier téléchargé, import impossible.</translation>
+        <translation>Impossible d&apos;enregistrer le fichier chargé, import impossible.</translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
