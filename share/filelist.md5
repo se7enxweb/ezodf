@@ -1,11 +1,11 @@
 name: ezodf
-version: 7.0.0
-files_count: 189
+version: 7.0.1
+files_count: 190
 
 a65c763ef0340e232cfe8c274f56fca0  .github/FUNDING.yml
 09e5ab0a2578bb8948c4cf98eba08b02  LICENSE
 2c8ea09ee10b7209c3ec89076f750176  README
-6f834daa4c8f04b322593f4567e89fa5  bin/ezodfworker.py
+2314c3f9af543b442508f761afc9b778  bin/ezodfworker.py
 77c22f84dff178c4e3c1d0933336dd80  bin/php/ezodfjob.php
 f4468e03e367a03a056d70ef50c24ee8  classes/converter/expodfaiassist.php
 df17145cf30139dc0342dd112b4c476e  classes/converter/expodfbatch.php
@@ -44,7 +44,7 @@ a1fc9c88141a2096dcbb977e609f1066  classes/sqliimport/expodfimportdocumentfeedsou
 831b8b89c07d204adb44754ab2c41797  classes/sqliimport/expodfimportmailboxdocumentssource.php
 ce97b9a1fab1e789b67ecf85e823597f  classes/sqliimport/expodfimportonedrivesource.php
 30f9a3ff522cd51356a3add418937d95  classes/sqliimport/expodfimportwebdavsource.php
-09e2e26449eb488d8579c7425762347e  composer.json
+7fc8486bda4e2465b9a7f35b8ca77e3b  composer.json
 1ac2048fbc90645629da894fcd7545e7  cronjobs/ezodf_keepalive.php
 56ba93f2e0a75f957a497208834e7106  design/standard/images/ooo_logo.gif
 3494e536d83e0361ca8153617f385f41  design/standard/javascript/ezodf_admin.js
@@ -80,6 +80,7 @@ a76dd304d42b95061a917ade241b56ed  doc/changelogs/2.2/CHANGELOG-2.1.0-to-2.2.0
 fc62b257e3ccb1faf68c7f325e7cfb80  doc/changelogs/2.4/CHANGELOG-2.3.0-to-2.4.0
 8d0a3ae7ab6910eb19874a4e06e55252  doc/changelogs/2.5/CHANGELOG-2.4.0-to-2.5.0
 9b0c38cc6a666c11ab7b974d4642257e  doc/changelogs/7.0/CHANGELOG-6.1.13-to-7.0.0
+18f91dcc3e62f8239bd5a91daf389710  doc/changelogs/7.0/CHANGELOG-7.0.0-to-7.0.1
 9b97638d32512be2b3dbcd5d82c6a36b  doc/converter.md
 afa77d424b0efa80cbdbf9ba991f2157  doc/eZconversion.txt
 f1e92cd0fd20ceaa283d96e35b176da7  doc/eZconversion.zip
@@ -100,8 +101,8 @@ af04f022ed96fea1b98670c33c45e6d5  doc/index.md
 7f5917008bfcc5b4ff422ce6652a957f  doc/sources.md
 e4d4a5a58f9f3fc9111712122be08968  examples/article.odt
 5f63d7f5a5579230d03a5c49d77cdee0  examples/general_document_example.odt
-73653fb694c4aade0bb1c712ddb3660d  extension.xml
-0a621587cf0eec71201130638852df73  ezinfo.php
+b8681da89b3898d0e9c0d93a1810ed08  extension.xml
+4523dfe57dfbe1f187ba1b7ea83e9fa4  ezinfo.php
 8d0b52b28a4c5c31d734921c4a5f0346  modules/ezodf/batch.php
 dc9b4aff3f503f5ac4d135f92d6cf75f  modules/ezodf/batchstatus.php
 9590ed3d48ea7e95fb9426673635bb4d  modules/ezodf/converter.php
