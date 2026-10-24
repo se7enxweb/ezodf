@@ -1,0 +1,77 @@
+Changes from 6.1.13 to 7.0.0 (2026-10-24)
+
+ezodf 7 brings documents in and out of Exponential with LibreOffice as the converter again, installed and switched
+on from the administration, without the 4.x conversion daemon and without the command line. Many documents are
+imported at once (files, folders, ZIP archives, web addresses, feeds, cloud folders and mailboxes), any item is
+exported as a document, and the extension takes part in the kernel's transfer registry.
+
+*Added*
+
+- Added: The Document converter page (Setup > System > Document converter, right ezodf/converter): LibreOffice
+  installed with one click (the official build into var/<site>/ezodf/libreoffice/, checked against its SHA-256 and
+  the OpenPGP signature of the LibreOffice build key shipped in share/keys, no root needed) or the system's
+  LibreOffice; updates and removal of a downloaded build; a conversion server switched on and off on the page,
+  restarted after a crash or a hanging conversion and kept running by the cron part ezodf_keepalive; a remote
+  unoserver or Gotenberg as an option; test conversions of bundled samples (share/samples); limits; cleanup.
+- Added: Every conversion runs in a sandbox (bubblewrap without network, only the job directory writable) with
+  time, memory, file size and process limits.
+- Added: Readers for Word (DOCX), spreadsheets (XLSX, ODS, CSV, TSV), presentations (PPTX, ODP), PDF (with
+  pdftotext), Markdown, HTML and plain text that work without LibreOffice; archives are checked before anything is
+  read, XML is never loaded from the network, and HTML keeps only allowed elements and addresses.
+- Added: Import documents (Documents > Import documents): many files, a whole folder (its tree becomes folders), ZIP
+  archives and web addresses at once, each converted and published by a background job, with a live page per
+  import, retry of the failed documents, a new version instead of a second item when a document is imported again
+  into the same place, and safe fetching of web addresses (http and https, public addresses only, size and time
+  limits).
+- Added: Export documents (Documents > Export documents): any item as ODT, DOCX, PDF, RTF, DOC, XHTML, EPUB or text,
+  and a folder with everything below it as a ZIP in its folder tree, written by a background job. The context menu
+  offers ODT, PDF and Word (DOCX).
+- Added: Background jobs on the job queue (expqueue) when it is installed, else a PHP process per job
+  (bin/php/ezodfjob.php).
+- Added: Document formats of 7x SQLI Import 2 (when it is installed): documents of an upload or ZIP, from web
+  addresses and from a feed, a WebDAV or Nextcloud folder, a Google Drive folder, a OneDrive or SharePoint folder
+  and the attachments of an IMAP mailbox, with mapping into any class, dry run, schedules, undo and the run history
+  of the Imports tool. Passwords and keys are names of secrets.
+- Added: AI suggestions for imported documents through expai (a summary for the intro and keywords), listed on the
+  import's page and written as a new version only when someone clicks Apply.
+- Added: The transfer registry entry transfer.ezodf (settings/kernelservices.ini.append.php, Exponential 6.0.15 and
+  later): the kernel lists the Word and OpenDocument import and export on its "Which import or export tool do I
+  need?" page, in the other tools' "Looking for...?" boxes, the "Import and export" lists, an item's Import/Export
+  menu and the administration's search. Older kernels ignore it.
+- Added: The manual (doc/index.md) in English and German (doc/ger-de/), also in the help center of the
+  administration, and German texts of the Documents pages.
+- Added: The checksum list of the extension's files (share/filelist.md5) for the upgrade check of the
+  administration.
+- Added: Unit tests of the readers, the HTML to ODT writer, the converter layer and the import sources.
+
+*Updated*
+
+- Updated: odf.ini [DocumentType] ConvertTypes[] lists every format the converter takes; a site override keeps
+  working and narrows the formats.
+- Updated: Settings changed on the Document converter page are kept in var/<site>/ezodf/settings.json, over odf.ini.
+- Updated: Messages of failed jobs on the import and export pages name no server path.
+- Updated: The documents page shows the other import and export tools, as the import page does.
+- Updated: Polish buttons and menu items use the infinitive, as the Exponential administration does.
+- Updated: The tests with data providers also name them in a docblock, so they run on PHPUnit 9.6 (PHP 8.0) as well
+  as on PHPUnit 10 and later.
+- Updated: composer.json requires PHP 8.0 or later and ext-dom, and suggests expqueue, sqliimport, expai and
+  ext-curl.
+
+*Fixed*
+
+- Fixed: OpenDocument texts with whitespace between table cells or style properties import on PHP 8, and an item
+  is named without any file extension.
+- Fixed: Word and RTF documents keep their body, and items with bold or italic text can be exported.
+- Fixed: Exports and imports that convert a document no longer hang under Exponential Velocity (the wait for the
+  conversion server's result forgets the cached file status before each look).
+- Fixed: The imports table no longer redefines the translation context variable of the page that includes it, so
+  the documents and imports pages no longer log "Variable 't' is already defined".
+
+*Upgrading*
+
+- Install 7.0.0 over 6.x, regenerate the autoloads and clear the caches. There is no update script and no schema
+  change; ezodf has no tables.
+- The 4.x conversion daemon (scripts/daemon.php, odf.ini [ODFImport] ConversionDaemon) is no longer needed. Sites
+  that run it keep it by leaving ConversionDaemon=enabled; otherwise the new converter is used.
+- New right ezodf/converter for the Document converter page; ezodf/import and ezodf/export keep their meaning.
+- The PHP zip extension (ext-zip) is required: uploaded documents are checked before anything is extracted.

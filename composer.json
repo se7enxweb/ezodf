@@ -1,18 +1,32 @@
 {
     "name": "se7enxweb/ezodf",
-    "description": "This extension provides for the import and export of OpenOffice.org Writer documents within Exponential Legacy",
+    "description": "Documents in and out of Exponential: imports Word, OpenDocument, RTF, PDF, Markdown, HTML, spreadsheets and presentations (files, folders, ZIP archives, web addresses) and exports any item as DOCX, PDF, ODT, RTF, EPUB or text, with LibreOffice as the converter, installed and switched on from the administration",
     "type": "ezpublish-legacy-extension",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "eZ Publish dev-team & eZ Community",
             "homepage": "https://github.com/se7enxweb/ezodf/contributors"
+        },
+        {
+            "name": "7x",
+            "email": "info@se7enx.com",
+            "homepage": "https://se7enx.com",
+            "role": "Maintainer"
         }
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": ">=8.0",
         "se7enxweb/ezpublish-legacy-installer": "*",
-        "ext-zip": "*"
+        "ext-zip": "*",
+        "ext-dom": "*"
+    },
+    "suggest": {
+        "se7enxweb/expqueue": "Runs imports, exports and the converter's work on the job queue; without it each job runs in a PHP process of its own",
+        "se7enxweb/sqliimport": "Document formats of 7x SQLI Import 2: mapping, dry run, undo and schedules for documents of uploads, ZIP archives, web addresses, feeds, WebDAV/Nextcloud, Google Drive, OneDrive and mailboxes",
+        "se7enxweb/expai": "AI suggestions for imported documents (a summary and keywords), applied only on request",
+        "ext-curl": "Installs LibreOffice from the administration and reads web addresses"
     },
     "extra": {
         "ezpublish-legacy-extension-name": "ezodf"

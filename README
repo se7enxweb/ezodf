@@ -21,14 +21,34 @@ The manual is in doc/index.md (German: doc/ger-de/index.md) and in the help cent
 Requirements
 ------------
 
-- Exponential 6 with the extension expqueue (the job queue) for the background work; the cron job every
-  installation runs (runcronjobs.php expqueue, every minute).
-- PHP 8.1 or later with zip, dom, curl; proc_open allowed.
-- For the converter: Linux; bubblewrap (bwrap) for the sandbox; about 2 GB below var/ for a LibreOffice installed
-  from the administration, or LibreOffice from the system packages (doc/hosting.md).
+- Exponential 6. The entries in the transfer registry (the "Which import or export tool do I need?" page, an
+  item's Import/Export menu) need Exponential 6.0.15; older kernels ignore them.
+- The extension expqueue (the job queue) is recommended for the background work, with the cron job every
+  installation runs (runcronjobs.php expqueue, every minute); without it each job runs in a PHP process of its own.
+- PHP 8.0 to 8.5 with zip and dom; curl to install LibreOffice from the administration and to read web addresses;
+  proc_open allowed.
+- For the converter: Linux; LibreOffice, either installed with one click from the administration (about 2 GB below
+  var/, no root needed) or from the system packages; bubblewrap (bwrap) for the sandbox (doc/hosting.md).
+  Without a converter, Word, spreadsheets, presentations, PDF, Markdown, HTML and text are still read by the
+  built-in readers, and OpenDocument texts import and export as before.
+- No tables of its own: ezodf needs nothing on the database, on a new installation or on an upgrade.
+
+Installation
+------------
+
+    composer require se7enxweb/ezodf:^7.0
+
+Activate ezodf in [ExtensionSettings] ActiveExtensions[] (the installation wizard activates it by default),
+regenerate the autoloads (php bin/php/ezpgenerateautoloads.php -e) and clear the caches. Give editors the rights
+ezodf/import and ezodf/export, and administrators ezodf/converter. Then open Setup > System > Document converter
+to install LibreOffice or point to the system's.
 
 Upgrading to 7.0
 ----------------
+
+- Install 7.0 over 6.x, regenerate the autoloads and clear the caches; there is no update script and no schema
+  change. Roles that should open the Document converter page need the new right ezodf/converter.
+  Everything that changed: doc/changelogs/7.0/CHANGELOG-6.1.13-to-7.0.0.
 
 - The 4.x conversion daemon (scripts/daemon.php, odf.ini [ODFImport] ConversionDaemon) is no longer needed.
   Sites that run it keep it by leaving ConversionDaemon=enabled; otherwise the new converter is used.

@@ -1,10 +1,10 @@
 name: ezodf
-version: 7.0.0-dev
-files_count: 188
+version: 7.0.0
+files_count: 189
 
 a65c763ef0340e232cfe8c274f56fca0  .github/FUNDING.yml
 09e5ab0a2578bb8948c4cf98eba08b02  LICENSE
-9decef5b7b07136470f8d6e6459171d0  README
+2c8ea09ee10b7209c3ec89076f750176  README
 6f834daa4c8f04b322593f4567e89fa5  bin/ezodfworker.py
 77c22f84dff178c4e3c1d0933336dd80  bin/php/ezodfjob.php
 f4468e03e367a03a056d70ef50c24ee8  classes/converter/expodfaiassist.php
@@ -44,7 +44,7 @@ a1fc9c88141a2096dcbb977e609f1066  classes/sqliimport/expodfimportdocumentfeedsou
 831b8b89c07d204adb44754ab2c41797  classes/sqliimport/expodfimportmailboxdocumentssource.php
 ce97b9a1fab1e789b67ecf85e823597f  classes/sqliimport/expodfimportonedrivesource.php
 30f9a3ff522cd51356a3add418937d95  classes/sqliimport/expodfimportwebdavsource.php
-986c2355991352b1ecd1c04701c397b4  composer.json
+09e2e26449eb488d8579c7425762347e  composer.json
 1ac2048fbc90645629da894fcd7545e7  cronjobs/ezodf_keepalive.php
 56ba93f2e0a75f957a497208834e7106  design/standard/images/ooo_logo.gif
 3494e536d83e0361ca8153617f385f41  design/standard/javascript/ezodf_admin.js
@@ -79,6 +79,7 @@ a76dd304d42b95061a917ade241b56ed  doc/changelogs/2.2/CHANGELOG-2.1.0-to-2.2.0
 83cf67eb836f5c09d80e668d024b7bd6  doc/changelogs/2.3/CHANGELOG-2.2.0-to-2.3.0
 fc62b257e3ccb1faf68c7f325e7cfb80  doc/changelogs/2.4/CHANGELOG-2.3.0-to-2.4.0
 8d0a3ae7ab6910eb19874a4e06e55252  doc/changelogs/2.5/CHANGELOG-2.4.0-to-2.5.0
+9b0c38cc6a666c11ab7b974d4642257e  doc/changelogs/7.0/CHANGELOG-6.1.13-to-7.0.0
 9b97638d32512be2b3dbcd5d82c6a36b  doc/converter.md
 afa77d424b0efa80cbdbf9ba991f2157  doc/eZconversion.txt
 f1e92cd0fd20ceaa283d96e35b176da7  doc/eZconversion.zip
@@ -99,8 +100,8 @@ af04f022ed96fea1b98670c33c45e6d5  doc/index.md
 7f5917008bfcc5b4ff422ce6652a957f  doc/sources.md
 e4d4a5a58f9f3fc9111712122be08968  examples/article.odt
 5f63d7f5a5579230d03a5c49d77cdee0  examples/general_document_example.odt
-78414fdac68adff69352277caa0e3785  extension.xml
-626b65af74e62e52a9d831eb02afbfaa  ezinfo.php
+73653fb694c4aade0bb1c712ddb3660d  extension.xml
+0a621587cf0eec71201130638852df73  ezinfo.php
 8d0b52b28a4c5c31d734921c4a5f0346  modules/ezodf/batch.php
 dc9b4aff3f503f5ac4d135f92d6cf75f  modules/ezodf/batchstatus.php
 9590ed3d48ea7e95fb9426673635bb4d  modules/ezodf/converter.php
@@ -152,11 +153,11 @@ b204a46f632f8a02b6eee49be6c10a65  tests/eZOOGeneratorTest.php
 c4fc41c85bef67fe44fedfbf77a76e0b  tests/eZOOImportAccessTest.php
 3aba330c667e9aab50bdcd2e6c42f186  tests/eZOOImportArchiveTest.php
 3e44d3e7823ac4d9dd10904aa167fb23  tests/eZOOImportMarkupTest.php
-a0ae16fb33f7c0e06d6436222cae92a6  tests/eZOOImportZipSlipTest.php
+6ca4950bea7b73b92424772f6223e022  tests/eZOOImportZipSlipTest.php
 6975b4a779587f96b386bb3d7c47145b  tests/eZOpenofficeUploadHandlerTest.php
-040535178b0adc6d908d4a0289c2bfa3  tests/expOdfConverterLayerTest.php
+6186352d84838f1ec64a4283a3aa8dc9  tests/expOdfConverterLayerTest.php
 9de86e9bed0ef2a3eb5fb38f6b41d5fa  tests/expOdfHtmlToOdtTest.php
-f976423ac9e5e22b83df73183f6fe695  tests/expOdfImportSourcesTest.php
+57f6ccfd21650adaccbca1339b69246f  tests/expOdfImportSourcesTest.php
 44f1dae0d63bd73177f4f4f98df67864  tests/expOdfReadersTest.php
 12cd076512e53dce22f4b76eb070c850  tests/fixtures/kernel_stubs.php
 44a4c0a78efb8ef266de91b5d91c3e47  translations/ara-SA/translation.ts
@@ -180,7 +181,7 @@ d02d06965b664f6508e99db289ad03bc  translations/heb-IL/translation.ts
 8bb26e40eeec10c3539a7d1c0cfcfa55  translations/kur-TR/translation.ts
 dad40430b0ce1b5c5757e2cd92abba9b  translations/lat-VA/translation.ts
 28a5252c0c5bce1ecbf2462de6b884f3  translations/nor-NO/translation.ts
-1bd7242792fc2afe2a3b7cf631fc3d1d  translations/pol-PL/translation.ts
+3167a7b1f177927e3ba2e416b788c607  translations/pol-PL/translation.ts
 43566e13d638528cb20a46995222786b  translations/por-BR/translation.ts
 35e7cdf40fd851957f677fe4cc1a151b  translations/pus-AF/translation.ts
 476f44570fdb8c740e35923e54bdf72e  translations/ser-SR/translation.ts
