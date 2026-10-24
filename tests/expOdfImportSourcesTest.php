@@ -253,6 +253,7 @@ class expOdfImportSourcesTest extends TestCase
         );
     }
 
+    /** @dataProvider sourceClasses */
     #[\PHPUnit\Framework\Attributes\DataProvider('sourceClasses')]
     public function testCatalogueEntry( $class, $identifier, $group, $pattern )
     {

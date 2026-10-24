@@ -60,6 +60,7 @@ class expOdfConverterLayerTest extends TestCase
         );
     }
 
+    /** @dataProvider addresses */
     #[\PHPUnit\Framework\Attributes\DataProvider( 'addresses' )]
     public function testPublicAddresses( $ip, $public )
     {
@@ -75,6 +76,7 @@ class expOdfConverterLayerTest extends TestCase
         );
     }
 
+    /** @dataProvider refusedUrls */
     #[\PHPUnit\Framework\Attributes\DataProvider( 'refusedUrls' )]
     public function testRefusedUrls( $url )
     {

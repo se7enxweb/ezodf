@@ -128,6 +128,7 @@ class eZOOImportZipSlipTest extends TestCase
         $this->assertRefused( $file, 'unsafe_path' );
     }
 
+    /** @dataProvider specialFileTypes */
     #[DataProvider( 'specialFileTypes' )]
     public function testDevicesAndFifosAreRefused( $mode )
     {
