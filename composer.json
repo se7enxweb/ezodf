@@ -22,6 +22,9 @@
         "ext-zip": "*",
         "ext-dom": "*"
     },
+    "replace": {
+        "se7enxweb/ezodf-ls": "self.version"
+    },
     "suggest": {
         "se7enxweb/expqueue": "Runs imports, exports and the converter's work on the job queue; without it each job runs in a PHP process of its own",
         "se7enxweb/sqliimport": "Document formats of 7x SQLI Import 2: mapping, dry run, undo and schedules for documents of uploads, ZIP archives, web addresses, feeds, WebDAV/Nextcloud, Google Drive, OneDrive and mailboxes",
