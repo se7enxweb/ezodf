@@ -1,0 +1,67 @@
+/* ezodf: the pages of Documents (Document converter, import, runs). Built from the administration's shared
+   components (.a4-page, .a4-card, .a4-figures, .a4-table, .a4-btn, .a4-notice, .a4-meter, .a4-chips, .a4-facts,
+   .a4-fold, .a4-toolbar) and their --a4-* tokens, which have a light and a dark value. This file holds only what
+   the components cannot do, as .a4-ezodf-* classes, and takes every colour, radius and space from the tokens.
+   Loaded through design.ini [StylesheetSettings] BackendCSSFileList. */
+
+/* an action of a row or a toolbar: a small POST form that sits in the line like a button */
+.a4-ezodf-inline { display: inline-block; margin: 0 var(--a4-space-1) var(--a4-space-1) 0; }
+
+/* cards that take the whole width of the grid */
+.a4-ezodf-span { grid-column: 1 / -1; }
+
+/* paths and error texts wrap instead of widening the page */
+.a4-ezodf-path, .a4-ezodf-error { overflow-wrap: anywhere; word-break: break-word; }
+
+/* the install box below the table */
+.a4-ezodf-install { margin: var(--a4-space-4) 0 0; padding: var(--a4-space-3) 0 0; border-top: 1px solid var(--a4-line); }
+.a4-ezodf-progress { margin: var(--a4-space-2) 0; }
+.a4-ezodf-meter { height: var(--a4-space-3); margin: var(--a4-space-1) 0; }
+
+/* logs: one line per item, a fixed height that scrolls in its region */
+.a4-ezodf-log { max-height: 18rem; overflow: auto; margin: 0; padding: var(--a4-space-2); list-style: none; border: 1px solid var(--a4-line); border-radius: var(--a4-radius-s); background: var(--a4-soft); }
+.a4-ezodf-log li { margin: 0; padding: 0; overflow-wrap: anywhere; }
+.a4-ezodf-log code { font-family: var(--a4-mono); font-size: var(--a4-text-xs); color: var(--a4-ink); background: none; padding: 0; white-space: pre-wrap; }
+
+/* number fields side by side where there is room */
+.a4-ezodf-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--a4-space-3); }
+.a4-ezodf-fields .a4-toolbar { grid-column: 1 / -1; }
+
+/* the extension lists of the formats wrap anywhere */
+.a4-ezodf-exts { overflow-wrap: anywhere; line-height: 1.6; }
+
+/* columns that make way on narrow screens (and at 200% zoom) */
+@media (max-width: 760px) {
+    .a4-ezodf-hide-narrow { display: none; }
+}
+
+/* ---- Import documents ---- */
+
+/* the drop zone: a dashed area that marks itself while files are dragged over it */
+.a4-ezodf-drop { padding: var(--a4-space-4); border: 2px dashed var(--a4-line-strong); border-radius: var(--a4-radius); background: var(--a4-soft); text-align: center; }
+.a4-ezodf-drop.is-over { border-color: var(--a4-accent); background: var(--a4-accent-soft); }
+.a4-ezodf-drop-text { margin: 0 0 var(--a4-space-2); font-size: var(--a4-text-m); }
+.a4-ezodf-pickers { justify-content: center; }
+.a4-ezodf-pickers label.a4-btn { cursor: pointer; }
+.a4-ezodf-pickers input:focus-visible + label, .a4-ezodf-pickers label:focus-within { box-shadow: 0 0 0 3px var(--a4-ring); }
+
+/* the chosen files below the drop zone */
+.a4-ezodf-selection { margin: var(--a4-space-3) 0; }
+.a4-ezodf-selection .a4-table-wrap { max-height: 16rem; overflow: auto; }
+
+/* the URL list takes the card's width */
+.a4-ezodf-urls { width: 100%; box-sizing: border-box; font-family: var(--a4-mono); }
+
+/* a field that spans the option grid */
+.a4-ezodf-wide { grid-column: 1 / -1; }
+
+/* space between the parts below the form */
+.a4-ezodf-section { margin: var(--a4-space-4) 0 0; }
+.a4-page.a4-ezodf > .box-bc .a4-card + .a4-card { margin-top: var(--a4-space-3); }
+
+/* ---- Export documents: the format buttons in a row that wraps ---- */
+.a4-ezodf-formats-list { display: flex; flex-wrap: wrap; gap: var(--a4-space-2); margin: 0; padding: 0; list-style: none; }
+
+/* ---- AI suggestions on the page of an import ---- */
+.a4-ezodf-ai { margin: var(--a4-space-2) 0 0; }
+.a4-ezodf-ai p { margin: var(--a4-space-1) 0; }

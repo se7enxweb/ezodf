@@ -1,31 +1,26 @@
 <?php
-//
-// Created on: <17-Aug-2004 12:57:54 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 3.9.x
-// COPYRIGHT NOTICE: Copyright (C) 1998 - 2026 7x & Exponential Foundation
-// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * The module ezodf: documents in and out.
+ *
+ *   import          Import documents: files, a folder (its tree), ZIP archives and URLs into a folder, as background
+ *                   jobs; the 6.x single-document flow (a new version: import_type/replace) is kept
+ *   upload          the uploads of the import page with JavaScript (JSON)
+ *   batch           one import of documents with each document's state, retry, cancel
+ *   batchstatus     the live state of a batch as JSON
+ *   runs            the imports of documents
+ *   export          Export documents: one item as ODT, DOCX, PDF, RTF, DOC, XHTML, EPUB or text; a folder as a ZIP
+ *   exportfile      the ZIP of a folder export
+ *   exportstatus    whether a folder export still runs (JSON)
+ *   converter       Document converter: the LibreOffice installation (one-click install, the installed one, update,
+ *                   remove), the conversion server (on, off, restart, status, log), test conversions, a remote server,
+ *                   the limits, the formats, cleanup; policy ezodf/converter
+ *   converterstatus the live state of the converter page as JSON (polled by ezodf_admin.js)
+ *   converterfile   a result of the test conversions, as a download
+ *
+ * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS
+ * @license GNU General Public License v2.0 (or any later version)
+ */
 
 $Module = array( 'name' => 'eZODF',
                  'variable_params' => true );
@@ -47,9 +42,58 @@ $ViewList['export'] = array(
     'unordered_params' => array( 'node_id' => 'NodeID',
                                  'export_type' => 'ExportType' ) );
 
+$ViewList['upload'] = array(
+    'script' => 'upload.php',
+    'params' => array(),
+    'functions' => array( 'import' ) );
+
+$ViewList['batch'] = array(
+    'script' => 'batch.php',
+    'params' => array( 'BatchID' ),
+    'functions' => array( 'import' ),
+    'default_navigation_part' => 'ezsetupnavigationpart' );
+
+$ViewList['batchstatus'] = array(
+    'script' => 'batchstatus.php',
+    'params' => array( 'BatchID' ),
+    'functions' => array( 'import' ) );
+
+$ViewList['runs'] = array(
+    'script' => 'runs.php',
+    'params' => array(),
+    'functions' => array( 'import' ),
+    'default_navigation_part' => 'ezsetupnavigationpart' );
+
+$ViewList['exportfile'] = array(
+    'script' => 'exportfile.php',
+    'params' => array( 'ExportID' ),
+    'functions' => array( 'export' ) );
+
+$ViewList['exportstatus'] = array(
+    'script' => 'exportstatus.php',
+    'params' => array(),
+    'functions' => array( 'export' ) );
+
+$ViewList['converter'] = array(
+    'script' => 'converter.php',
+    'params' => array(),
+    'functions' => array( 'converter' ),
+    'default_navigation_part' => 'ezsetupnavigationpart' );
+
+$ViewList['converterstatus'] = array(
+    'script' => 'converterstatus.php',
+    'params' => array(),
+    'functions' => array( 'converter' ) );
+
+$ViewList['converterfile'] = array(
+    'script' => 'converterfile.php',
+    'params' => array( 'Name' ),
+    'functions' => array( 'converter' ) );
 
 $FunctionList = array();
 $FunctionList['import'] = array();
 $FunctionList['export'] = array();
+// sets up and runs the document converter (install LibreOffice, the conversion server, limits, remote server)
+$FunctionList['converter'] = array();
 
 ?>

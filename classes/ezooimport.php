@@ -78,6 +78,8 @@ class eZOOImport
 
     var $ERROR = array();
     var $currentUserID;
+    /// what the converter of ezodf 7 did for the last import (backend, filter, seconds), when it converted
+    var $ConversionInfo = null;
 
     /*!
      Constructor. PHP 8 does not call a method named like the class, so the former eZOOImport() constructor never
@@ -172,6 +174,39 @@ class eZOOImport
                 return false;
         }
         return true;
+    }
+
+    /*!
+     \static
+     A heading inside a list (the outline numbering of Word headings, as LibreOffice writes them) would become a
+     <header> in a list item, which the rich text refuses: the whole body was then stored as empty. A list whose
+     items hold nothing but headings (and such lists) is replaced by its headings, in their order; in a list with
+     other paragraphs a heading becomes a paragraph where it stands.
+    */
+    static function unwrapHeadingLists( DOMDocument $dom )
+    {
+        $xpath = new DOMXPath( $dom );
+        $xpath->registerNamespace( 'text', self::NAMESPACE_TEXT );
+        foreach ( iterator_to_array( $xpath->query( '//text:list[not(ancestor::text:list)][.//text:h]' ) ) as $list )
+        {
+            $other = $xpath->query( './/text:list-item/*[not(self::text:h) and not(self::text:list)] | .//text:list-header/*[not(self::text:h) and not(self::text:list)]', $list );
+            $headings = iterator_to_array( $xpath->query( './/text:h', $list ) );
+            if ( $other->length === 0 )
+            {
+                foreach ( $headings as $h )
+                    $list->parentNode->insertBefore( $h, $list );
+                $list->parentNode->removeChild( $list );
+                continue;
+            }
+            // a list with paragraphs and headings: the headings become bold paragraphs where they stand
+            foreach ( $headings as $h )
+            {
+                $p = $dom->createElementNS( self::NAMESPACE_TEXT, 'text:p' );
+                while ( $h->firstChild )
+                    $p->appendChild( $h->firstChild );
+                $h->parentNode->replaceChild( $p, $h );
+            }
+        }
     }
 
     /*!
@@ -635,27 +670,44 @@ class eZOOImport
         // Alex 2008/04/21 - added !== false
         if ( in_array( $originalFileType, $convertTypes, false ) !== false )
         {
-            if ( !self::conversionDaemonEnabled() )
-            {
-                $this->setError( self::ERROR_CONVERSIONDISABLED, $originalFileType );
-                return false;
-            }
             $uniqueStamp = bin2hex( random_bytes( 16 ) );
-            $tmpFromFile = $tmpDir . "/convert_from_$uniqueStamp.doc";
             $tmpToFile   = $tmpDir . "/ooo_converted_$uniqueStamp.odt";
-            $this->TemporaryFiles[] = $tmpFromFile;
             $this->TemporaryFiles[] = $tmpToFile;
-            copy( realpath( $file ),  $tmpFromFile );
-
-           /// Convert document using the eZ Publish document conversion daemon
-            if ( !$this->daemonConvert( $tmpFromFile, $tmpToFile ) )
+            if ( class_exists( 'expOdfConverter' ) && !self::conversionDaemonEnabled() )
             {
-                if( $this->getErrorNumber() == 0 )
-                    $this->setError( self::ERROR_CONVERT );
-                return false;
+                // ezodf 7: LibreOffice in its sandbox (server, per call or remote), else the PHP readers
+                try
+                {
+                    $converted = expOdfConverter::toOdt( $file, $originalFileName );
+                    copy( $converted['file'], $tmpToFile );
+                    expOdfConverter::cleanup( $converted );
+                    $this->ConversionInfo = $converted;
+                }
+                catch ( expOdfConverterException $e )
+                {
+                    $this->setError( self::ERROR_CONVERT, $e->getMessage() );
+                    return false;
+                }
             }
-            // At this point we can unlink the sourcefile for conversion
-            unlink( $tmpFromFile );
+            else
+            {
+                // the 4.x conversion daemon (odf.ini [ODFImport] ConversionDaemon=enabled), kept for sites that run it
+                if ( !self::conversionDaemonEnabled() )
+                {
+                    $this->setError( self::ERROR_CONVERSIONDISABLED, $originalFileType );
+                    return false;
+                }
+                $tmpFromFile = $tmpDir . "/convert_from_$uniqueStamp.doc";
+                $this->TemporaryFiles[] = $tmpFromFile;
+                copy( realpath( $file ),  $tmpFromFile );
+                if ( !$this->daemonConvert( $tmpFromFile, $tmpToFile ) )
+                {
+                    if( $this->getErrorNumber() == 0 )
+                        $this->setError( self::ERROR_CONVERT );
+                    return false;
+                }
+                unlink( $tmpFromFile );
+            }
 
             // Overwrite the file location
             $file = $tmpToFile;
@@ -689,6 +741,9 @@ class eZOOImport
             $this->setError( self::ERROR_PARSEXML );
             return false;
         }
+
+        // Word and RTF documents converted by LibreOffice number their headings with an outline list
+        self::unwrapHeadingLists( $dom );
 
 
         // Fetch the automatic document styles
@@ -1282,8 +1337,8 @@ class eZOOImport
 
                 $objectName = basename( $originalFileName );
 
-                // Remove extension from name
-                $objectName = preg_replace( "/(\....)$/", "", $objectName );
+                // Remove the extension from the name (any: docx, xlsx, markdown ..., not only three letters)
+                $objectName = preg_replace( "/\.[A-Za-z0-9]{1,8}$/", "", $objectName );
                 // Convert _ to spaces and upcase the first character
                 $objectName = ucfirst( str_replace( "_", " ", $objectName ) );
 
@@ -1503,6 +1558,9 @@ class eZOOImport
                         {
                             foreach ( $style->childNodes as $styleChild )
                             {
+                                // whitespace between the properties of a style is a text node: it has no attributes
+                                if ( $styleChild->nodeType !== XML_ELEMENT_NODE )
+                                    continue;
                                 $fontWeight = $styleChild->getAttributeNS( self::NAMESPACE_FO, 'font-weight' );
                                 $fontStyle = $styleChild->getAttributeNS( self::NAMESPACE_FO, 'font-style' );
                             }
@@ -1758,10 +1816,10 @@ class eZOOImport
                                     $rowContent = "";
                                     foreach ( $headerRow->childNodes as $tableCell )
                                     {
-                                        $colSpan = $tableCell->getAttributeNS( self::NAMESPACE_TABLE, 'number-columns-spanned' );
-
+                                        // whitespace between header cells is a text node: only a cell has the attribute
                                         if ( $tableCell->localName == 'table-cell' )
                                         {
+                                            $colSpan = $tableCell->getAttributeNS( self::NAMESPACE_TABLE, 'number-columns-spanned' );
                                             $cellContent = "";
                                             foreach ( $tableCell->childNodes as $tableContentNode )
                                             {
@@ -2031,7 +2089,7 @@ class eZOOImport
                                     if ( $style->childNodes->length == 1 )
                                     {
                                         $properties = $style->childNodes->item( 0 );
-                                        $alignment = $properties->getAttributeNS( self::NAMESPACE_STYLE, "horizontal-pos" );
+                                        $alignment = $properties instanceof DOMElement ? $properties->getAttributeNS( self::NAMESPACE_STYLE, "horizontal-pos" ) : '';
                                     }
 
                                     // Check image alignment
