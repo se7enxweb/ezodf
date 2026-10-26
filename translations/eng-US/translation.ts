@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en_US" sourcelanguage="en">
 <context>
+    <name>design/ezodf/import</name>
+    <message>
+        <source>File:</source>
+        <translation>File:</translation>
+    </message>
+    <message>
+        <source>Create or update the translation in:</source>
+        <translation>Create or update the translation in:</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation>Existing translations</translation>
+    </message>
+    <message>
+        <source>New translations</source>
+        <translation>New translations</translation>
+    </message>
+    <message>
+        <source>Import in:</source>
+        <translation>Import in:</translation>
+    </message>
+</context>
+<context>
     <name>extension/ezodf</name>
     <message>
         <source>OpenOffice.org export</source>
@@ -68,6 +91,14 @@ Images are placed in the media library so you can re-use them in other articles.
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</translation>
+    </message>
+    <message>
+        <source>Document imported as</source>
+        <translation>Document imported as</translation>
+    </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation>The imported document is waiting for an approbation to be published.</translation>
     </message>
 </context>
 <context>
