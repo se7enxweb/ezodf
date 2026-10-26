@@ -1,115 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="ca_ES">
 <context>
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxer:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea o actualitza la traducció a:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduccions existents</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Noves traduccions</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa a:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
     <message>
-        <source>OpenOffice.org export</source>
-        <translation>OpenOffice.org Export</translation>
-    </message>
-    <message>
-        <source>Export Exponential content to OpenOffice.org</source>
-        <translation>Exporta Exponential content a OpenOffice.org</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Error</translation>
-    </message>
-    <message>
-        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
-        <translation>Aquí pots exportar qualsevol objecte Exponential content a format document OpenOffice.org Writer. </translation>
     </message>
     <message>
         <source>Export Object</source>
         <translation>Exporta l&apos;objecte</translation>
     </message>
     <message>
-        <source>Document is now imported</source>
-        <translation>S&apos;ha importat el document</translation>
+        <source>OpenOffice.org import</source>
+        <translation>Importació d&apos;OpenOffice.org</translation>
     </message>
     <message>
-        <source>OpenOffice.org import</source>
-        <translation>OpenOffice.org import</translation>
+        <source>OpenOffice.org export</source>
+        <translation>Exportació d&apos;OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>Document is now imported</source>
+        <translation>El document ja s&apos;ha importat</translation>
     </message>
     <message>
         <source>The object was imported as: %class_name</source>
-        <translation>S&apos;ha importat l&apos;objecte com a: %class_name</translation>
+        <translation>L&apos;objecte s&apos;ha importat com a: %class_name</translation>
     </message>
     <message>
         <source>Document imported as</source>
-        <translation>S&apos;ha importat el document com a</translation>
-    </message>
-    <message>
-        <source>The images are placed in the media library and can be re-used.</source>
-        <translation>Les imatges són a la mediateca i poden ser reutilitzades.</translation>
+        <translation>Document importat com a</translation>
     </message>
     <message>
         <source>Import another document</source>
         <translation>Importa un altre document</translation>
     </message>
     <message>
-        <source>Upload file</source>
-        <translation type="obsolete">Carrega el document</translation>
-    </message>
-    <message>
         <source>Import OpenOffice.org document</source>
-        <translation>Importa document OpenOffice.org</translation>
+        <translation>Importa un document d&apos;OpenOffice.org</translation>
     </message>
     <message>
         <source>Replace document</source>
-        <translation>Substitueix el docuemnt</translation>
+        <translation>Substitueix el document</translation>
     </message>
     <message>
         <source>Import to</source>
         <translation>Importa a</translation>
     </message>
     <message>
+        <source>Export Exponential content to OpenOffice.org</source>
+        <translation>Exporta contingut d&apos;Exponential a OpenOffice.org</translation>
+    </message>
+    <message>
+        <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
+        <translation>Aquí pots exportar qualsevol objecte de contingut d&apos;Exponential al format de document d&apos;OpenOffice.org Writer.</translation>
+    </message>
+    <message>
+        <source>The images are placed in the media library and can be re-used.</source>
+        <translation>Les imatges es col·loquen a la mediateca i es poden reutilitzar.</translation>
+    </message>
+    <message>
         <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Pots importar documents OpenOffice.org Writer directament a Exponential des d&apos;aquesta pàgina. Has de
-definir on vols ubicar el document i l&apos;Exponential fa la resta. El document es converteix al 
-format adecuat durant el procés d&apos;importació. Se te n&apos;informarà un cop el document hagi estat convertit.
-Les imatges es coloquen a la mediateca per tal que puguin ser reutilitzades en altre articles.</translation>
+        <translation>Des d&apos;aquesta pàgina pots importar documents d&apos;OpenOffice.org Writer directament a Exponential. Se&apos;t
+demana on vols col·locar el document i Exponential fa la resta. Durant la importació, el document es converteix
+a la classe de contingut adequada i, quan la importació acaba, rebs una nota sobre això.
+Les imatges es col·loquen a la mediateca perquè puguis reutilitzar-les en altres articles.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>
-        <translation type="unfinished"></translation>
+        <translation>El document importat està esperant una aprovació per ser publicat.</translation>
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa un document</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/browse</name>
     <message>
         <source>Choose document placement</source>
-        <translation>Selecciona la ubicació del document</translation>
+        <translation>Tria la ubicació del document</translation>
     </message>
     <message>
         <source>Please choose the placement for the OpenOffice.org object.
@@ -117,13 +113,11 @@ Les imatges es coloquen a la mediateca per tal que puguin ser reutilitzades en a
     Select the placements and click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Selecciona una ubicació per a l&apos;objecte OpenOffice.org. 
+        <translation>Tria la ubicació de l&apos;objecte d&apos;OpenOffice.org.
 
-Selecciona les ubicacions i prem aquest %buttonname botó.
-També pots utilitzar ítems i marcadors recents per a una ubicació ràpida.
-Clica sobre el nom de les ubicacions per a canviar la llista de navegació.
-
-</translation>
+    Selecciona les ubicacions i fes clic al botó %buttonname.
+    També pots utilitzar els elements recents i les adreces d&apos;interès per a una ubicació ràpida.
+    Fes clic als noms de les ubicacions per canviar el llistat d&apos;exploració.</translation>
     </message>
     <message>
         <source>Select</source>
@@ -134,129 +128,137 @@ Clica sobre el nom de les ubicacions per a canviar la llista de navegació.
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation type="unfinished">Format de destinació de document no suportat</translation>
+        <translation>El format del fitxer de destinació no és compatible</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation type="unfinished">La conversió a PDF no ha funcionat</translation>
+        <translation>La conversió a PDF ha fallat</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation type="unfinished">La conversió a Word no ha funcionat</translation>
+        <translation>La conversió a Word ha fallat</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation type="unfinished">No es pot recuperar el nòdul o no es pot llegir</translation>
+        <translation>No es pot obtenir el node o no hi ha accés de lectura</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation type="unfinished">No es pot obrir el document %1 amb el server side</translation>
+        <translation>No es pot obrir el fitxer %1 al servidor</translation>
+    </message>
+    <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>La conversió a PDF o Word està desactivada (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation type="unfinished">Extensió o tipus de document no permès.</translation>
+        <translation>L&apos;extensió o el tipus de fitxer no està permès.</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation type="unfinished">No s&apos;ha pogut analitzar l&apos;XML.</translation>
+        <translation>No s&apos;ha pogut analitzar l&apos;XML.</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation type="unfinished">No es pot obrir la placa base. Comprova si l&apos;extensió /ezodf/daemon.php està operativa.</translation>
+        <translation>No es pot obrir el socket. Comprova si extension/ezodf/daemon.php s&apos;està executant.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation type="unfinished">Aquest document no es pot convertir.</translation>
+        <translation>No es pot convertir el document indicat.</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation type="unfinished">No es troba el dimoni. La bifurcació no pot crear el procés fill.</translation>
+        <translation>No es pot cridar el dimoni. Fork no pot crear el procés fill.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation type="unfinished">El dimoni dóna error.</translation>
+        <translation>El dimoni ha informat d&apos;un error.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation type="unfinished">Nòdul desconegut.</translation>
+        <translation>Node desconegut.</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation type="unfinished">Accés denegat.</translation>
+        <translation>Accés denegat.</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation type="unfinished">Error durant la importació.</translation>
+        <translation>Error durant la importació.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation type="unfinished">La classe de contingut especificada a odf.ini és desconeguda:</translation>
+        <translation>S&apos;ha especificat una classe de contingut desconeguda a odf.ini:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation type="unfinished">Error desconegut.</translation>
+        <translation>Error desconegut.</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation type="unfinished">Tipus de document:</translation>
-    </message>
-    <message>
-        <source>Unable to fetch node with id  </source>
-        <translation type="obsolete">No es pot recuperar el nòdul amb id</translation>
-    </message>
-    <message>
-        <source>Folder for images could not be created, access denied.</source>
-        <translation type="unfinished">No s&apos;ha pogut crear la carpeta d&apos;imatges, accés denegat.</translation>
-    </message>
-    <message>
-        <source>Document is not supported.</source>
-        <translation type="unfinished">Document no suportat.</translation>
-    </message>
-    <message>
-        <source>Cannot import. File not found. Already imported?</source>
-        <translation type="unfinished">No es pot importar. No s&apos;ha trobat el document. S&apos;havia importat ja?</translation>
-    </message>
-    <message>
-        <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation type="unfinished">No es pot importar el document, la ubicació de la ID del nòdul no és vàlida.</translation>
-    </message>
-    <message>
-        <source>Cannot store uploaded file, cannot import.</source>
-        <translation type="unfinished">No es pot desar el document carregat, no es pot importar.</translation>
+        <translation>Tipus de fitxer: </translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation type="unfinished">No es pot recuperar el node amb id </translation>
+        <translation>No s&apos;ha pogut obtenir el node amb l&apos;identificador </translation>
+    </message>
+    <message>
+        <source>Folder for images could not be created, access denied.</source>
+        <translation>No s&apos;ha pogut crear la carpeta per a les imatges, accés denegat.</translation>
+    </message>
+    <message>
+        <source>Document is not supported.</source>
+        <translation>El document no és compatible.</translation>
+    </message>
+    <message>
+        <source>Cannot import. File not found. Already imported?</source>
+        <translation>No es pot importar. No s&apos;ha trobat el fitxer. Potser ja s&apos;ha importat?</translation>
+    </message>
+    <message>
+        <source>Cannot import document, supplied placement nodeID is not valid.</source>
+        <translation>No es pot importar el document, l&apos;ID de node de destinació proporcionat no és vàlid.</translation>
+    </message>
+    <message>
+        <source>Cannot store uploaded file, cannot import.</source>
+        <translation>No es pot desar el fitxer pujat, no es pot importar.</translation>
+    </message>
+    <message>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>El fitxer no és un fitxer OpenDocument que es pugui importar.</translation>
+    </message>
+    <message>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>La conversió de documents està desactivada (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/popupmenu</name>
+    <message>
+        <source>Export PDF</source>
+        <translation>Exporta a PDF</translation>
+    </message>
+    <message>
+        <source>Export Word</source>
+        <translation>Exporta a Word</translation>
+    </message>
     <message>
         <source>OpenOffice.org</source>
         <translation>OpenOffice.org</translation>
     </message>
     <message>
         <source>Export OpenOffice</source>
-        <translation>Exporta l&apos;OpenOffice</translation>
-    </message>
-    <message>
-        <source>Export PDF</source>
-        <translation>Exporta PDF</translation>
-    </message>
-    <message>
-        <source>Export Word</source>
-        <translation>Exporta el Word</translation>
+        <translation>Exporta a OpenOffice</translation>
     </message>
     <message>
         <source>Import OpenOffice</source>
-        <translation>Importa OpenOffice</translation>
+        <translation>Importa des d&apos;OpenOffice</translation>
     </message>
     <message>
         <source>Replace OpenOffice</source>
-        <translation>Substitueix l&apos;OpenOffice</translation>
+        <translation>Substitueix amb OpenOffice</translation>
     </message>
 </context>
 </TS>

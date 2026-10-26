@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="sr_Latn_RS">
 <context>
     <name>design/ezodf/import</name>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka:</translation>
     </message>
     <message>
         <source>Create or update the translation in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Napravite ili ažurirajte prevod u:</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Postojeći prevodi</translation>
     </message>
     <message>
         <source>New translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Novi prevodi</translation>
     </message>
     <message>
         <source>Import in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvezi u:</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf</name>
-    <message>
-        <source>Upload file</source>
-        <translation type="obsolete">Otpremi datoteku</translation>
-    </message>
     <message>
         <source>Error</source>
         <translation>Greška</translation>
@@ -56,7 +52,7 @@
     </message>
     <message>
         <source>Document imported as</source>
-        <translation>Dokument uvezen kao</translation>
+        <translation>Dokument je uvezen kao</translation>
     </message>
     <message>
         <source>Import another document</source>
@@ -76,34 +72,33 @@
     </message>
     <message>
         <source>Export Exponential content to OpenOffice.org</source>
-        <translation>Izvezi Exponential sadržaj u OpenOffice.org</translation>
+        <translation>Izvezite Exponential sadržaj u OpenOffice.org</translation>
     </message>
     <message>
         <source>Here you can export any Exponential content object to an OpenOffice.org Writer document format.</source>
-        <translation>Ovde možete izvesti bilo koji Exponential sadržajni objekat u OpenOffice.org Writer formatu dokumenta.</translation>
+        <translation>Ovde možete izvesti bilo koji objekat sadržaja sistema Exponential u format dokumenta OpenOffice.org Writer.</translation>
     </message>
     <message>
         <source>The images are placed in the media library and can be re-used.</source>
-        <translation>Slike su stavljene u biblioteku medija i mogu se ponovo koristiti.</translation>
+        <translation>Slike se nalaze u medijskoj biblioteci i mogu se ponovo koristiti.</translation>
     </message>
     <message>
         <source>You can import OpenOffice.org Writer documents directly into Exponential from this page. You are
 asked where to place the document and Exponential does the rest. The document is converted into
 the appropriate class during the import, you get a notice about this after the import is done.
 Images are placed in the media library so you can re-use them in other articles.</source>
-        <translation>Možete uvesti OpenOffice.org Writer dokumenta direktno u Exponential sa ove strane. Pitaće Vas
-gde želite da stavite dokument i Exponential će uraditi ostalo. Dokument je adaptiran u odgovarajuću
-klasu prilikom uvoza, a Vi ćete dobiti obaveštenje o ovome nakon što se završi sa uvozom.
-Slike su stavljene u biblioteku medija tako da ih možete ponovo koristiti i u drugim člancima.
-</translation>
+        <translation>Sa ove stranice možete direktno uvesti OpenOffice.org Writer dokumente u Exponential. Od vas se traži
+da odredite gde će dokument biti smešten, a Exponential obavlja ostalo. Dokument se tokom uvoza
+pretvara u odgovarajuću klasu, a po završetku uvoza dobićete napomenu o tome. Slike se smeštaju
+u medijsku biblioteku kako biste ih mogli ponovo koristiti u drugim člancima.</translation>
     </message>
     <message>
         <source>The imported document is waiting for an approbation to be published.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvezeni dokument čeka na odobrenje za objavljivanje.</translation>
     </message>
     <message>
         <source>Import document</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvezi dokument</translation>
     </message>
 </context>
 <context>
@@ -118,11 +113,11 @@ Slike su stavljene u biblioteku medija tako da ih možete ponovo koristiti i u d
     Select the placements and click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Molimo Vas izaberite mesto za OpenOffice.org objekat.
+        <translation>Izaberite mesto za OpenOffice.org objekat.
 
-    Izaberite mesto i kliknite na %buttonname dugme.
-    Za brzo pozicioniranje je takođe moguće koristiti nedavne elemente i elemente oznaka za knjigu.
-    Kliknite na položaj imena da biste promenili redosled listinga.</translation>
+    Izaberite mesta i kliknite na dugme %buttonname.
+    Za brzo postavljanje možete koristiti i skorašnje stavke i obeleživače.
+    Kliknite na nazive mesta da biste promenili prikaz pregledanja.</translation>
     </message>
     <message>
         <source>Select</source>
@@ -133,98 +128,110 @@ Slike su stavljene u biblioteku medija tako da ih možete ponovo koristiti i u d
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation type="unfinished">Format odredišne datoteke nije podržan</translation>
+        <translation>Odredišni format datoteke nije podržan</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation type="unfinished">PDF konverzija nije uspela</translation>
+        <translation>PDF pretvaranje nije uspelo</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation type="unfinished">Word konverzija nije uspela</translation>
+        <translation>Word pretvaranje nije uspelo</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation type="unfinished">Nije moguće dohvatiti čvor ili ga nije moguće pročitati</translation>
+        <translation>Nije moguće preuzeti čvor ili nema pristupa za čitanje</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation type="unfinished">Nije moguće otvoriti datoteku %1 na strani servera</translation>
+        <translation>Nije moguće otvoriti datoteku %1 na strani servera</translation>
+    </message>
+    <message>
+        <source>Conversion to PDF or Word is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Konverzija u PDF ili Word je onemogućena (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation type="unfinished">Oznaka ili tip datoteke nisu dozvoljeni.</translation>
+        <translation>Ekstenzija ili vrsta datoteke nije dozvoljena.</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation type="unfinished">Nije moguće analizirati XLM.</translation>
+        <translation>Nije moguće obraditi XML.</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation type="unfinished">Nije moguće otvoriti spojnicu. Molimo proverite da li extension/ezodf/daemon.php radi.</translation>
+        <translation>Nije moguće otvoriti soket. Proverite da li se izvršava extension/ezodf/daemon.php.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation type="unfinished">Nije moguće pretvoriti dati dokument.</translation>
+        <translation>Nije moguće pretvoriti dati dokument.</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation type="unfinished">Nije moguće pozvati daemon. Ogranak ne može da kreira podređeni proces.</translation>
+        <translation>Nije moguće pozvati daemon. Fork ne može da napravi podređeni proces.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation type="unfinished">Daemon je prijavio grešku.</translation>
+        <translation>Daemon je prijavio grešku.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation type="unfinished">Nepoznati čvor.</translation>
+        <translation>Nepoznat čvor.</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation type="unfinished">Pristup nije dozvoljen.</translation>
+        <translation>Pristup odbijen.</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation type="unfinished">Greška prilikom uvoza.</translation>
+        <translation>Greška tokom uvoza.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation type="unfinished">Klasa nepoznatog sadržaja navedena u odf.ini:</translation>
+        <translation>Nepoznata klasa sadržaja navedena u odf.ini:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation type="unfinished">Nepoznata greška.</translation>
+        <translation>Nepoznata greška.</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation type="unfinished">Tip datoteke:</translation>
-    </message>
-    <message>
-        <source>Folder for images could not be created, access denied.</source>
-        <translation type="unfinished">Nije moguće kreirati fasciklu za slike, pristup nije dozvoljen.</translation>
-    </message>
-    <message>
-        <source>Cannot import. File not found. Already imported?</source>
-        <translation type="unfinished">Ne mogu da uvezem. Datoteka nije pronađena. Već uvezena?</translation>
-    </message>
-    <message>
-        <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation type="unfinished">Ne mogu da uvezem dokument, navedeni položaj IDčvora nije validan.</translation>
-    </message>
-    <message>
-        <source>Cannot store uploaded file, cannot import.</source>
-        <translation type="unfinished">Ne mogu da sačuvam otpremljenu datoteku, ne mogu da uvezem. </translation>
-    </message>
-    <message>
-        <source>Document is not supported.</source>
-        <translation type="unfinished">Dokument nije podržan.</translation>
+        <translation>Tip datoteke: </translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation type="unfinished"></translation>
+        <translation>Nije moguće preuzeti čvor sa identifikatorom </translation>
+    </message>
+    <message>
+        <source>Folder for images could not be created, access denied.</source>
+        <translation>Fascikla za slike nije mogla biti napravljena, pristup odbijen.</translation>
+    </message>
+    <message>
+        <source>Document is not supported.</source>
+        <translation>Dokument nije podržan.</translation>
+    </message>
+    <message>
+        <source>Cannot import. File not found. Already imported?</source>
+        <translation>Uvoz nije moguć. Datoteka nije pronađena. Da li je već uvezena?</translation>
+    </message>
+    <message>
+        <source>Cannot import document, supplied placement nodeID is not valid.</source>
+        <translation>Nije moguće uvesti dokument, navedeni nodeID pozicije nije ispravan.</translation>
+    </message>
+    <message>
+        <source>Cannot store uploaded file, cannot import.</source>
+        <translation>Nije moguće sačuvati otpremljenu datoteku, uvoz nije moguć.</translation>
+    </message>
+    <message>
+        <source>The file is not an OpenDocument file that can be imported.</source>
+        <translation>Datoteka nije OpenDocument datoteka koja može da se uveze.</translation>
+    </message>
+    <message>
+        <source>Document conversion is disabled (odf.ini [ODFImport] ConversionDaemon).</source>
+        <translation>Konverzija dokumenta je onemogućena (odf.ini [ODFImport] ConversionDaemon).</translation>
     </message>
 </context>
 <context>
