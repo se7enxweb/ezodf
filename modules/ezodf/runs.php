@@ -3,7 +3,7 @@
  * ezodf/runs (policy ezodf/import): the imports of documents, newest first (the user's own; every user's with
  * ezodf/converter), with their counts and a link to each batch.
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

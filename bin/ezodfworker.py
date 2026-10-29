@@ -22,7 +22,7 @@ Modes:
   ezodfworker.py serve --spool DIR --state DIR --soffice PATH [--timeout 90] [--restart-after 200]
   ezodfworker.py check --soffice PATH            prints {"ok": true, "python": ..., "uno": true} as JSON
 
-Copyright (C) 1998 - 2026 7x & Exponential Foundation. GNU General Public License v2.0 (or any later version).
+Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved. GNU General Public License v2.0 (or any later version).
 """
 import json
 import os

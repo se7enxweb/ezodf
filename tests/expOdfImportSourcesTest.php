@@ -8,7 +8,7 @@
  * The classes of 7x SQLI Import come from its clone (they are not part of ezodf); expImport (which reads
  * sqliimport.ini through the kernel) is replaced by a stand-in with settings in memory.
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

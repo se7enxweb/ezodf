@@ -4,7 +4,7 @@
  * Runs one ezodf background job on an installation without expqueue (started by expOdfJobs; the administration
  * starts it, nobody needs to type it): php extension/ezodf/bin/php/ezodfjob.php --job=<id>
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

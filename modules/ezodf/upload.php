@@ -8,7 +8,7 @@
  *   Action=start   BatchID             -> { url } (the batch page)
  * Every request is a POST with the form token (ezformtoken), sent by ezodf_admin.js from the page's form.
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

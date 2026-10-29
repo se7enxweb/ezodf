@@ -3,7 +3,7 @@
  * ezodf/batch/<id> (policy ezodf/import): one import of documents, each document with its state, live while it runs;
  * Retry failed, Retry (one), Cancel. A batch is shown to the user who started it and to users with ezodf/converter.
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

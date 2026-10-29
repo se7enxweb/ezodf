@@ -7,7 +7,7 @@
  * still answers what it always answered: a new version of an item (import_type/replace), its upload form (oo_file),
  * and its browse step (OOPlace), so bookmarks, the context menu's "Replace" and REST clients keep working.
  *
- * @copyright Copyright (C) 1998 - 2026 7x and the Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  */
 $http = eZHTTPTool::instance();

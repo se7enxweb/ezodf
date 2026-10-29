@@ -5,7 +5,7 @@
  * imported by a background job of its own (expOdfBatch). With JavaScript the files are uploaded one by one with
  * progress (ezodf/upload); without it the form posts them at once (up to max_file_uploads files).
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

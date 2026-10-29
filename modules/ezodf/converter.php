@@ -3,7 +3,7 @@
  * ezodf/converter (policy ezodf/converter): the Document converter page. Every change is a POST (ezformtoken adds
  * its token to the forms); long work starts as a background job and the page shows it live.
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license GNU General Public License v2.0 (or any later version)
  * @package ezodf
  */

@@ -17,7 +17,7 @@
  *   converterstatus the live state of the converter page as JSON (polled by ezodf_admin.js)
  *   converterfile   a result of the test conversions, as a download
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @copyright Copyright (C) 1999-2014 eZ Systems AS
  * @license GNU General Public License v2.0 (or any later version)
  */
