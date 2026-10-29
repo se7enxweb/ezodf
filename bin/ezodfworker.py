@@ -32,7 +32,7 @@ import sys
 import threading
 import time
 
-VERSION = '7.0.3'
+VERSION = '7.0.5'
 
 # the export filter of a target extension, by the kind of document LibreOffice opened
 EXPORT_FILTERS = {

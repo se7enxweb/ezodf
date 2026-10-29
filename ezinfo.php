@@ -15,7 +15,7 @@ class ezodfInfo
     {
         return array(
             'Name' => 'eZ OpenOffice.org LS',
-            'Version' => '7.0.4',
+            'Version' => '7.0.5',
             'Copyright' => 'Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved. Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.',
             'License' => 'GNU General Public License v2.0 (or any later version)',
             'Info_url' => 'https://github.com/se7enxweb/ezodf',
