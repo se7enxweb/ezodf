@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=8.0",
+        "php": ">=7.4",
         "se7enxweb/ezpublish-legacy-installer": "*",
         "ext-zip": "*",
         "ext-dom": "*"

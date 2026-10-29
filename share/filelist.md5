@@ -1,5 +1,5 @@
 name: ezodf
-version: 7.0.3
+version: 7.0.4
 files_count: 291
 
 a65c763ef0340e232cfe8c274f56fca0  .github/FUNDING.yml
@@ -44,7 +44,7 @@ a1fc9c88141a2096dcbb977e609f1066  classes/sqliimport/expodfimportdocumentfeedsou
 831b8b89c07d204adb44754ab2c41797  classes/sqliimport/expodfimportmailboxdocumentssource.php
 ce97b9a1fab1e789b67ecf85e823597f  classes/sqliimport/expodfimportonedrivesource.php
 30f9a3ff522cd51356a3add418937d95  classes/sqliimport/expodfimportwebdavsource.php
-7fc8486bda4e2465b9a7f35b8ca77e3b  composer.json
+8eaf7e7d281f34ac8d01af9b9b1682f1  composer.json
 1ac2048fbc90645629da894fcd7545e7  cronjobs/ezodf_keepalive.php
 56ba93f2e0a75f957a497208834e7106  design/standard/images/ooo_logo.gif
 3494e536d83e0361ca8153617f385f41  design/standard/javascript/ezodf_admin.js
@@ -103,8 +103,8 @@ af04f022ed96fea1b98670c33c45e6d5  doc/index.md
 7f5917008bfcc5b4ff422ce6652a957f  doc/sources.md
 e4d4a5a58f9f3fc9111712122be08968  examples/article.odt
 5f63d7f5a5579230d03a5c49d77cdee0  examples/general_document_example.odt
-5be5196f5b9f627274e372ba2aa336fd  extension.xml
-81787c87de752d3bb6d58065ca1fb52c  ezinfo.php
+ebdeb4b6d7e4fc9c3c10d96e5e6e2c75  extension.xml
+2e02d4e3c5886cced2e3408a4523a536  ezinfo.php
 8d0b52b28a4c5c31d734921c4a5f0346  modules/ezodf/batch.php
 dc9b4aff3f503f5ac4d135f92d6cf75f  modules/ezodf/batchstatus.php
 9590ed3d48ea7e95fb9426673635bb4d  modules/ezodf/converter.php
