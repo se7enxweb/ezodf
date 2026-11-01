@@ -367,7 +367,7 @@ class expOdfImportSourcesTest extends TestCase
         foreach ( $responses as $r )
         {
             $type = !empty( $r['collection'] ) ? '<d:resourcetype><d:collection/></d:resourcetype>' : '<d:resourcetype/>';
-            $xml .= '<d:response><d:href>' . htmlspecialchars( $r['href'] ) . '</d:href><d:propstat><d:prop>' . $type
+            $xml .= '<d:response><d:href>' . htmlspecialchars( $r['href'], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 ) . '</d:href><d:propstat><d:prop>' . $type
                   . ( isset( $r['etag'] ) ? '<d:getetag>&quot;' . $r['etag'] . '&quot;</d:getetag>' : '' )
                   . '<d:getlastmodified>Tue, 20 Oct 2026 10:00:00 GMT</d:getlastmodified>'
                   . '</d:prop><d:status>HTTP/1.1 200 OK</d:status></d:propstat>'
