@@ -1,0 +1,10 @@
+Changes from 7.0.5 to 7.0.6 (2026-11-14)
+
+- Updated: Pull request #17 (Marco-JAC) merged: the OpenOffice export (eZOOConverter, literal text) and the WebDAV
+  responses of the import test escape with htmlspecialchars( ..., ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 ), the
+  default of PHP 8.1 and later. Without flags PHP 8.0 used ENT_COMPAT | ENT_HTML401: a single quote stayed as it is
+  and a line with invalid UTF-8 became empty. The output on PHP 8.1 and later does not change. No escaping call
+  without flags is left in the extension; php -l passes on PHP 8.0 and 8.5 for every PHP file.
+- Updated: share/filelist.md5 carries the checksums of the changed files.
+
+Upgrading: composer update and clear the caches.

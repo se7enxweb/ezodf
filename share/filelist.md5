@@ -1,6 +1,6 @@
 name: ezodf
-version: 7.0.5
-files_count: 292
+version: 7.0.6
+files_count: 293
 
 a65c763ef0340e232cfe8c274f56fca0  .github/FUNDING.yml
 eee5f9135e5b658adce09e7e046c881f  LICENSE
@@ -28,7 +28,7 @@ b82e2b211fb0ece92c8679b48ac13542  classes/converter/expodfjobs.php
 a50e2b61435ebdd33122ca8d0e595b99  classes/converter/expodfsandbox.php
 852578c3590910eef0bcee7727f40593  classes/converter/expodfserver.php
 4f22e3c4d2d0c61bcb4cbe424b68e801  classes/converter/expodfsettings.php
-9ec4a54a37a19592d0e5174dc1d03bfc  classes/ezooconverter.php
+e44d85fbc7eea579ac737bb660b14b2b  classes/ezooconverter.php
 f1d80ceb315ee23cbb01f38ae709f31a  classes/ezoogenerator.php
 d6418d65bb631bc2ea07231f05846786  classes/ezooimport.php
 7ddd293d97efb0d438befd02c38967f4  classes/ezrestodfhandler.php
@@ -84,6 +84,7 @@ fc62b257e3ccb1faf68c7f325e7cfb80  doc/changelogs/2.4/CHANGELOG-2.3.0-to-2.4.0
 be1a35b699c0cf8dbbf58b0d5e03ba4c  doc/changelogs/7.0/CHANGELOG-7.0.1-to-7.0.2
 1fe899915da365d797839ff0ba5e7178  doc/changelogs/7.0/CHANGELOG-7.0.2-to-7.0.3
 ad51aee50ca7bea6f44f5575684424bf  doc/changelogs/7.0/CHANGELOG-7.0.4-to-7.0.5
+0d809b64abba1f90662acea460c00d55  doc/changelogs/7.0/CHANGELOG-7.0.5-to-7.0.6
 9b97638d32512be2b3dbcd5d82c6a36b  doc/converter.md
 afa77d424b0efa80cbdbf9ba991f2157  doc/eZconversion.txt
 f1e92cd0fd20ceaa283d96e35b176da7  doc/eZconversion.zip
@@ -104,8 +105,8 @@ af04f022ed96fea1b98670c33c45e6d5  doc/index.md
 7f5917008bfcc5b4ff422ce6652a957f  doc/sources.md
 e4d4a5a58f9f3fc9111712122be08968  examples/article.odt
 5f63d7f5a5579230d03a5c49d77cdee0  examples/general_document_example.odt
-7e959a007d6bf2816c1e6ea725451780  extension.xml
-c60a0a8d765efe5092f72b9d3e989961  ezinfo.php
+95dee407d7368ed6ba027181f5a8783b  extension.xml
+b91305e0e61db164b107b1e2c69aafca  ezinfo.php
 67b12237f8824be973745826ae58b9c9  modules/ezodf/batch.php
 4f30f879d6bc321d56bede32ce340150  modules/ezodf/batchstatus.php
 dc039ebedb351a0271a754d8a7482c0c  modules/ezodf/converter.php
@@ -161,7 +162,7 @@ c4fc41c85bef67fe44fedfbf77a76e0b  tests/eZOOImportAccessTest.php
 6975b4a779587f96b386bb3d7c47145b  tests/eZOpenofficeUploadHandlerTest.php
 0cb1bcf5ec8ece4ac3c9e77f9ebe9538  tests/expOdfConverterLayerTest.php
 a66b2036fb96587a193afd78de5a4945  tests/expOdfHtmlToOdtTest.php
-9d942c36fa52e3ea89da3c282aa239f6  tests/expOdfImportSourcesTest.php
+e85f1cd71b8fbb7932d091d935e2b79e  tests/expOdfImportSourcesTest.php
 fd33787dd5f9ce8e107e07c8cb103274  tests/expOdfReadersTest.php
 12cd076512e53dce22f4b76eb070c850  tests/fixtures/kernel_stubs.php
 d53e2c00ae19533fcf92cf936c3e7937  translations/afr-ZA/translation.ts
