@@ -414,7 +414,7 @@ class eZOOConverter
                 $literalContentArray = explode( "\n", $literalContent );
                 foreach ( $literalContentArray as $literalLine )
                 {
-                    $generator->addParagraph( "Preformatted_20_Text", htmlspecialchars( $literalLine ) );
+                    $generator->addParagraph( "Preformatted_20_Text", htmlspecialchars( $literalLine, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 ) );
                 }
 
             } break;
